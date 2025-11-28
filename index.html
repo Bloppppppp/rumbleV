@@ -9,11 +9,12 @@
         :root {
             --bg-dark: #020502;
             --accent-green: #39ff14;
-            --accent-glow: rgba(57, 255, 20, 0.6);
-            --glass-panel: rgba(10, 15, 10, 0.85);
-            --glass-border: rgba(57, 255, 20, 0.15);
+            --accent-red: #ff2a2a;
+            --accent-gold: #ffd700;
+            --glass-panel: rgba(10, 15, 10, 0.9);
+            --glass-border: rgba(57, 255, 20, 0.2);
             --text-main: #e0e0e0;
-            --medal-size: 42px;
+            --medal-size: 44px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,7 +39,6 @@
             background: radial-gradient(circle at 50% -10%, #0d2e0d 0%, #000000 85%);
         }
 
-        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -50,7 +50,6 @@
         }
         @keyframes particleDrift { 0% { transform: translateY(0); } 100% { transform: translateY(-60px); } }
 
-        /* The Grid Floor with Pulse */
         .grid-floor {
             position: fixed;
             bottom: -20%; left: -50%; width: 200%; height: 60%;
@@ -65,20 +64,9 @@
             -webkit-mask-image: linear-gradient(to top, black, transparent);
         }
 
-        /* Moving Scanline Pulse on Grid */
-        .grid-floor::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(57, 255, 20, 0.1), transparent);
-            background-size: 100% 50%;
-            animation: gridScan 6s linear infinite;
-        }
-        @keyframes gridScan { 0% { background-position: 0 -100%; } 100% { background-position: 0 200%; } }
-
         .container {
-            width: 95%;
-            max-width: 1750px;
+            width: 98%;
+            max-width: 2400px;
             margin: 0 auto;
             flex: 1;
             display: flex;
@@ -89,10 +77,10 @@
             z-index: 1;
         }
 
-        /* --- HEADER (Restored "Cool" Animation) --- */
+        /* --- HEADER --- */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             position: relative;
             animation: slideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             opacity: 0;
@@ -119,23 +107,16 @@
             background: linear-gradient(180deg, #fff 10%, #888 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Subtle Glitch */
             animation: glitch 5s infinite;
         }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            2% { transform: translate(-2px, 2px); }
-            4% { transform: translate(2px, -2px); }
-            6% { transform: translate(0); }
-            100% { transform: translate(0); }
-        }
+        @keyframes glitch { 0%, 100% { transform: translate(0); } 2% { transform: translate(-2px, 2px); } 4% { transform: translate(2px, -2px); } 6% { transform: translate(0); } }
         
         .mid-row {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
         .h-mid-box {
@@ -153,11 +134,7 @@
             box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
         }
 
-        .h-jungle-row {
-            display: flex;
-            align-items: baseline;
-            gap: 15px;
-        }
+        .h-jungle-row { display: flex; align-items: baseline; gap: 15px; }
 
         .h-jungle { 
             font-size: 5.5rem; 
@@ -167,74 +144,74 @@
             filter: drop-shadow(0 5px 0 #000);
         }
 
-        /* The Neon V - Restored */
         .v-suffix {
             font-family: 'Black Ops One', cursive;
             font-size: 5.5rem;
             color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px var(--accent-green),
-                0 0 40px var(--accent-green),
-                0 0 80px var(--accent-green);
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--accent-green), 0 0 40px var(--accent-green);
             transform: translateY(4px) rotate(-5deg);
             animation: neonPulse 3s infinite alternate;
         }
-        @keyframes neonPulse {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-green); }
-            to { text-shadow: 0 0 15px #fff, 0 0 30px var(--accent-green), 0 0 60px var(--accent-green); }
-        }
+        @keyframes neonPulse { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-green); } to { text-shadow: 0 0 15px #fff, 0 0 30px var(--accent-green), 0 0 60px var(--accent-green); } }
 
-        /* --- GRID --- */
-        .teams-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            width: 100%;
+        /* --- FLEX GRID LAYOUT --- */
+        .teams-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px; /* Tighter gap */
             perspective: 1000px;
         }
 
-        /* --- 3D INTERACTIVE CARD --- */
+        /* Forces a new line */
+        .break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        /* --- CARD STYLING --- */
         .team-card {
+            flex: 0 1 19%; 
+            min-width: 290px;
+            
             background: var(--glass-panel);
             border: 1px solid var(--glass-border);
             border-radius: 6px;
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: visible; /* Changed to visible for tooltip */
+            overflow: visible;
             backdrop-filter: blur(12px);
-            
-            /* Entrance */
             opacity: 0;
             transform: translateY(50px);
             animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            
             transition: transform 0.1s ease-out, box-shadow 0.3s ease;
             transform-style: preserve-3d;
         }
 
-        /* Staggered Loading */
+        /* Staggered Delay */
         .team-card:nth-child(1) { animation-delay: 0.1s; }
-        .team-card:nth-child(2) { animation-delay: 0.2s; }
-        .team-card:nth-child(3) { animation-delay: 0.3s; }
-        .team-card:nth-child(4) { animation-delay: 0.4s; }
-        .team-card:nth-child(5) { animation-delay: 0.5s; }
-        .team-card:nth-child(6) { animation-delay: 0.6s; }
-        .team-card:nth-child(7) { animation-delay: 0.7s; }
-        .team-card:nth-child(8) { animation-delay: 0.8s; }
+        .team-card:nth-child(2) { animation-delay: 0.15s; }
+        .team-card:nth-child(3) { animation-delay: 0.2s; }
+        .team-card:nth-child(4) { animation-delay: 0.25s; }
+        .team-card:nth-child(6) { animation-delay: 0.3s; }
+        .team-card:nth-child(7) { animation-delay: 0.35s; }
+        .team-card:nth-child(8) { animation-delay: 0.4s; }
+        .qualifier-wrapper { animation-delay: 0.5s; }
 
-        @keyframes cardStagger {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes cardStagger { to { opacity: 1; transform: translateY(0); } }
 
         .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
             background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
             opacity: 0.7;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-top-color: var(--accent-green);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(57, 255, 20, 0.1);
+            z-index: 10;
         }
 
         .team-header {
@@ -242,215 +219,179 @@
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
         }
 
         .team-name {
             font-family: 'Black Ops One';
             color: #f0f0f0;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             text-shadow: 0 2px 4px rgba(0,0,0,1);
         }
 
-        .players-list {
-            padding: 12px;
+        /* --- QUALIFIER WRAPPER (The Red Zone) --- */
+        .qualifier-wrapper {
+            flex: 0 1 39%; 
+            min-width: 600px;
+            
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            
+            border: 2px dashed var(--accent-red);
+            border-radius: 8px;
+            background: rgba(30, 5, 5, 0.3);
+            
+            opacity: 0;
+            transform: translateY(50px);
+            animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* NEW: The Warning Banner at the Top */
+        .qualifier-banner {
+            background: var(--accent-red);
+            color: #000;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            padding: 4px 0;
+            text-transform: uppercase;
+            animation: warningPulse 2s infinite;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        @keyframes warningPulse { 0%, 100% { background: var(--accent-red); } 50% { background: #ff7777; } }
+
+        /* The Combined Header for Qualifier */
+        .qualifier-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 25px;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(60,10,10,0.8), rgba(0,0,0,0.8));
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .q-team-title {
+            font-family: 'Black Ops One';
+            color: #f0f0f0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
+        }
+
+        /* The VS Badge inside header */
+        .q-vs-badge {
+            font-family: 'Black Ops One';
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-red);
+            background: #000;
+            padding: 2px 10px;
+            border: 2px solid var(--accent-red);
+            transform: skew(-10deg);
+            box-shadow: 0 0 20px rgba(255, 42, 42, 0.6);
+        }
+
+        /* The Body containing 2 columns */
+        .qualifier-body {
+            display: flex;
             flex: 1;
         }
 
+        .q-col {
+            flex: 1;
+            padding: 10px;
+        }
+
+        /* Vertical Divider between columns */
+        .q-col:first-child {
+            border-right: 1px solid rgba(255, 42, 42, 0.2);
+        }
+
+        .qualifier-wrapper:hover {
+            box-shadow: 0 15px 40px rgba(255, 42, 42, 0.15);
+            border-color: var(--accent-red);
+        }
+
+        /* --- PLAYERS --- */
+        .players-list { padding: 12px 15px; flex: 1; }
+
         .player-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 8px;
-            margin-bottom: 2px;
-            border-radius: 4px;
-            transition: all 0.2s;
-            position: relative;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 7px 8px; margin-bottom: 3px; border-radius: 4px;
+            transition: all 0.2s; position: relative;
         }
+        .player-row:hover { background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%); padding-left: 12px; }
+        .qualifier-wrapper .player-row:hover { background: linear-gradient(90deg, rgba(255, 42, 42, 0.15) 0%, transparent 100%); }
 
-        .player-row:hover {
-            background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%);
-            padding-left: 12px;
-        }
-
-        /* --- HIGHEST MMR TOOLTIP & EFFECT --- */
-        /* Tooltip Container */
-        .highest-mmr {
-            position: relative;
-        }
+        .player-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
         
-        /* The Tooltip Itself */
+        .player-name { 
+            font-size: 1.1rem; /* BIG TEXT */
+            font-weight: 700; 
+            color: #bbb; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            max-width: 160px; 
+            transition: color 0.2s; 
+        }
+        .player-row:hover .player-name { color: #fff; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5); }
+
+        .highest-mmr:hover .mmr-tooltip { opacity: 1; transform: translateY(0) scale(1); }
         .mmr-tooltip {
-            position: absolute;
-            bottom: 80%; /* Position above */
-            right: 0;
-            background: rgba(0, 20, 0, 0.95);
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            padding: 4px 10px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            
-            /* Hidden by default */
-            opacity: 0;
-            transform: translateY(10px) scale(0.9);
-            pointer-events: none;
-            
-            /* Fancy shadow */
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
-            z-index: 100;
-            white-space: nowrap;
-            
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: absolute; bottom: 80%; right: 0; background: rgba(0, 20, 0, 0.95); border: 1px solid var(--accent-green);
+            color: var(--accent-green); padding: 4px 10px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+            border-radius: 4px; opacity: 0; transform: translateY(10px) scale(0.9); pointer-events: none;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); z-index: 100; white-space: nowrap; transition: all 0.3s;
         }
-
-        /* Show on Hover */
-        .highest-mmr:hover .mmr-tooltip {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Crown Icon for et si */
-        .crown-icon {
-            display: inline-block;
-            font-size: 0.8rem;
-            margin-left: 5px;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-            animation: floatCrown 2s ease-in-out infinite;
-        }
+        .crown-icon { display: inline-block; font-size: 0.8rem; margin-left: 5px; animation: floatCrown 2s ease-in-out infinite; }
         @keyframes floatCrown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
-
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            overflow: hidden;
-        }
-
-        .player-name {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #bbb;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 130px;
-            transition: color 0.2s;
-        }
-
-        .player-row:hover .player-name {
-            color: #fff;
-            text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
-        }
-
-        /* --- MEDALS --- */
-        .rank-wrapper {
-            width: var(--medal-size);
-            height: var(--medal-size);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .rank-icon {
-            width: 100%; height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.8));
-            transition: transform 0.2s;
-        }
-
+        .rank-wrapper { width: var(--medal-size); height: var(--medal-size); position: relative; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .rank-icon { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.8)); transition: transform 0.2s; }
         .player-row:hover .rank-icon { transform: scale(1.2); }
 
-        .rank-pill {
-            position: absolute;
-            bottom: -3px; right: -5px;
-            background: #000;
-            border: 1px solid #555;
-            color: #fff;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 1px 4px;
-            border-radius: 3px;
-            z-index: 2;
-        }
+        .rank-pill { position: absolute; bottom: -3px; right: -5px; background: #000; border: 1px solid #555; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0 4px; border-radius: 3px; z-index: 2; }
 
-        .player-mmr {
-            font-family: 'Rajdhani', monospace;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--accent-green);
-            text-align: right;
-            min-width: 45px;
+        .player-mmr { 
+            font-family: 'Rajdhani', monospace; 
+            font-weight: 700; 
+            font-size: 1.25rem; /* BIG MMR */
+            color: var(--accent-green); 
+            text-align: right; 
+            min-width: 50px; 
         }
-        .player-mmr.no-mmr { color: #555; }
+        .player-mmr.no-mmr { color: #555; font-size: 1.25rem; }
+        .qualifier-wrapper .player-mmr { color: #ff6b6b; }
 
         /* --- FOOTER --- */
         .footer {
-            margin-top: 40px;
-            padding: 25px 0;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            background: linear-gradient(to top, #000 0%, transparent 100%);
-            opacity: 0;
-            animation: fadeIn 1s ease 1s forwards;
+            margin-top: 30px; padding: 20px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%);
+            opacity: 0; animation: fadeIn 1s ease 1.5s forwards;
         }
         @keyframes fadeIn { to { opacity: 1; } }
         
-        .legend {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(10, 20, 10, 0.6);
-            padding: 8px 24px;
-            border-radius: 30px;
-            border: 1px solid rgba(57, 255, 20, 0.15);
-            transition: all 0.3s;
-        }
-        
-        .legend-item:hover {
-            border-color: var(--accent-green);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
-        }
-
+        .legend { display: flex; justify-content: center; gap: 50px; align-items: center; }
+        .legend-item { display: flex; align-items: center; gap: 12px; background: rgba(10, 20, 10, 0.6); padding: 8px 24px; border-radius: 30px; border: 1px solid rgba(57, 255, 20, 0.15); transition: all 0.3s; }
         .legend-item img { width: 36px; height: 36px; object-fit: contain; }
+        .legend-item span { font-size: 0.9rem; color: #ccc; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
-        .legend-item span {
-            font-size: 0.9rem;
-            color: #ccc;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        @media (max-width: 1400px) { 
+            .team-card { flex: 1 1 calc(33% - 20px); } 
+            .break { display: none; }
+            .qualifier-wrapper { flex: 1 1 100%; min-width: 0; }
         }
-
-        /* RESPONSIVE */
-        @media (max-width: 1650px) {
-            .teams-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
-            .h-rumble { font-size: 3.5rem; }
-            .h-jungle, .v-suffix { font-size: 4.5rem; }
-        }
-        
-        @media (max-width: 1400px) {
-            .teams-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 0 auto; }
-        }
-
         @media (max-width: 768px) {
-            .teams-grid { grid-template-columns: 1fr; }
+            .teams-container { flex-direction: column; }
+            .team-card { width: 100%; max-width: none; }
+            .qualifier-wrapper { flex-direction: column; }
+            .qualifier-top-bar { flex-direction: column; gap: 10px; }
+            .qualifier-body { flex-direction: column; }
             .h-rumble { font-size: 2.5rem; }
             .h-jungle, .v-suffix { font-size: 3rem; }
         }
@@ -477,59 +418,26 @@
             </div>
         </header>
 
-        <div class="teams-grid">
+        <div class="teams-container">
             
             <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">Maslyata</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#3815</span>
-                            </div>
-                            <span class="player-name">sandstorm</span>
-                        </div>
-                        <span class="player-mmr" data-val="3509">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span>
                     </div>
                     <div class="player-row highest-mmr">
                         <div class="mmr-tooltip">Highest AD MMR</div>
-                        
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">et si <span class="crown-icon">👑</span></span>
-                        </div>
-                        <span class="player-mmr" data-val="3996">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">hedgehog</span>
-                        </div>
-                        <span class="player-mmr" data-val="3741">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">kid</span>
-                        </div>
-                        <span class="player-mmr" data-val="3518">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#2024</span>
-                            </div>
-                            <span class="player-name">piggy/electro</span>
-                        </div>
-                        <span class="player-mmr" data-val="3684">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span>
                     </div>
                 </div>
             </div>
@@ -538,51 +446,19 @@
                 <div class="team-header"><div class="team-name">Gym Esports</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png">
-                            </div>
-                            <span class="player-name">Ultra Greed</span>
-                        </div>
-                        <span class="player-mmr" data-val="3383">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png"></div><span class="player-name">Ultra Greed</span></div><span class="player-mmr" data-val="3383">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#870</span>
-                            </div>
-                            <span class="player-name">Aniki</span>
-                        </div>
-                        <span class="player-mmr" data-val="3337">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#870</span></div><span class="player-name">Aniki</span></div><span class="player-mmr" data-val="3337">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#932</span>
-                            </div>
-                            <span class="player-name">Vata</span>
-                        </div>
-                        <span class="player-mmr" data-val="2739">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#932</span></div><span class="player-name">Vata</span></div><span class="player-mmr" data-val="2739">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">Inffe</span>
-                        </div>
-                        <span class="player-mmr" data-val="3143">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Inffe</span></div><span class="player-mmr" data-val="3143">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">Hoshoryu</span>
-                        </div>
-                        <span class="player-mmr" data-val="3393">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Hoshoryu</span></div><span class="player-mmr" data-val="3393">0</span>
                     </div>
                 </div>
             </div>
@@ -591,52 +467,19 @@
                 <div class="team-header"><div class="team-name">TMNT</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#3147</span>
-                            </div>
-                            <span class="player-name">Ptenchik</span>
-                        </div>
-                        <span class="player-mmr" data-val="3513">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png">
-                            </div>
-                            <span class="player-name">Foxy</span>
-                        </div>
-                        <span class="player-mmr" data-val="3383">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">Mirrored</span>
-                        </div>
-                        <span class="player-mmr" data-val="3680">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#1562</span>
-                            </div>
-                            <span class="player-name">Lost</span>
-                        </div>
-                        <span class="player-mmr" data-val="3976">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png">
-                                <span class="rank-pill">PVT</span>
-                            </div>
-                            <span class="player-name">Lenske</span>
-                        </div>
-                        <span class="player-mmr" data-val="3443">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span>
                     </div>
                 </div>
             </div>
@@ -645,104 +488,42 @@
                 <div class="team-header"><div class="team-name">Space Marines</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">Space</span>
-                        </div>
-                        <span class="player-mmr" data-val="3222">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Space</span></div><span class="player-mmr" data-val="3222">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">friscy</span>
-                        </div>
-                        <span class="player-mmr" data-val="3357">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">friscy</span></div><span class="player-mmr" data-val="3357">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#430</span>
-                            </div>
-                            <span class="player-name">shushu</span>
-                        </div>
-                        <span class="player-mmr no-mmr">—</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#430</span></div><span class="player-name">shushu</span></div><span class="player-mmr no-mmr">—</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#648</span>
-                            </div>
-                            <span class="player-name">Nano</span>
-                        </div>
-                        <span class="player-mmr no-mmr">—</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#648</span></div><span class="player-name">Nano</span></div><span class="player-mmr no-mmr">—</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#4369</span>
-                            </div>
-                            <span class="player-name">Godba</span>
-                        </div>
-                        <span class="player-mmr" data-val="3606">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4369</span></div><span class="player-name">Godba</span></div><span class="player-mmr" data-val="3606">0</span>
                     </div>
                 </div>
             </div>
+
+            <div class="break"></div>
 
             <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">LAGGAN</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-1.png">
-                            </div>
-                            <span class="player-name">Circuz</span>
-                        </div>
-                        <span class="player-mmr no-mmr">—</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-1.png"></div><span class="player-name">Circuz</span></div><span class="player-mmr no-mmr">—</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">Haj</span>
-                        </div>
-                        <span class="player-mmr" data-val="2333">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Haj</span></div><span class="player-mmr" data-val="2333">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-guardian-2.png">
-                            </div>
-                            <span class="player-name">Hulk</span>
-                        </div>
-                        <span class="player-mmr" data-val="2522">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-guardian-2.png"></div><span class="player-name">Hulk</span></div><span class="player-mmr" data-val="2522">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#4109</span>
-                            </div>
-                            <span class="player-name">Dr_McWho</span>
-                        </div>
-                        <span class="player-mmr" data-val="2941">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4109</span></div><span class="player-name">Dr_McWho</span></div><span class="player-mmr" data-val="2941">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png">
-                            </div>
-                            <span class="player-name">Lungs</span>
-                        </div>
-                        <span class="player-mmr" data-val="2231">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png"></div><span class="player-name">Lungs</span></div><span class="player-mmr" data-val="2231">0</span>
                     </div>
                 </div>
             </div>
@@ -751,54 +532,19 @@
                 <div class="team-header"><div class="team-name">seppo13</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#2953</span>
-                            </div>
-                            <span class="player-name">BigGoose</span>
-                        </div>
-                        <span class="player-mmr" data-val="2661">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#2428</span>
-                            </div>
-                            <span class="player-name">noertti</span>
-                        </div>
-                        <span class="player-mmr" data-val="3707">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#1429</span>
-                            </div>
-                            <span class="player-name">sifla</span>
-                        </div>
-                        <span class="player-mmr" data-val="3087">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#2381</span>
-                            </div>
-                            <span class="player-name">Fruugu</span>
-                        </div>
-                        <span class="player-mmr" data-val="2903">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#4596</span>
-                            </div>
-                            <span class="player-name">Juketsuu</span>
-                        </div>
-                        <span class="player-mmr" data-val="3288">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span>
                     </div>
                 </div>
             </div>
@@ -807,106 +553,68 @@
                 <div class="team-header"><div class="team-name">shottyteam</div></div>
                 <div class="players-list">
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#3761</span>
-                            </div>
-                            <span class="player-name">godwithashotgun</span>
-                        </div>
-                        <span class="player-mmr" data-val="3263">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3761</span></div><span class="player-name">godwithashotgun</span></div><span class="player-mmr" data-val="3263">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                            </div>
-                            <span class="player-name">drea</span>
-                        </div>
-                        <span class="player-mmr" data-val="3352">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">drea</span></div><span class="player-mmr" data-val="3352">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-2.png">
-                            </div>
-                            <span class="player-name">Admiral Rat</span>
-                        </div>
-                        <span class="player-mmr" data-val="3209">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-2.png"></div><span class="player-name">Admiral Rat</span></div><span class="player-mmr" data-val="3209">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-archon-4.png">
-                            </div>
-                            <span class="player-name">Silence</span>
-                        </div>
-                        <span class="player-mmr" data-val="3297">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-archon-4.png"></div><span class="player-name">Silence</span></div><span class="player-mmr" data-val="3297">0</span>
                     </div>
                     <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png">
-                            </div>
-                            <span class="player-name">ATGAT</span>
-                        </div>
-                        <span class="player-mmr" data-val="2992">0</span>
+                        <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png"></div><span class="player-name">ATGAT</span></div><span class="player-mmr" data-val="2992">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card js-tilt">
-                <div class="team-header"><div class="team-name">lay an egg</div></div>
-                <div class="players-list">
-                    <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#581</span>
-                            </div>
-                            <span class="player-name">Dogical</span>
+            <div class="qualifier-wrapper">
+                
+                <div class="qualifier-banner">⚠️ Qualifier Match • Fight for 8th Slot ⚠️</div>
+
+                <div class="qualifier-top-bar">
+                    <div class="q-team-title">LAY AN EGG</div>
+                    <div class="q-vs-badge">VS</div>
+                    <div class="q-team-title">CHORBA FREAK</div>
+                </div>
+                
+                <div class="qualifier-body">
+                    <div class="q-col">
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#581</span></div><span class="player-name">Dogical</span></div><span class="player-mmr" data-val="3062">0</span>
                         </div>
-                        <span class="player-mmr" data-val="3062">0</span>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#101</span></div><span class="player-name">erik</span></div><span class="player-mmr no-mmr">—</span>
+                        </div>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1367</span></div><span class="player-name">chrohny</span></div><span class="player-mmr no-mmr">—</span>
+                        </div>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#480</span></div><span class="player-name">frisb</span></div><span class="player-mmr" data-val="3071">0</span>
+                        </div>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1628</span></div><span class="player-name">polo</span></div><span class="player-mmr" data-val="2196">0</span>
+                        </div>
                     </div>
-                    <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#101</span>
-                            </div>
-                            <span class="player-name">erik</span>
+
+                    <div class="q-col">
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-2.png"></div><span class="player-name">Rize</span></div><span class="player-mmr" data-val="2257">0</span>
                         </div>
-                        <span class="player-mmr no-mmr">—</span>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#1367</span>
-                            </div>
-                            <span class="player-name">chrohny</span>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">AkimiChiii</span></div><span class="player-mmr no-mmr">—</span>
                         </div>
-                        <span class="player-mmr no-mmr">—</span>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#480</span>
-                            </div>
-                            <span class="player-name">frisb</span>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">P1KA</span></div><span class="player-mmr no-mmr">—</span>
                         </div>
-                        <span class="player-mmr" data-val="3071">0</span>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-info">
-                            <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
-                                <span class="rank-pill">#1628</span>
-                            </div>
-                            <span class="player-name">polo</span>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-archon-3.png"></div><span class="player-name">Not_Mugen</span></div><span class="player-mmr" data-val="1884">0</span>
                         </div>
-                        <span class="player-mmr" data-val="2196">0</span>
+                        <div class="player-row">
+                            <div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-ancient-4.png"></div><span class="player-name">Zodd</span></div><span class="player-mmr no-mmr">—</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -947,7 +655,7 @@
         setTimeout(() => {
             mmrElements.forEach(el => {
                 const target = parseInt(el.getAttribute('data-val'));
-                animateValue(el, 0, target, 2000); // 2 second count up
+                animateValue(el, 0, target, 1500); 
             });
         }, 1200);
 
@@ -959,16 +667,11 @@
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
-                // Calculate center
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                
-                // Get rotate values (max 8deg)
-                const rotateX = ((y - centerY) / centerY) * -8;
-                const rotateY = ((x - centerX) / centerX) * 8;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
             });
             
             card.addEventListener('mouseleave', () => {
