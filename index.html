@@ -203,6 +203,7 @@
         .team-card {
             flex: 0 1 19%; 
             min-width: 290px;
+            
             background: var(--glass-panel);
             border: 1px solid var(--glass-border);
             border-radius: 6px;
@@ -218,6 +219,7 @@
             transform-style: preserve-3d;
         }
 
+        /* Staggered Delay */
         .team-card:nth-child(1) { animation-delay: 0.1s; }
         .team-card:nth-child(2) { animation-delay: 0.15s; }
         .team-card:nth-child(3) { animation-delay: 0.2s; }
@@ -398,10 +400,7 @@
 
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%); }
-        .legend { display: flex; justify-content: center; gap: 50px; align-items: center; }
-        .legend-item { display: flex; align-items: center; gap: 12px; background: rgba(10, 20, 10, 0.6); padding: 8px 24px; border-radius: 30px; border: 1px solid rgba(57, 255, 20, 0.15); }
-        .legend-item img { width: 36px; height: 36px; object-fit: contain; }
-        .legend-item span { font-size: 0.9rem; color: #ccc; font-weight: 600; text-transform: uppercase; }
+        .footer-logo { color: #444; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
 
         @media (max-width: 1400px) { .team-card { flex: 1 1 calc(33% - 20px); } .break { display: none; } .qualifier-wrapper { flex: 1 1 100%; min-width: 0; } }
         @media (max-width: 768px) { 
@@ -436,8 +435,8 @@
         <nav class="nav-bar">
             <button class="nav-btn" onclick="scrollToSection('teams')">Teams</button>
             <button class="nav-btn" onclick="scrollToSection('groups')">Groups</button>
-            <button class="nav-btn" onclick="scrollToSection('schedule')">Schedule</button>
             <button class="nav-btn" onclick="scrollToSection('playoffs')">Playoffs</button>
+            <button class="nav-btn" onclick="scrollToSection('schedule')">Schedule</button>
         </nav>
 
         <div id="teams" class="section-wrapper">
@@ -518,6 +517,53 @@
                             <tr><td>LAGGAN</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="playoffs" class="section-wrapper">
+            <h2 class="section-title">Playoffs Bracket</h2>
+            <div class="bracket-scroll">
+                <div class="bracket-flex">
+                    <div class="round-col">
+                        <div class="round-header">UB SEMIFINALS - DEC 7 (19:30)</div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>A1</span><span class="node-score">0</span></div><div class="node-row"><span>B2</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>B1</span><span class="node-score">0</span></div><div class="node-row"><span>A2</span><span class="node-score">0</span></div></div>
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB ROUND 1 - DEC 7 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>A3</span><span class="node-score">0</span></div><div class="node-row"><span>B4</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>B3</span><span class="node-score">0</span></div><div class="node-row"><span>A4</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="round-header">UB FINAL - DEC 13 (19:30)</div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB QUARTER - DEC 7 (22:00)</div>
+                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB SEMI - DEC 13 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB FINAL - DEC 14 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="round-header">GRAND FINAL - DEC 14 (19:30)</div>
+                        <div class="match-node grand-final">
+                            <div class="node-date">19:30 - BO5</div>
+                            <div class="node-row"><span>UB Winner</span><span class="node-score">0</span></div>
+                            <div class="node-row"><span>LB Winner</span><span class="node-score">0</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -643,53 +689,9 @@
             </div>
         </div>
 
-        <div id="playoffs" class="section-wrapper">
-            <h2 class="section-title">Playoffs Bracket</h2>
-            <div class="bracket-scroll">
-                <div class="bracket-flex">
-                    <div class="round-col">
-                        <div class="round-header">UB SEMIFINALS - DEC 7 (19:30)</div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>A1</span><span class="node-score">0</span></div><div class="node-row"><span>B2</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>B1</span><span class="node-score">0</span></div><div class="node-row"><span>A2</span><span class="node-score">0</span></div></div>
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB ROUND 1 - DEC 7 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>A3</span><span class="node-score">0</span></div><div class="node-row"><span>B4</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>B3</span><span class="node-score">0</span></div><div class="node-row"><span>A4</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="round-header">UB FINAL - DEC 13 (19:30)</div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB QUARTER - DEC 7 (22:00)</div>
-                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB SEMI - DEC 13 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB FINAL - DEC 14 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="round-header">GRAND FINAL - DEC 14 (19:30)</div>
-                        <div class="match-node grand-final">
-                            <div class="node-date">19:30 - BO5</div>
-                            <div class="node-row"><span>UB Winner</span><span class="node-score">0</span></div>
-                            <div class="node-row"><span>LB Winner</span><span class="node-score">0</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <footer class="footer">
+            <div class="footer-logo">RUMBLE IN THE JUNGLE V</div>
+        </footer>
     </div>
 
     <script>
