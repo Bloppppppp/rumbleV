@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #010401;
+            --bg-dark: #020502;
             --accent-green: #39ff14;
-            --accent-dim: #145214;
-            --glass-panel: rgba(10, 20, 10, 0.85);
-            --glass-border: rgba(57, 255, 20, 0.2);
+            --accent-glow: rgba(57, 255, 20, 0.6);
+            --glass-panel: rgba(10, 15, 10, 0.85);
+            --glass-border: rgba(57, 255, 20, 0.15);
             --text-main: #e0e0e0;
             --medal-size: 42px;
         }
@@ -27,65 +27,54 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            perspective: 2000px;
         }
 
-        /* --- BACKGROUND --- */
+        /* --- BACKGROUND FX --- */
         .cyber-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 50% -20%, #0d3a0d 0%, #000000 70%);
+            z-index: -3;
+            background: radial-gradient(circle at 50% -10%, #0d2e0d 0%, #000000 85%);
         }
 
-        .cyber-bg::before {
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-image: radial-gradient(rgba(57, 255, 20, 0.15) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.4;
+            animation: particleDrift 40s linear infinite;
+        }
+        @keyframes particleDrift { 0% { transform: translateY(0); } 100% { transform: translateY(-60px); } }
+
+        /* The Grid Floor with Pulse */
+        .grid-floor {
+            position: fixed;
+            bottom: -20%; left: -50%; width: 200%; height: 60%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(57, 255, 20, 0.05) 25%, rgba(57, 255, 20, 0.05) 26%, transparent 27%, transparent 74%, rgba(57, 255, 20, 0.05) 75%, rgba(57, 255, 20, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(57, 255, 20, 0.05) 25%, rgba(57, 255, 20, 0.05) 26%, transparent 27%, transparent 74%, rgba(57, 255, 20, 0.05) 75%, rgba(57, 255, 20, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            z-index: -2;
+            pointer-events: none;
+            mask-image: linear-gradient(to top, black, transparent);
+            -webkit-mask-image: linear-gradient(to top, black, transparent);
+        }
+
+        /* Moving Scanline Pulse on Grid */
+        .grid-floor::after {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(57, 255, 20, 0.04) 0%, transparent 25%),
-                radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.04) 0%, transparent 25%);
-            animation: drift 25s ease-in-out infinite;
-        }
-
-        @keyframes drift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(3%, 2%); }
-        }
-        
-        .grid-overlay {
-            position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
-            animation: gridPulse 8s ease-in-out infinite;
+            background: linear-gradient(to bottom, transparent, rgba(57, 255, 20, 0.1), transparent);
+            background-size: 100% 50%;
+            animation: gridScan 6s linear infinite;
         }
-
-        @keyframes gridPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        /* Scanlines */
-        .scanlines {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15) 0px,
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 3px
-            );
-            z-index: 100;
-            pointer-events: none;
-            opacity: 0.3;
-        }
+        @keyframes gridScan { 0% { background-position: 0 -100%; } 100% { background-position: 0 200%; } }
 
         .container {
             width: 95%;
@@ -96,41 +85,49 @@
             flex-direction: column;
             justify-content: center;
             padding: 20px 0;
+            position: relative;
+            z-index: 1;
         }
 
-        /* --- HEADER: REFINED --- */
+        /* --- HEADER (Restored "Cool" Animation) --- */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
-            z-index: 2;
+            animation: slideDown 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
         }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 
         .logo-stack {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            line-height: 0.9;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+            line-height: 0.85;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
         }
 
         .h-text {
             font-family: 'Black Ops One', cursive;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #fff 10%, #999 50%, #444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
         }
 
         .h-rumble { 
-            font-size: 4.5rem;
-            animation: shimmer 3s ease-in-out infinite;
+            font-size: 4.5rem; 
+            z-index: 2;
+            background: linear-gradient(180deg, #fff 10%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Subtle Glitch */
+            animation: glitch 5s infinite;
         }
-
-        @keyframes shimmer {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
-            50% { filter: brightness(1.1) drop-shadow(0 0 20px rgba(255,255,255,0.1)); }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            2% { transform: translate(-2px, 2px); }
+            4% { transform: translate(2px, -2px); }
+            6% { transform: translate(0); }
+            100% { transform: translate(0); }
         }
         
         .mid-row {
@@ -138,121 +135,128 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 5px 0;
+            margin: 8px 0;
         }
 
         .h-mid-box {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 800;
-            background: var(--accent-dim);
-            color: #fff;
-            padding: 2px 12px;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            border: 1px solid var(--accent-green);
-            transform: skew(-10deg);
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-            animation: boxGlow 2s ease-in-out infinite;
+            background: #051505;
+            color: #aaa;
+            padding: 3px 20px;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            border: 1px solid #333;
+            border-left: 3px solid var(--accent-green);
+            border-right: 3px solid var(--accent-green);
+            transform: skew(-15deg);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
         }
 
-        @keyframes boxGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(57, 255, 20, 0.5), 0 0 50px rgba(57, 255, 20, 0.2); }
-        }
-
-        /* Title Line 3: JUNGLE + V */
         .h-jungle-row {
             display: flex;
             align-items: baseline;
             gap: 15px;
         }
 
-        .h-jungle { font-size: 5.5rem; }
+        .h-jungle { 
+            font-size: 5.5rem; 
+            background: linear-gradient(180deg, #fff 10%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 0 #000);
+        }
 
+        /* The Neon V - Restored */
         .v-suffix {
             font-family: 'Black Ops One', cursive;
             font-size: 5.5rem;
-            color: var(--accent-green);
-            text-shadow: 0 0 20px rgba(57, 255, 20, 0.6);
-            -webkit-text-fill-color: var(--accent-green); 
-            transform: translateY(2px);
-            animation: vPulse 2s ease-in-out infinite;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px var(--accent-green),
+                0 0 40px var(--accent-green),
+                0 0 80px var(--accent-green);
+            transform: translateY(4px) rotate(-5deg);
+            animation: neonPulse 3s infinite alternate;
         }
-
-        @keyframes vPulse {
-            0%, 100% { 
-                text-shadow: 0 0 20px rgba(57, 255, 20, 0.6), 0 0 40px rgba(57, 255, 20, 0.4);
-                transform: translateY(2px) scale(1);
-            }
-            50% { 
-                text-shadow: 0 0 30px rgba(57, 255, 20, 0.8), 0 0 60px rgba(57, 255, 20, 0.5), 0 0 90px rgba(57, 255, 20, 0.3);
-                transform: translateY(2px) scale(1.03);
-            }
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-green); }
+            to { text-shadow: 0 0 15px #fff, 0 0 30px var(--accent-green), 0 0 60px var(--accent-green); }
         }
 
         /* --- GRID --- */
         .teams-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 25px;
             width: 100%;
+            perspective: 1000px;
         }
 
-        /* --- CARD --- */
+        /* --- 3D INTERACTIVE CARD --- */
         .team-card {
             background: var(--glass-panel);
             border: 1px solid var(--glass-border);
-            border-top: 3px solid var(--accent-dim);
             border-radius: 6px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* Changed to visible for tooltip */
+            backdrop-filter: blur(12px);
+            
+            /* Entrance */
+            opacity: 0;
+            transform: translateY(50px);
+            animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
         }
 
-        .team-card::after {
+        /* Staggered Loading */
+        .team-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-card:nth-child(2) { animation-delay: 0.2s; }
+        .team-card:nth-child(3) { animation-delay: 0.3s; }
+        .team-card:nth-child(4) { animation-delay: 0.4s; }
+        .team-card:nth-child(5) { animation-delay: 0.5s; }
+        .team-card:nth-child(6) { animation-delay: 0.6s; }
+        .team-card:nth-child(7) { animation-delay: 0.7s; }
+        .team-card:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes cardStagger {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .team-card::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.05), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .team-card:hover {
-            transform: translateY(-5px);
-            border-top-color: var(--accent-green);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 20px rgba(57, 255, 20, 0.1);
-        }
-
-        .team-card:hover::after {
-            left: 150%;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0.7;
         }
 
         .team-header {
-            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.8), transparent);
-            padding: 10px;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8));
+            padding: 12px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
         }
 
         .team-name {
             font-family: 'Black Ops One';
-            color: #fff;
-            font-size: 1.2rem;
+            color: #f0f0f0;
+            font-size: 1.25rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: text-shadow 0.3s;
-        }
-
-        .team-card:hover .team-name {
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
         }
 
         .players-list {
-            padding: 10px 12px;
+            padding: 12px;
             flex: 1;
         }
 
@@ -260,36 +264,90 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            transition: background 0.2s;
+            padding: 6px 8px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            position: relative;
         }
-        .player-row:last-child { border: none; }
 
         .player-row:hover {
-            background: rgba(57, 255, 20, 0.03);
+            background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%);
+            padding-left: 12px;
         }
+
+        /* --- HIGHEST MMR TOOLTIP & EFFECT --- */
+        /* Tooltip Container */
+        .highest-mmr {
+            position: relative;
+        }
+        
+        /* The Tooltip Itself */
+        .mmr-tooltip {
+            position: absolute;
+            bottom: 80%; /* Position above */
+            right: 0;
+            background: rgba(0, 20, 0, 0.95);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            
+            /* Hidden by default */
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+            pointer-events: none;
+            
+            /* Fancy shadow */
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+            z-index: 100;
+            white-space: nowrap;
+            
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Show on Hover */
+        .highest-mmr:hover .mmr-tooltip {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Crown Icon for et si */
+        .crown-icon {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            animation: floatCrown 2s ease-in-out infinite;
+        }
+        @keyframes floatCrown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
 
         .player-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             overflow: hidden;
         }
 
         .player-name {
             font-size: 0.95rem;
             font-weight: 600;
-            color: #ccc;
+            color: #bbb;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 140px;
+            max-width: 130px;
             transition: color 0.2s;
         }
 
         .player-row:hover .player-name {
             color: #fff;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
         }
 
         /* --- MEDALS --- */
@@ -306,101 +364,89 @@
         .rank-icon {
             width: 100%; height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
-            transition: transform 0.3s, filter 0.3s;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.8));
+            transition: transform 0.2s;
         }
 
-        .player-row:hover .rank-icon {
-            transform: scale(1.1);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9)) drop-shadow(0 0 8px rgba(255,200,50,0.3));
-        }
+        .player-row:hover .rank-icon { transform: scale(1.2); }
 
         .rank-pill {
             position: absolute;
-            bottom: -2px; right: -4px;
+            bottom: -3px; right: -5px;
             background: #000;
-            border: 1px solid #444;
+            border: 1px solid #555;
             color: #fff;
             font-size: 0.65rem;
             font-weight: 700;
-            padding: 0 3px;
+            padding: 1px 4px;
             border-radius: 3px;
+            z-index: 2;
         }
 
         .player-mmr {
             font-family: 'Rajdhani', monospace;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--accent-green);
             text-align: right;
             min-width: 45px;
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-            transition: text-shadow 0.2s;
         }
+        .player-mmr.no-mmr { color: #555; }
 
-        .player-row:hover .player-mmr {
-            text-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
-        }
-
-        .player-mmr.no-mmr { 
-            color: #555; 
-            text-shadow: none;
-        }
-
-        /* --- FOOTER (SIMPLIFIED) --- */
+        /* --- FOOTER --- */
         .footer {
-            margin-top: 30px;
-            padding: 20px 0;
+            margin-top: 40px;
+            padding: 25px 0;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
         }
+        @keyframes fadeIn { to { opacity: 1; } }
         
         .legend {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             align-items: center;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 12px;
+            background: rgba(10, 20, 10, 0.6);
+            padding: 8px 24px;
+            border-radius: 30px;
+            border: 1px solid rgba(57, 255, 20, 0.15);
             transition: all 0.3s;
         }
-
+        
         .legend-item:hover {
-            background: rgba(57, 255, 20, 0.1);
-            border-color: rgba(57, 255, 20, 0.3);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
         }
 
-        .legend-item img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }
+        .legend-item img { width: 36px; height: 36px; object-fit: contain; }
 
         .legend-item span {
             font-size: 0.9rem;
-            color: #aaa;
+            color: #ccc;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* RESPONSIVE */
-        @media (max-width: 1600px) {
-            .teams-grid { grid-template-columns: repeat(4, 1fr); }
+        @media (max-width: 1650px) {
+            .teams-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
             .h-rumble { font-size: 3.5rem; }
             .h-jungle, .v-suffix { font-size: 4.5rem; }
         }
         
         @media (max-width: 1400px) {
-            .teams-grid { grid-template-columns: repeat(2, 1fr); }
+            .teams-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 0 auto; }
         }
 
         @media (max-width: 768px) {
@@ -413,8 +459,8 @@
 <body>
 
     <div class="cyber-bg"></div>
-    <div class="grid-overlay"></div>
-    <div class="scanlines"></div>
+    <div class="particles"></div>
+    <div class="grid-floor"></div>
 
     <div class="container">
         
@@ -433,7 +479,7 @@
 
         <div class="teams-grid">
             
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">Maslyata</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -444,16 +490,18 @@
                             </div>
                             <span class="player-name">sandstorm</span>
                         </div>
-                        <span class="player-mmr">3509</span>
+                        <span class="player-mmr" data-val="3509">0</span>
                     </div>
-                    <div class="player-row">
+                    <div class="player-row highest-mmr">
+                        <div class="mmr-tooltip">Highest AD MMR</div>
+                        
                         <div class="player-info">
                             <div class="rank-wrapper">
                                 <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
                             </div>
-                            <span class="player-name">et si</span>
+                            <span class="player-name">et si <span class="crown-icon">👑</span></span>
                         </div>
-                        <span class="player-mmr">3996</span>
+                        <span class="player-mmr" data-val="3996">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -462,7 +510,7 @@
                             </div>
                             <span class="player-name">hedgehog</span>
                         </div>
-                        <span class="player-mmr">3741</span>
+                        <span class="player-mmr" data-val="3741">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -471,7 +519,7 @@
                             </div>
                             <span class="player-name">kid</span>
                         </div>
-                        <span class="player-mmr">3518</span>
+                        <span class="player-mmr" data-val="3518">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -481,12 +529,12 @@
                             </div>
                             <span class="player-name">piggy/electro</span>
                         </div>
-                        <span class="player-mmr">3684</span>
+                        <span class="player-mmr" data-val="3684">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">Gym Esports</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -496,7 +544,7 @@
                             </div>
                             <span class="player-name">Ultra Greed</span>
                         </div>
-                        <span class="player-mmr">3383</span>
+                        <span class="player-mmr" data-val="3383">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -506,7 +554,7 @@
                             </div>
                             <span class="player-name">Aniki</span>
                         </div>
-                        <span class="player-mmr">3337</span>
+                        <span class="player-mmr" data-val="3337">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -516,7 +564,7 @@
                             </div>
                             <span class="player-name">Vata</span>
                         </div>
-                        <span class="player-mmr">2739</span>
+                        <span class="player-mmr" data-val="2739">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -525,7 +573,7 @@
                             </div>
                             <span class="player-name">Inffe</span>
                         </div>
-                        <span class="player-mmr">3143</span>
+                        <span class="player-mmr" data-val="3143">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -534,12 +582,12 @@
                             </div>
                             <span class="player-name">Hoshoryu</span>
                         </div>
-                        <span class="player-mmr">3393</span>
+                        <span class="player-mmr" data-val="3393">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">TMNT</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -550,7 +598,7 @@
                             </div>
                             <span class="player-name">Ptenchik</span>
                         </div>
-                        <span class="player-mmr">3513</span>
+                        <span class="player-mmr" data-val="3513">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -559,16 +607,16 @@
                             </div>
                             <span class="player-name">Foxy</span>
                         </div>
-                        <span class="player-mmr">3383</span>
+                        <span class="player-mmr" data-val="3383">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
                             <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-5.png">
+                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
                             </div>
                             <span class="player-name">Mirrored</span>
                         </div>
-                        <span class="player-mmr">3680</span>
+                        <span class="player-mmr" data-val="3680">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -578,21 +626,22 @@
                             </div>
                             <span class="player-name">Lost</span>
                         </div>
-                        <span class="player-mmr">3976</span>
+                        <span class="player-mmr" data-val="3976">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
                             <div class="rank-wrapper">
                                 <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png">
+                                <span class="rank-pill">PVT</span>
                             </div>
                             <span class="player-name">Lenske</span>
                         </div>
-                        <span class="player-mmr">3443</span>
+                        <span class="player-mmr" data-val="3443">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">Space Marines</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -602,16 +651,16 @@
                             </div>
                             <span class="player-name">Space</span>
                         </div>
-                        <span class="player-mmr">3222</span>
+                        <span class="player-mmr" data-val="3222">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
                             <div class="rank-wrapper">
-                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-2.png">
+                                <img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png">
                             </div>
                             <span class="player-name">friscy</span>
                         </div>
-                        <span class="player-mmr">3357</span>
+                        <span class="player-mmr" data-val="3357">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -641,12 +690,12 @@
                             </div>
                             <span class="player-name">Godba</span>
                         </div>
-                        <span class="player-mmr">3606</span>
+                        <span class="player-mmr" data-val="3606">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">LAGGAN</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -665,7 +714,7 @@
                             </div>
                             <span class="player-name">Haj</span>
                         </div>
-                        <span class="player-mmr">2333</span>
+                        <span class="player-mmr" data-val="2333">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -674,7 +723,7 @@
                             </div>
                             <span class="player-name">Hulk</span>
                         </div>
-                        <span class="player-mmr">2522</span>
+                        <span class="player-mmr" data-val="2522">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -684,7 +733,7 @@
                             </div>
                             <span class="player-name">Dr_McWho</span>
                         </div>
-                        <span class="player-mmr">2941</span>
+                        <span class="player-mmr" data-val="2941">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -693,12 +742,12 @@
                             </div>
                             <span class="player-name">Lungs</span>
                         </div>
-                        <span class="player-mmr">2231</span>
+                        <span class="player-mmr" data-val="2231">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">seppo13</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -709,7 +758,7 @@
                             </div>
                             <span class="player-name">BigGoose</span>
                         </div>
-                        <span class="player-mmr">2661</span>
+                        <span class="player-mmr" data-val="2661">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -719,7 +768,7 @@
                             </div>
                             <span class="player-name">noertti</span>
                         </div>
-                        <span class="player-mmr">3707</span>
+                        <span class="player-mmr" data-val="3707">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -729,7 +778,7 @@
                             </div>
                             <span class="player-name">sifla</span>
                         </div>
-                        <span class="player-mmr">3087</span>
+                        <span class="player-mmr" data-val="3087">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -739,7 +788,7 @@
                             </div>
                             <span class="player-name">Fruugu</span>
                         </div>
-                        <span class="player-mmr">2903</span>
+                        <span class="player-mmr" data-val="2903">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -749,12 +798,12 @@
                             </div>
                             <span class="player-name">Juketsuu</span>
                         </div>
-                        <span class="player-mmr">3288</span>
+                        <span class="player-mmr" data-val="3288">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">shottyteam</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -765,7 +814,7 @@
                             </div>
                             <span class="player-name">godwithashotgun</span>
                         </div>
-                        <span class="player-mmr">3263</span>
+                        <span class="player-mmr" data-val="3263">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -774,7 +823,7 @@
                             </div>
                             <span class="player-name">drea</span>
                         </div>
-                        <span class="player-mmr">3352</span>
+                        <span class="player-mmr" data-val="3352">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -783,7 +832,7 @@
                             </div>
                             <span class="player-name">Admiral Rat</span>
                         </div>
-                        <span class="player-mmr">3209</span>
+                        <span class="player-mmr" data-val="3209">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -792,7 +841,7 @@
                             </div>
                             <span class="player-name">Silence</span>
                         </div>
-                        <span class="player-mmr">3297</span>
+                        <span class="player-mmr" data-val="3297">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -801,12 +850,12 @@
                             </div>
                             <span class="player-name">ATGAT</span>
                         </div>
-                        <span class="player-mmr">2992</span>
+                        <span class="player-mmr" data-val="2992">0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
+            <div class="team-card js-tilt">
                 <div class="team-header"><div class="team-name">lay an egg</div></div>
                 <div class="players-list">
                     <div class="player-row">
@@ -817,7 +866,7 @@
                             </div>
                             <span class="player-name">Dogical</span>
                         </div>
-                        <span class="player-mmr">3062</span>
+                        <span class="player-mmr" data-val="3062">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -847,7 +896,7 @@
                             </div>
                             <span class="player-name">frisb</span>
                         </div>
-                        <span class="player-mmr">3071</span>
+                        <span class="player-mmr" data-val="3071">0</span>
                     </div>
                     <div class="player-row">
                         <div class="player-info">
@@ -857,7 +906,7 @@
                             </div>
                             <span class="player-name">polo</span>
                         </div>
-                        <span class="player-mmr">2196</span>
+                        <span class="player-mmr" data-val="2196">0</span>
                     </div>
                 </div>
             </div>
@@ -877,5 +926,55 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        // 1. Number Counter Animation
+        const mmrElements = document.querySelectorAll('.player-mmr:not(.no-mmr)');
+        
+        const animateValue = (obj, start, end, duration) => {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        setTimeout(() => {
+            mmrElements.forEach(el => {
+                const target = parseInt(el.getAttribute('data-val'));
+                animateValue(el, 0, target, 2000); // 2 second count up
+            });
+        }, 1200);
+
+        // 2. 3D Tilt Effect
+        const cards = document.querySelectorAll('.js-tilt');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate center
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Get rotate values (max 8deg)
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+        });
+    </script>
 </body>
 </html>
