@@ -206,10 +206,11 @@
         }
 
         /* --- FLEX GRID LAYOUT --- */
-        .teams-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; perspective: 1000px; }
+        .teams-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; perspective: 1000px; }
+        .break { flex-basis: 100%; height: 0; }
 
         /* --- CARD STYLING --- */
-        .team-card { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; position: relative; overflow: visible; backdrop-filter: blur(12px); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; transition: transform 0.1s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; }
+        .team-card { flex: 0 1 19%; min-width: 290px; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; position: relative; overflow: visible; backdrop-filter: blur(12px); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; transition: transform 0.1s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; }
         .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; } .team-card:nth-child(6) { animation-delay: 0.3s; } .team-card:nth-child(7) { animation-delay: 0.35s; } .team-card:nth-child(8) { animation-delay: 0.4s; } .qualifier-wrapper { animation-delay: 0.5s; }
         @keyframes cardStagger { to { opacity: 1; transform: translateY(0); } }
         .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-green), transparent); opacity: 0.7; }
@@ -217,10 +218,23 @@
         .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .team-name { font-family: 'Black Ops One'; color: #f0f0f0; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,1); }
         
+        /* Qualifier Wrapper */
+        .qualifier-wrapper { flex: 0 1 39%; min-width: 600px; display: flex; flex-direction: column; position: relative; border: 2px dashed var(--accent-red); border-radius: 8px; background: rgba(30, 5, 5, 0.3); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .qualifier-banner { background: var(--accent-red); color: #000; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 800; font-size: 0.9rem; letter-spacing: 3px; padding: 4px 0; text-transform: uppercase; animation: warningPulse 2s infinite; border-top-left-radius: 6px; border-top-right-radius: 6px; }
+        @keyframes warningPulse { 0%, 100% { background: var(--accent-red); } 50% { background: #ff7777; } }
+        .qualifier-top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 25px; background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(60,10,10,0.8), rgba(0,0,0,0.8)); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .q-team-title { font-family: 'Black Ops One'; color: #f0f0f0; font-size: 1.3rem; text-transform: uppercase; text-shadow: 0 0 10px rgba(255, 42, 42, 0.5); }
+        .q-vs-badge { font-family: 'Black Ops One'; font-size: 2rem; color: #fff; text-shadow: 0 0 10px var(--accent-red); background: #000; padding: 2px 10px; border: 2px solid var(--accent-red); transform: skew(-10deg); box-shadow: 0 0 20px rgba(255, 42, 42, 0.6); }
+        .qualifier-body { display: flex; flex: 1; }
+        .q-col { flex: 1; padding: 10px; }
+        .q-col:first-child { border-right: 1px solid rgba(255, 42, 42, 0.2); }
+        .qualifier-wrapper:hover { box-shadow: 0 15px 40px rgba(255, 42, 42, 0.15); border-color: var(--accent-red); }
+
         /* Players */
         .players-list { padding: 12px 15px; flex: 1; }
         .player-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 8px; margin-bottom: 3px; border-radius: 4px; transition: all 0.2s; position: relative; }
         .player-row:hover { background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%); padding-left: 12px; }
+        .qualifier-wrapper .player-row:hover { background: linear-gradient(90deg, rgba(255, 42, 42, 0.15) 0%, transparent 100%); }
         .player-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
         .player-name { font-size: 1.1rem; font-weight: 700; color: #bbb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; transition: color 0.2s; }
         .player-row:hover .player-name { color: #fff; text-shadow: 0 0 8px rgba(57, 255, 20, 0.5); }
@@ -230,6 +244,7 @@
         .rank-pill { position: absolute; bottom: -3px; right: -5px; background: #000; border: 1px solid #555; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0 4px; border-radius: 3px; z-index: 2; }
         .player-mmr { font-family: 'Rajdhani', monospace; font-weight: 700; font-size: 1.25rem; color: var(--accent-green); text-align: right; min-width: 50px; }
         .player-mmr.no-mmr { color: #555; font-size: 1.25rem; }
+        .qualifier-wrapper .player-mmr { color: #ff6b6b; }
         .crown-icon { display: inline-block; font-size: 0.8rem; margin-left: 5px; animation: floatCrown 2s ease-in-out infinite; }
         @keyframes floatCrown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
         .highest-mmr:hover .mmr-tooltip { opacity: 1; transform: translateY(0) scale(1); }
@@ -244,7 +259,7 @@
 
         /* --- PRIZE POOL --- */
         .prizepool-container { display: flex; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
-        .prizepool-card { flex: 2; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
+        .prizepool-card { flex: 2; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
         .prizepool-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05), transparent 60%); animation: pulsePool 5s infinite alternate; pointer-events: none; }
         @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
         
@@ -329,7 +344,9 @@
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%); }
 
-        @media (max-width: 1400px) { .team-card { flex: 1 1 calc(33% - 20px); } .break { display: none; } }
+        @media (max-width: 1400px) { 
+            .teams-container { grid-template-columns: repeat(2, 1fr); max-width: 1000px; } 
+        }
         @media (max-width: 768px) { 
             .teams-container { grid-template-columns: 1fr; } 
             .h-rumble { font-size: 2.5rem; } .h-jungle, .v-suffix { font-size: 3rem; } .nav-bar { flex-wrap: wrap; }
@@ -383,8 +400,8 @@
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">Maslyata</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span></div><div class="player-row highest-mmr"><div class="mmr-tooltip">Highest AD MMR</div><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">Gym Esports</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png"></div><span class="player-name">Ultra Greed</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#870</span></div><span class="player-name">Aniki</span></div><span class="player-mmr" data-val="3337">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#932</span></div><span class="player-name">Vata</span></div><span class="player-mmr" data-val="2739">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Inffe</span></div><span class="player-mmr" data-val="3143">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Hoshoryu</span></div><span class="player-mmr" data-val="3393">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="pill">#2381</span></div><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
-
+                <div class="team-card js-tilt"><div class="team-header"><div class="team-name">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
+                
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">Space Marines</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Space</span></div><span class="player-mmr" data-val="3222">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">friscy</span></div><span class="player-mmr" data-val="3357">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#430</span></div><span class="player-name">shushu</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#648</span></div><span class="player-name">Nano</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4369</span></div><span class="player-name">Godba</span></div><span class="player-mmr" data-val="3606">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">LAGGAN</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-1.png"></div><span class="player-name">Circuz</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Haj</span></div><span class="player-mmr" data-val="2333">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-guardian-2.png"></div><span class="player-name">Hulk</span></div><span class="player-mmr" data-val="2522">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4109</span></div><span class="player-name">Dr_McWho</span></div><span class="player-mmr" data-val="2941">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png"></div><span class="player-name">Lungs</span></div><span class="player-mmr" data-val="2231">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">shottyteam</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3761</span></div><span class="player-name">godwithashotgun</span></div><span class="player-mmr" data-val="3263">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">drea</span></div><span class="player-mmr" data-val="3352">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-2.png"></div><span class="player-name">Admiral Rat</span></div><span class="player-mmr" data-val="3209">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-archon-4.png"></div><span class="player-name">Silence</span></div><span class="player-mmr" data-val="3297">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png"></div><span class="player-name">ATGAT</span></div><span class="player-mmr" data-val="2992">0</span></div></div></div>
@@ -473,6 +490,53 @@
                             <tr><td>LAGGAN</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="playoffs" class="section-wrapper">
+            <h2 class="section-title">Playoffs Bracket</h2>
+            <div class="bracket-scroll">
+                <div class="bracket-flex">
+                    <div class="round-col">
+                        <div class="round-header">UB SEMIFINALS - DEC 7 (19:30)</div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>A1</span><span class="node-score">0</span></div><div class="node-row"><span>B2</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>B1</span><span class="node-score">0</span></div><div class="node-row"><span>A2</span><span class="node-score">0</span></div></div>
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB ROUND 1 - DEC 7 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>A3</span><span class="node-score">0</span></div><div class="node-row"><span>B4</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>B3</span><span class="node-score">0</span></div><div class="node-row"><span>A4</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="round-header">UB FINAL - DEC 13 (19:30)</div>
+                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB QUARTER - DEC 7 (22:00)</div>
+                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB SEMI - DEC 13 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="bracket-spacer"></div>
+                        <div class="round-header">LB FINAL - DEC 14 (17:00)</div>
+                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
+                    </div>
+
+                    <div class="round-col">
+                        <div class="round-header">GRAND FINAL - DEC 14 (19:30)</div>
+                        <div class="match-node grand-final">
+                            <div class="node-date">19:30 - BO5</div>
+                            <div class="node-row"><span>UB Winner</span><span class="node-score">0</span></div>
+                            <div class="node-row"><span>LB Winner</span><span class="node-score">0</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -598,53 +662,6 @@
             </div>
         </div>
 
-        <div id="playoffs" class="section-wrapper">
-            <h2 class="section-title">Playoffs Bracket</h2>
-            <div class="bracket-scroll">
-                <div class="bracket-flex">
-                    <div class="round-col">
-                        <div class="round-header">UB SEMIFINALS - DEC 7 (19:30)</div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>A1</span><span class="node-score">0</span></div><div class="node-row"><span>B2</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>B1</span><span class="node-score">0</span></div><div class="node-row"><span>A2</span><span class="node-score">0</span></div></div>
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB ROUND 1 - DEC 7 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>A3</span><span class="node-score">0</span></div><div class="node-row"><span>B4</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>B3</span><span class="node-score">0</span></div><div class="node-row"><span>A4</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="round-header">UB FINAL - DEC 13 (19:30)</div>
-                        <div class="match-node"><div class="node-date">19:30</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB QUARTER - DEC 7 (22:00)</div>
-                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                        <div class="match-node"><div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB SEMI - DEC 13 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="bracket-spacer"></div>
-                        <div class="round-header">LB FINAL - DEC 14 (17:00)</div>
-                        <div class="match-node"><div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div></div>
-                    </div>
-
-                    <div class="round-col">
-                        <div class="round-header">GRAND FINAL - DEC 14 (19:30)</div>
-                        <div class="match-node grand-final">
-                            <div class="node-date">19:30 - BO5</div>
-                            <div class="node-row"><span>UB Winner</span><span class="node-score">0</span></div>
-                            <div class="node-row"><span>LB Winner</span><span class="node-score">0</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <footer class="footer">
             </footer>
     </div>
@@ -663,7 +680,7 @@
         }
         setTimeout(() => { mmrElements.forEach(el => animateValue(el, 0, parseInt(el.getAttribute('data-val')), 1500)); }, 1200);
 
-        const cards = document.querySelectorAll('.js-tilt, .qualifier-wrapper, .prizepool-card, .group-card, .match-node');
+        const cards = document.querySelectorAll('.js-tilt, .prizepool-card, .group-card, .match-node, .donators-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -676,11 +693,7 @@
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
             });
             card.addEventListener('mouseleave', () => {
-                if(card.classList.contains('qualifier-wrapper')) {
-                     card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1) translateY(50px)`;
-                } else {
-                     card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-                }
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
             });
         });
 
