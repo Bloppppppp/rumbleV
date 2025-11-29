@@ -6,13 +6,14 @@
     <title>Rumble in the Jungle V</title>
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
         :root {
             --bg-dark: #020502;
             --accent-green: #39ff14;
             --accent-red: #ff2a2a;
             --accent-gold: #ffd700;
+            --accent-silver: #c0c0c0;
+            --accent-bronze: #cd7f32;
             --glass-panel: rgba(10, 15, 10, 0.9);
             --glass-border: rgba(57, 255, 20, 0.2);
             --text-main: #e0e0e0;
@@ -352,6 +353,34 @@
         .legend-item span { font-size: 0.9rem; color: #ccc; font-weight: 600; text-transform: uppercase; }
         @keyframes fadeIn { to { opacity: 1; } }
 
+        /* --- PRIZE POOL --- */
+        .prizepool-container { display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto; }
+        .prizepool-card { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
+        .prizepool-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05), transparent 60%); animation: pulsePool 5s infinite alternate; pointer-events: none; }
+        @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        .total-prize { font-family: 'Black Ops One'; font-size: 5rem; color: var(--accent-green); text-shadow: 0 0 20px var(--accent-green); margin: 10px 0 20px 0; line-height: 1; }
+        
+        .distribution-grid { display: flex; justify-content: space-around; margin: 30px 0; gap: 10px; flex-wrap: wrap; }
+        .dist-item { display: flex; flex-direction: column; padding: 15px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid #333; min-width: 120px; }
+        .dist-item.rank-1 { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.15); }
+        .dist-item.rank-1 .place { color: var(--accent-gold); }
+        .dist-item.rank-2 .place { color: var(--accent-silver); }
+        .dist-item.rank-3 .place { color: var(--accent-bronze); }
+        
+        .place { font-family: 'Black Ops One'; font-size: 1.5rem; margin-bottom: 5px; }
+        .percent { font-size: 0.9rem; color: #888; font-weight: 700; }
+        .value { font-size: 1.2rem; font-weight: 700; color: #eee; margin-top: 5px; }
+
+        .donate-btn {
+            display: inline-block; margin-top: 10px; padding: 15px 40px;
+            background: linear-gradient(90deg, var(--accent-green), #2a8a1a);
+            color: #000; font-family: 'Black Ops One'; font-size: 1.2rem; text-transform: uppercase;
+            text-decoration: none; border-radius: 50px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+            transition: all 0.3s; position: relative; z-index: 2;
+        }
+        .donate-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(57, 255, 20, 0.6); color: #000; }
+
         /* --- GROUPS TABLE --- */
         .groups-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
         .group-card { flex: 1; min-width: 400px; max-width: 600px; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 8px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -400,7 +429,6 @@
 
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%); }
-        .footer-logo { color: #444; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
 
         @media (max-width: 1400px) { .team-card { flex: 1 1 calc(33% - 20px); } .break { display: none; } .qualifier-wrapper { flex: 1 1 100%; min-width: 0; } }
         @media (max-width: 768px) { 
@@ -434,6 +462,7 @@
 
         <nav class="nav-bar">
             <button class="nav-btn" onclick="scrollToSection('teams')">Teams</button>
+            <button class="nav-btn" onclick="scrollToSection('prizepool')">Prize Pool</button>
             <button class="nav-btn" onclick="scrollToSection('groups')">Groups</button>
             <button class="nav-btn" onclick="scrollToSection('playoffs')">Playoffs</button>
             <button class="nav-btn" onclick="scrollToSection('schedule')">Schedule</button>
@@ -487,6 +516,38 @@
                 <div class="legend-item">
                     <span style="color: var(--accent-green); font-weight: 700;">MMR</span>
                     <span>= AD MMR</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="prizepool" class="section-wrapper">
+            <h2 class="section-title">Prize Pool</h2>
+            <div class="prizepool-container">
+                <div class="prizepool-card js-tilt">
+                    <div class="total-prize">585€</div>
+                    <div class="distribution-grid">
+                        <div class="dist-item rank-1">
+                            <span class="place">1st</span>
+                            <span class="percent">50%</span>
+                            <span class="value">~292€</span>
+                        </div>
+                        <div class="dist-item rank-2">
+                            <span class="place">2nd</span>
+                            <span class="percent">25%</span>
+                            <span class="value">~146€</span>
+                        </div>
+                        <div class="dist-item rank-3">
+                            <span class="place">3rd</span>
+                            <span class="percent">15%</span>
+                            <span class="value">~87€</span>
+                        </div>
+                        <div class="dist-item">
+                            <span class="place">4th</span>
+                            <span class="percent">10%</span>
+                            <span class="value">~58€</span>
+                        </div>
+                    </div>
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=2A52H56DRV48Q" target="_blank" class="donate-btn">Contribute to Pool</a>
                 </div>
             </div>
         </div>
@@ -690,8 +751,7 @@
         </div>
 
         <footer class="footer">
-            <div class="footer-logo">RUMBLE IN THE JUNGLE V</div>
-        </footer>
+            </footer>
     </div>
 
     <script>
@@ -708,7 +768,7 @@
         }
         setTimeout(() => { mmrElements.forEach(el => animateValue(el, 0, parseInt(el.getAttribute('data-val')), 1500)); }, 1200);
 
-        const cards = document.querySelectorAll('.js-tilt, .qualifier-wrapper');
+        const cards = document.querySelectorAll('.js-tilt, .qualifier-wrapper, .prizepool-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -723,7 +783,6 @@
             card.addEventListener('mouseleave', () => {
                 if(card.classList.contains('qualifier-wrapper')) {
                      card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1) translateY(50px)`;
-                     card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`; 
                 } else {
                      card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
                 }
