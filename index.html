@@ -29,11 +29,11 @@
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow-x: hidden;
+            overflow-x: hidden; /* Keeps horizontal scroll hidden */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            perspective: 2000px;
+            /* Perspective removed from body to fix Firefox endless scroll */
         }
 
         /* --- BACKGROUND FX --- */
@@ -100,25 +100,78 @@
             filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
         }
 
-        .h-text { font-family: 'Black Ops One', cursive; text-transform: uppercase; letter-spacing: 2px; }
-        .h-rumble { font-size: 4.5rem; z-index: 2; background: linear-gradient(180deg, #fff 10%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: glitch 5s infinite; }
+        .h-text {
+            font-family: 'Black Ops One', cursive;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .h-rumble { 
+            font-size: 4.5rem; 
+            z-index: 2;
+            background: linear-gradient(180deg, #fff 10%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitch 5s infinite;
+        }
         @keyframes glitch { 0%, 100% { transform: translate(0); } 2% { transform: translate(-2px, 2px); } 4% { transform: translate(2px, -2px); } 6% { transform: translate(0); } }
         
-        .mid-row { display: flex; align-items: center; justify-content: center; width: 100%; margin: 6px 0; }
-        .h-mid-box { font-family: 'Rajdhani', sans-serif; font-weight: 800; background: #051505; color: #aaa; padding: 3px 20px; font-size: 1.1rem; letter-spacing: 4px; border: 1px solid #333; border-left: 3px solid var(--accent-green); border-right: 3px solid var(--accent-green); transform: skew(-15deg); box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); }
+        .mid-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 6px 0;
+        }
+
+        .h-mid-box {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            background: #051505;
+            color: #aaa;
+            padding: 3px 20px;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            border: 1px solid #333;
+            border-left: 3px solid var(--accent-green);
+            border-right: 3px solid var(--accent-green);
+            transform: skew(-15deg);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+        }
+
         .h-jungle-row { display: flex; align-items: baseline; gap: 15px; }
-        .h-jungle { font-size: 5.5rem; background: linear-gradient(180deg, #fff 10%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 5px 0 #000); }
-        .v-suffix { font-family: 'Black Ops One', cursive; font-size: 5.5rem; color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--accent-green), 0 0 40px var(--accent-green); transform: translateY(4px) rotate(-5deg); animation: neonPulse 3s infinite alternate; }
+
+        .h-jungle { 
+            font-size: 5.5rem; 
+            background: linear-gradient(180deg, #fff 10%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 0 #000);
+        }
+
+        .v-suffix {
+            font-family: 'Black Ops One', cursive;
+            font-size: 5.5rem;
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--accent-green), 0 0 40px var(--accent-green);
+            transform: translateY(4px) rotate(-5deg);
+            animation: neonPulse 3s infinite alternate;
+        }
         @keyframes neonPulse { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-green); } to { text-shadow: 0 0 15px #fff, 0 0 30px var(--accent-green), 0 0 60px var(--accent-green); } }
 
         /* --- NAVIGATION --- */
         .nav-bar {
-            position: sticky; top: 10px; z-index: 100;
+            position: sticky; 
+            top: 0; /* Stick to the very top */
+            z-index: 1000;
             display: flex; justify-content: center; gap: 20px;
             margin-bottom: 30px;
-            background: rgba(0,0,0,0.8); padding: 10px;
+            background: rgba(2, 5, 2, 0.95); /* Darker background for readability when sticky */
+            padding: 15px 0;
             border-bottom: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
         .nav-btn {
             background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);
@@ -127,10 +180,12 @@
             text-decoration: none; display: inline-block;
         }
         .nav-btn:hover { background: var(--accent-green); color: #000; box-shadow: 0 0 20px var(--accent-green); }
+        
+        /* Discord Button Style */
         .nav-btn.discord { border-color: var(--discord-color); color: var(--discord-color); }
         .nav-btn.discord:hover { background: var(--discord-color); color: #fff; box-shadow: 0 0 20px var(--discord-color); }
 
-        /* --- COUNTDOWN --- */
+        /* --- COUNTDOWN SECTION --- */
         .countdown-container {
             text-align: center; margin: 0 auto 50px auto; max-width: 800px;
             background: linear-gradient(90deg, transparent, rgba(0,20,0,0.6), transparent);
@@ -155,37 +210,13 @@
             margin: 10px auto; box-shadow: 0 0 10px var(--accent-green);
         }
 
-        /* --- TEAMS GRID (4x2 Layout) --- */
-        .teams-container { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
-            gap: 20px; 
-            perspective: 1000px; 
-        }
+        /* --- FLEX GRID LAYOUT --- */
+        .teams-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; perspective: 1000px; }
 
         /* --- CARD STYLING --- */
-        .team-card {
-            background: var(--glass-panel);
-            border: 1px solid var(--glass-border);
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: visible;
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            transform: translateY(50px);
-            animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        /* Staggered Delay */
-        .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; }
-        .team-card:nth-child(5) { animation-delay: 0.3s; } .team-card:nth-child(6) { animation-delay: 0.35s; } .team-card:nth-child(7) { animation-delay: 0.4s; } .team-card:nth-child(8) { animation-delay: 0.45s; }
-
+        .team-card { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; position: relative; overflow: visible; backdrop-filter: blur(12px); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; transition: transform 0.1s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; }
+        .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; } .team-card:nth-child(6) { animation-delay: 0.3s; } .team-card:nth-child(7) { animation-delay: 0.35s; } .team-card:nth-child(8) { animation-delay: 0.4s; }
         @keyframes cardStagger { to { opacity: 1; transform: translateY(0); } }
-
         .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-green), transparent); opacity: 0.7; }
         .team-card:hover { transform: translateY(-8px); border-top-color: var(--accent-green); box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(57, 255, 20, 0.1); z-index: 10; }
         .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -262,6 +293,7 @@
         .group-table th { text-align: left; color: #888; font-size: 0.9rem; padding: 8px; }
         .group-table td { padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 700; color: #ddd; }
         .group-table tr:hover td { background: rgba(57, 255, 20, 0.05); color: #fff; }
+        .group-table .qual-spot { color: var(--accent-red); font-style: italic; }
 
         /* --- SCHEDULE --- */
         .schedule-grid { display: grid; gap: 20px; max-width: 1200px; margin: 0 auto; }
@@ -302,7 +334,9 @@
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%); }
 
-        @media (max-width: 1400px) { .teams-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 1400px) { 
+            .teams-container { grid-template-columns: repeat(2, 1fr); max-width: 1000px; } 
+        }
         @media (max-width: 768px) { 
             .teams-container { grid-template-columns: 1fr; } 
             .h-rumble { font-size: 2.5rem; } .h-jungle, .v-suffix { font-size: 3rem; } .nav-bar { flex-wrap: wrap; }
