@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rumble in the Jungle V</title>
+    
+    <!-- Open Graph / Discord / Twitter Preview -->
+    <meta property="og:title" content="Rumble in the Jungle V">
+    <meta property="og:description" content="The biggest Ability Draft tournament returns! 8 teams, €615+ prize pool, December 6-14, 2025.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bloppppppp.github.io/rumbleV/">
+    <meta property="og:image" content="https://bloppppppp.github.io/rumbleV/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#39ff14">
+    
+    <!-- Favicon (neon green V) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%2339ff14'>V</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -29,11 +42,10 @@
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow-x: hidden; /* Keeps horizontal scroll hidden */
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* Perspective removed from body to fix Firefox endless scroll */
         }
 
         /* --- BACKGROUND FX --- */
@@ -162,11 +174,11 @@
         /* --- NAVIGATION --- */
         .nav-bar {
             position: sticky; 
-            top: 0; /* Stick to the very top */
+            top: 0;
             z-index: 1000;
             display: flex; justify-content: center; gap: 20px;
             margin-bottom: 30px;
-            background: rgba(2, 5, 2, 0.95); /* Darker background for readability when sticky */
+            background: rgba(2, 5, 2, 0.95);
             padding: 15px 0;
             border-bottom: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
@@ -181,7 +193,6 @@
         }
         .nav-btn:hover { background: var(--accent-green); color: #000; box-shadow: 0 0 20px var(--accent-green); }
         
-        /* Discord Button Style */
         .nav-btn.discord { border-color: var(--discord-color); color: var(--discord-color); }
         .nav-btn.discord:hover { background: var(--discord-color); color: #fff; box-shadow: 0 0 20px var(--discord-color); }
 
@@ -215,12 +226,37 @@
 
         /* --- CARD STYLING --- */
         .team-card { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; position: relative; overflow: visible; backdrop-filter: blur(12px); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; transition: transform 0.1s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; }
-        .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; } .team-card:nth-child(6) { animation-delay: 0.3s; } .team-card:nth-child(7) { animation-delay: 0.35s; } .team-card:nth-child(8) { animation-delay: 0.4s; }
+        .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; } .team-card:nth-child(5) { animation-delay: 0.3s; } .team-card:nth-child(6) { animation-delay: 0.35s; } .team-card:nth-child(7) { animation-delay: 0.4s; } .team-card:nth-child(8) { animation-delay: 0.45s; }
         @keyframes cardStagger { to { opacity: 1; transform: translateY(0); } }
         .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-green), transparent); opacity: 0.7; }
         .team-card:hover { transform: translateY(-8px); border-top-color: var(--accent-green); box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(57, 255, 20, 0.1); z-index: 10; }
-        .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; }
         .team-name { font-family: 'Black Ops One'; color: #f0f0f0; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,1); }
+        
+        /* --- CHAMPION BADGE --- */
+        .champion-badge {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
+            color: #000;
+            font-family: 'Black Ops One';
+            font-size: 0.65rem;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transform: rotate(12deg);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            z-index: 20;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: badgeGlow 2s ease-in-out infinite alternate;
+        }
+        .champion-badge i { margin-right: 4px; }
+        @keyframes badgeGlow {
+            from { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+            to { box-shadow: 0 4px 25px rgba(255, 215, 0, 0.7); }
+        }
         
         /* Players */
         .players-list { padding: 12px 15px; flex: 1; }
@@ -326,10 +362,60 @@
         .node-score { font-family: 'Black Ops One'; color: #666; }
         .bracket-spacer { height: 60px; }
         
-        /* Connector Lines */
         .round-col:not(:last-child) .match-node::after { content: ''; position: absolute; right: -20px; top: 50%; width: 20px; height: 1px; background: #444; }
         .round-col:not(:first-child) .match-node::before { content: ''; position: absolute; left: -20px; top: 50%; width: 20px; height: 1px; background: #444; }
         .grand-final { border-color: var(--accent-gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.15); scale: 1.1; }
+
+        /* --- CASTERS SECTION --- */
+        .casters-section {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .casters-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .caster-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .caster-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-green);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+            transition: all 0.3s;
+        }
+        .caster-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+        }
+        .caster-name {
+            font-family: 'Black Ops One';
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .caster-links {
+            display: flex;
+            gap: 15px;
+        }
+        .caster-links a {
+            color: #666;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        .caster-links a:hover {
+            color: #9146ff;
+            text-shadow: 0 0 10px rgba(145, 70, 255, 0.6);
+        }
 
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: linear-gradient(to top, #000 0%, transparent 100%); }
@@ -342,6 +428,7 @@
             .h-rumble { font-size: 2.5rem; } .h-jungle, .v-suffix { font-size: 3rem; } .nav-bar { flex-wrap: wrap; }
             .m-games-container { display: flex; flex-direction: column; gap: 10px; } .m-divider { display: none; }
             .prizepool-container { flex-direction: column; }
+            .casters-grid { gap: 30px; }
         }
     </style>
 </head>
@@ -387,7 +474,11 @@
 
         <div id="teams" class="section-wrapper">
             <div class="teams-container">
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name">Maslyata</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span></div><div class="player-row highest-mmr"><div class="mmr-tooltip">Highest AD MMR</div><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span></div></div></div>
+                <div class="team-card js-tilt">
+                    <div class="champion-badge"><i class="fa-solid fa-crown"></i> 4x Champions</div>
+                    <div class="team-header"><div class="team-name">Maslyata</div></div>
+                    <div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span></div><div class="player-row highest-mmr"><div class="mmr-tooltip">Highest AD MMR</div><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span></div></div>
+                </div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">Gym Esports</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png"></div><span class="player-name">Ultra Greed</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#870</span></div><span class="player-name">Aniki</span></div><span class="player-mmr" data-val="3337">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#932</span></div><span class="player-name">Vata</span></div><span class="player-mmr" data-val="2739">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Inffe</span></div><span class="player-mmr" data-val="3143">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Hoshoryu</span></div><span class="player-mmr" data-val="3393">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
@@ -652,8 +743,29 @@
             </div>
         </div>
 
+        <div id="casters" class="section-wrapper casters-section">
+            <h2 class="section-title">Your Casters</h2>
+            <div class="casters-grid">
+                <div class="caster-card">
+                    <img src="https://i.imgur.com/lZGfLl5.png" alt="BloPP" class="caster-img">
+                    <div class="caster-name">BloPP!</div>
+                    <div class="caster-links">
+                        <a href="https://www.twitch.tv/bloppdota2" target="_blank" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="https://www.youtube.com/@bloppdota2" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="caster-card">
+                    <img src="https://i.imgur.com/Xepb7mq.png" alt="Young Elodin" class="caster-img">
+                    <div class="caster-name">Young Elodin</div>
+                    <div class="caster-links">
+                        <a href="https://www.twitch.tv/young_elodin" target="_blank" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
-            </footer>
+        </footer>
     </div>
 
     <script>
