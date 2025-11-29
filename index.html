@@ -48,6 +48,59 @@
             justify-content: space-between;
         }
 
+        /* === SCANLINES OVERLAY === */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            opacity: 0.6;
+        }
+
+        /* === MOUSE GLOW FOLLOWER === */
+        .mouse-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(57, 255, 20, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        .mouse-glow.active { opacity: 1; }
+
+        /* === FIREFLIES === */
+        .firefly {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green), 0 0 20px var(--accent-green);
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            animation: fireflyFloat 15s infinite ease-in-out;
+        }
+        @keyframes fireflyFloat {
+            0%, 100% { opacity: 0; transform: translate(0, 0); }
+            10% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+            90% { opacity: 0.8; }
+            95% { opacity: 0; }
+        }
+
         /* --- BACKGROUND FX --- */
         .cyber-bg {
             position: fixed;
@@ -161,15 +214,25 @@
             filter: drop-shadow(0 5px 0 #000);
         }
 
+        /* === NEON FLICKER === */
         .v-suffix {
             font-family: 'Black Ops One', cursive;
             font-size: 5.5rem;
             color: #fff;
             text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--accent-green), 0 0 40px var(--accent-green);
             transform: translateY(4px) rotate(-5deg);
-            animation: neonPulse 3s infinite alternate;
+            animation: neonPulse 3s infinite alternate, subtleFlicker 8s infinite;
         }
         @keyframes neonPulse { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-green); } to { text-shadow: 0 0 15px #fff, 0 0 30px var(--accent-green), 0 0 60px var(--accent-green); } }
+        
+        @keyframes subtleFlicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+            96% { opacity: 0.9; }
+            97% { opacity: 1; }
+        }
 
         /* --- NAVIGATION --- */
         .nav-bar {
@@ -209,12 +272,24 @@
         .cd-number { font-family: 'Black Ops One'; font-size: 3.5rem; color: #fff; text-shadow: 0 0 15px var(--accent-green); line-height: 1; }
         .cd-text { font-size: 0.9rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; }
 
-        /* --- SECTIONS --- */
-        .section-wrapper { scroll-margin-top: 100px; margin-bottom: 80px; }
+        /* === SCROLL ANIMATIONS === */
+        .section-wrapper { 
+            scroll-margin-top: 100px; 
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .section-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .section-title {
             font-family: 'Black Ops One'; font-size: 3rem; color: #fff; text-align: center;
             margin: 0 0 40px 0; text-transform: uppercase;
             text-shadow: 0 0 10px var(--accent-green); position: relative;
+            animation: subtleFlicker 10s infinite;
         }
         .section-title::after {
             content: ''; display: block; width: 100px; height: 3px; background: var(--accent-green);
@@ -224,13 +299,81 @@
         /* --- FLEX GRID LAYOUT --- */
         .teams-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; perspective: 1000px; }
 
-        /* --- CARD STYLING --- */
-        .team-card { background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; position: relative; overflow: visible; backdrop-filter: blur(12px); opacity: 0; transform: translateY(50px); animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; transition: transform 0.1s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; }
+        /* === ANIMATED GRADIENT BORDER === */
+        .team-card { 
+            background: var(--glass-panel); 
+            border-radius: 6px; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+            overflow: visible; 
+            backdrop-filter: blur(12px); 
+            opacity: 0; 
+            transform: translateY(50px); 
+            animation: cardStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease; 
+            transform-style: preserve-3d;
+        }
+        
+        /* Flashlight beam border effect */
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: conic-gradient(
+                from var(--beam-angle, 0deg),
+                transparent 0deg,
+                transparent 30deg,
+                rgba(57, 255, 20, 0.1) 50deg,
+                rgba(57, 255, 20, 0.3) 70deg,
+                rgba(57, 255, 20, 0.6) 85deg,
+                var(--accent-green) 90deg,
+                rgba(57, 255, 20, 0.6) 95deg,
+                rgba(57, 255, 20, 0.3) 110deg,
+                rgba(57, 255, 20, 0.1) 130deg,
+                transparent 150deg,
+                transparent 360deg
+            );
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: rotateBorder 2.5s linear infinite paused;
+            filter: blur(1px);
+        }
+        .team-card:hover::before {
+            opacity: 1;
+            animation-play-state: running;
+        }
+        @keyframes rotateBorder {
+            from { --beam-angle: 0deg; }
+            to { --beam-angle: 360deg; }
+        }
+        @property --beam-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        
+        /* Inner background to cover the rotating gradient */
+        .team-card::after {
+            content: '';
+            position: absolute;
+            top: 1px; left: 1px; right: 1px; bottom: 1px;
+            background: var(--glass-panel);
+            border-radius: 5px;
+            z-index: -1;
+        }
+
         .team-card:nth-child(1) { animation-delay: 0.1s; } .team-card:nth-child(2) { animation-delay: 0.15s; } .team-card:nth-child(3) { animation-delay: 0.2s; } .team-card:nth-child(4) { animation-delay: 0.25s; } .team-card:nth-child(5) { animation-delay: 0.3s; } .team-card:nth-child(6) { animation-delay: 0.35s; } .team-card:nth-child(7) { animation-delay: 0.4s; } .team-card:nth-child(8) { animation-delay: 0.45s; }
         @keyframes cardStagger { to { opacity: 1; transform: translateY(0); } }
-        .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-green), transparent); opacity: 0.7; }
-        .team-card:hover { transform: translateY(-8px); border-top-color: var(--accent-green); box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(57, 255, 20, 0.1); z-index: 10; }
-        .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; }
+        
+        .team-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(57, 255, 20, 0.2); 
+            z-index: 10; 
+        }
+        .team-header { background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(20,40,20,0.6), rgba(0,0,0,0.8)); padding: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; border-radius: 5px 5px 0 0; }
         .team-name { font-family: 'Black Ops One'; color: #f0f0f0; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,1); }
         
         /* --- CHAMPION BADGE --- */
@@ -259,7 +402,7 @@
         }
         
         /* Players */
-        .players-list { padding: 12px 15px; flex: 1; }
+        .players-list { padding: 12px 15px; flex: 1; position: relative; z-index: 1; }
         .player-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 8px; margin-bottom: 3px; border-radius: 4px; transition: all 0.2s; position: relative; }
         .player-row:hover { background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%); padding-left: 12px; }
         .player-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
@@ -290,11 +433,31 @@
         @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
         
         .base-pool { font-size: 0.9rem; color: #666; margin-bottom: -5px; text-transform: uppercase; letter-spacing: 1px; }
-        .total-prize { font-family: 'Black Ops One'; font-size: 5rem; color: var(--accent-green); text-shadow: 0 0 20px var(--accent-green); margin: 5px 0 20px 0; line-height: 1; }
+        .total-prize { font-family: 'Black Ops One'; font-size: 5rem; color: var(--accent-green); text-shadow: 0 0 20px var(--accent-green); margin: 5px 0 20px 0; line-height: 1; animation: subtleFlicker 12s infinite; }
         
+        /* === 3D ROTATING TROPHY === */
+        .trophy-container {
+            perspective: 1000px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .trophy-3d {
+            font-size: 4rem;
+            display: inline-block;
+            animation: trophyRotate 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+        }
+        @keyframes trophyRotate {
+            0%, 100% { transform: rotateY(-15deg) rotateX(5deg); }
+            50% { transform: rotateY(15deg) rotateX(-5deg); }
+        }
+
         .distribution-grid { display: flex; justify-content: space-around; margin: 30px 0; gap: 10px; flex-wrap: wrap; }
-        .dist-item { display: flex; flex-direction: column; padding: 15px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid #333; min-width: 120px; }
+        .dist-item { display: flex; flex-direction: column; padding: 15px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid #333; min-width: 120px; transition: transform 0.3s, box-shadow 0.3s; }
+        .dist-item:hover { transform: translateY(-5px); }
         .dist-item.rank-1 { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.15); }
+        .dist-item.rank-1:hover { box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
         .dist-item.rank-1 .place { color: var(--accent-gold); }
         .dist-item.rank-2 .place { color: var(--accent-silver); }
         .dist-item.rank-3 .place { color: var(--accent-bronze); }
@@ -355,16 +518,41 @@
         .bracket-flex { display: flex; gap: 30px; min-width: 1400px; justify-content: center; padding-bottom: 20px; }
         .round-col { display: flex; flex-direction: column; justify-content: center; gap: 30px; }
         .round-header { text-align: center; font-family: 'Black Ops One'; color: var(--accent-green); margin-bottom: 15px; font-size: 1rem; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .match-node { width: 240px; background: #000; border: 1px solid #333; border-radius: 4px; padding: 10px; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        .match-node:hover { border-color: var(--accent-green); }
+        .match-node { width: 240px; background: #000; border: 1px solid #333; border-radius: 4px; padding: 10px; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.5); transition: all 0.3s; }
+        .match-node:hover { border-color: var(--accent-green); box-shadow: 0 0 25px rgba(57, 255, 20, 0.2); }
         .node-date { font-size: 0.75rem; color: #888; margin-bottom: 5px; display: block; border-bottom: 1px solid #222; padding-bottom: 2px; }
         .node-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 1rem; font-weight: 600; }
         .node-score { font-family: 'Black Ops One'; color: #666; }
         .bracket-spacer { height: 60px; }
         
-        .round-col:not(:last-child) .match-node::after { content: ''; position: absolute; right: -20px; top: 50%; width: 20px; height: 1px; background: #444; }
-        .round-col:not(:first-child) .match-node::before { content: ''; position: absolute; left: -20px; top: 50%; width: 20px; height: 1px; background: #444; }
+        /* === PULSING BRACKET CONNECTORS === */
+        .round-col:not(:last-child) .match-node::after { 
+            content: ''; 
+            position: absolute; 
+            right: -20px; 
+            top: 50%; 
+            width: 20px; 
+            height: 2px; 
+            background: linear-gradient(90deg, var(--accent-green), transparent);
+            animation: pulseConnector 2s ease-in-out infinite;
+        }
+        .round-col:not(:first-child) .match-node::before { 
+            content: ''; 
+            position: absolute; 
+            left: -20px; 
+            top: 50%; 
+            width: 20px; 
+            height: 2px; 
+            background: linear-gradient(270deg, var(--accent-green), transparent);
+            animation: pulseConnector 2s ease-in-out infinite;
+        }
+        @keyframes pulseConnector {
+            0%, 100% { opacity: 0.3; box-shadow: none; }
+            50% { opacity: 1; box-shadow: 0 0 10px var(--accent-green); }
+        }
+
         .grand-final { border-color: var(--accent-gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.15); scale: 1.1; }
+        .grand-final:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.3); }
 
         /* --- CASTERS SECTION --- */
         .casters-section {
@@ -429,10 +617,18 @@
             .m-games-container { display: flex; flex-direction: column; gap: 10px; } .m-divider { display: none; }
             .prizepool-container { flex-direction: column; }
             .casters-grid { gap: 30px; }
+            .mouse-glow { display: none; }
+            .firefly { display: none; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Scanlines overlay -->
+    <div class="scanlines"></div>
+    
+    <!-- Mouse glow follower -->
+    <div class="mouse-glow" id="mouseGlow"></div>
 
     <div class="cyber-bg"></div>
     <div class="particles"></div>
@@ -473,6 +669,7 @@
         </div>
 
         <div id="teams" class="section-wrapper">
+            <h2 class="section-title">Competing Teams</h2>
             <div class="teams-container">
                 <div class="team-card js-tilt">
                     <div class="champion-badge"><i class="fa-solid fa-crown"></i> 4x Champions</div>
@@ -505,6 +702,9 @@
             <h2 class="section-title">Prize Pool</h2>
             <div class="prizepool-container">
                 <div class="prizepool-card js-tilt">
+                    <div class="trophy-container">
+                        <div class="trophy-3d">🏆</div>
+                    </div>
                     <div class="base-pool">Base Pool: 500€ (Host)</div>
                     <div class="total-prize">615€</div>
                     <div class="distribution-grid">
@@ -769,6 +969,7 @@
     </div>
 
     <script>
+        // === MMR COUNTER ANIMATION ===
         const mmrElements = document.querySelectorAll('.player-mmr:not(.no-mmr)');
         const animateValue = (obj, start, end, duration) => {
             let startTimestamp = null;
@@ -782,6 +983,7 @@
         }
         setTimeout(() => { mmrElements.forEach(el => animateValue(el, 0, parseInt(el.getAttribute('data-val')), 1500)); }, 1200);
 
+        // === TILT EFFECT ON CARDS ===
         const cards = document.querySelectorAll('.js-tilt, .prizepool-card, .group-card, .match-node, .donators-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -799,7 +1001,7 @@
             });
         });
 
-        // Countdown Timer (Dec 6 17:00 CET)
+        // === COUNTDOWN TIMER ===
         const targetDate = new Date("2025-12-06T17:00:00+01:00").getTime();
 
         function updateCountdown() {
@@ -826,6 +1028,90 @@
         updateCountdown();
 
         function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+
+        // === MOUSE GLOW FOLLOWER ===
+        const mouseGlow = document.getElementById('mouseGlow');
+        let mouseTimeout;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseGlow.style.left = e.clientX + 'px';
+            mouseGlow.style.top = e.clientY + 'px';
+            mouseGlow.classList.add('active');
+            
+            clearTimeout(mouseTimeout);
+            mouseTimeout = setTimeout(() => {
+                mouseGlow.classList.remove('active');
+            }, 1000);
+        });
+
+        // === FIREFLIES ===
+        function createFirefly() {
+            const firefly = document.createElement('div');
+            firefly.className = 'firefly';
+            firefly.style.left = Math.random() * 100 + 'vw';
+            firefly.style.top = Math.random() * 100 + 'vh';
+            firefly.style.animationDuration = (10 + Math.random() * 10) + 's';
+            firefly.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Random drift
+            const driftX = (Math.random() - 0.5) * 200;
+            const driftY = (Math.random() - 0.5) * 200;
+            firefly.style.setProperty('--drift-x', driftX + 'px');
+            firefly.style.setProperty('--drift-y', driftY + 'px');
+            
+            document.body.appendChild(firefly);
+            
+            // Remove and recreate after animation
+            setTimeout(() => {
+                firefly.remove();
+                createFirefly();
+            }, 15000 + Math.random() * 10000);
+        }
+
+        // Create initial fireflies
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => createFirefly(), i * 500);
+        }
+
+        // Update firefly animation with drift
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fireflyFloat {
+                0%, 100% { 
+                    opacity: 0; 
+                    transform: translate(0, 0); 
+                }
+                10% { opacity: 0.8; }
+                50% { 
+                    opacity: 0.4; 
+                    transform: translate(var(--drift-x, 50px), var(--drift-y, -30px));
+                }
+                90% { opacity: 0.8; }
+                95% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // === SCROLL-TRIGGERED ANIMATIONS ===
+        const sections = document.querySelectorAll('.section-wrapper');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     </script>
 </body>
 </html>
