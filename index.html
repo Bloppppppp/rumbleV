@@ -334,6 +334,351 @@
         .cd-num { font-family: 'Black Ops One'; font-size: 3.5rem; color: #fff; text-shadow: 0 0 20px var(--accent-green); line-height: 1; }
         .cd-text { font-size: 0.9rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; }
 
+        /* === UP NEXT SECTION === */
+        .up-next-section {
+            margin-bottom: 60px;
+        }
+        .up-next-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .up-next-container.single-stream {
+            max-width: 1000px;
+        }
+        .up-next-stream {
+            background: var(--glass-panel);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 35px 45px;
+            position: relative;
+            overflow: hidden;
+            scroll-margin-top: 100px;
+        }
+        .up-next-stream::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            animation: scanLine 2s linear infinite;
+        }
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .up-next-stream.inactive {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .up-next-stream.inactive::after {
+            content: 'NO MATCH';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Black Ops One';
+            font-size: 1.5rem;
+            color: #444;
+            z-index: 10;
+        }
+        
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .stream-badge {
+            font-family: 'Black Ops One';
+            font-size: 1.3rem;
+            padding: 12px 26px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stream-badge.stream-a {
+            background: linear-gradient(135deg, #9146ff 0%, #6441a5 100%);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(145, 70, 255, 0.4);
+        }
+        .stream-badge.stream-b {
+            background: linear-gradient(135deg, #ff6b6b 0%, #c44d4d 100%);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+        }
+        .stream-watch-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .stream-watch-btn {
+            padding: 12px 22px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: 'Black Ops One';
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .stream-watch-btn.twitch {
+            background: #9146ff;
+            color: #fff;
+        }
+        .stream-watch-btn.twitch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(145, 70, 255, 0.6);
+        }
+        .stream-watch-btn.youtube {
+            background: #ff0000;
+            color: #fff;
+        }
+        .stream-watch-btn.youtube:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+        }
+        
+        .match-stage {
+            font-family: 'Black Ops One';
+            font-size: 2rem;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        .match-stage .live-badge {
+            color: var(--accent-red);
+            animation: livePulse 1s ease-in-out infinite;
+        }
+        .match-time {
+            font-family: 'Rajdhani';
+            font-size: 1.3rem;
+            color: #888;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .versus-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+        .versus-team-card {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            border-radius: 12px;
+            padding: 25px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .versus-team-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+        .versus-team-name {
+            font-family: 'Black Ops One';
+            font-size: 1.8rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .versus-players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .versus-player-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .versus-player-row:hover {
+            background: linear-gradient(90deg, rgba(57, 255, 20, 0.15) 0%, transparent 100%);
+        }
+        .versus-player-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .versus-rank-wrapper {
+            position: relative;
+            width: 44px;
+            height: 44px;
+        }
+        .versus-rank-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+        }
+        .versus-rank-pill {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2px 6px;
+            font-size: 0.6rem;
+            color: #aaa;
+            white-space: nowrap;
+        }
+        .versus-player-name {
+            font-family: 'Rajdhani';
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .versus-player-mmr {
+            font-family: 'Rajdhani', monospace;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            min-width: 55px;
+            text-align: right;
+        }
+        .versus-player-mmr.no-mmr {
+            color: #555;
+        }
+        .versus-crown {
+            color: gold;
+            margin-left: 4px;
+        }
+        .versus-highest-mmr {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%);
+        }
+        .versus-highest-mmr .versus-player-name {
+            color: var(--accent-gold);
+        }
+        
+        .versus-middle {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .versus-glow {
+            position: absolute;
+            width: 170%;
+            height: 170%;
+            background: radial-gradient(circle, rgba(57, 255, 20, 0.25) 0%, transparent 70%);
+            animation: vsGlow 2s ease-in-out infinite;
+        }
+        @keyframes vsGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .versus-text {
+            font-family: 'Black Ops One';
+            font-size: 3.2rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 25px var(--accent-green), 0 0 50px var(--accent-green);
+            z-index: 2;
+            animation: vsPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes vsPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .versus-lightning {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .lightning-bolt {
+            position: absolute;
+            width: 3px;
+            height: 70px;
+            background: linear-gradient(to bottom, transparent, var(--accent-green), transparent);
+            left: 50%;
+            top: -20px;
+            transform: translateX(-50%) rotate(15deg);
+            animation: boltFlash 0.8s ease-in-out infinite;
+            opacity: 0;
+        }
+        .lightning-bolt.delay {
+            animation-delay: 0.4s;
+            transform: translateX(-50%) rotate(-15deg);
+        }
+        @keyframes boltFlash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .single-stream-notice {
+            text-align: center;
+            color: #888;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+        }
+        .single-stream-notice i {
+            color: var(--accent-green);
+            margin-right: 8px;
+        }
+        
+        /* Tournament completed state */
+        .up-next-section.completed .up-next-container {
+            display: none;
+        }
+        .up-next-section.completed::after {
+            content: '🏆 TOURNAMENT COMPLETED 🏆';
+            display: block;
+            text-align: center;
+            font-family: 'Black Ops One';
+            font-size: 2rem;
+            color: var(--accent-gold);
+            padding: 60px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        @media (max-width: 900px) {
+            .versus-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .versus-middle {
+                width: 100%;
+                height: 80px;
+            }
+            .versus-text {
+                font-size: 2.5rem;
+            }
+            .stream-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .stream-watch-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            .up-next-stream {
+                padding: 25px;
+            }
+        }
+
         /* === SCROLL ANIMATIONS === */
         .section-wrapper { 
             scroll-margin-top: 140px; 
@@ -811,6 +1156,81 @@
             text-shadow: 0 0 10px rgba(145, 70, 255, 0.6);
         }
 
+        /* === LIVE MATCH INDICATOR === */
+        .match-node.live {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 42, 42, 0.4);
+            animation: liveGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes liveGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 42, 42, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(255, 42, 42, 0.7); }
+        }
+        .match-node.live::after {
+            content: 'LIVE';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent-red);
+            color: #fff;
+            font-family: 'Black Ops One';
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            animation: livePulse 1s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .match-node.completed {
+            opacity: 0.7;
+        }
+        .match-node.completed .node-row span:first-child {
+            color: #666;
+        }
+        .match-node .winner {
+            color: var(--accent-green) !important;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+        
+        /* Live indicator for group rows */
+        .group-table tr.live td {
+            background: rgba(255, 42, 42, 0.1);
+        }
+        
+        /* === SCHEDULE LIVE RESULTS === */
+        .sched-score {
+            font-family: 'Black Ops One';
+            color: var(--accent-green);
+            margin: 0 8px;
+        }
+        .sched-match.live {
+            background: rgba(255, 42, 42, 0.1) !important;
+            position: relative;
+        }
+        .sched-match.live::before {
+            content: '🔴 LIVE';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            animation: livePulse 1s ease-in-out infinite;
+        }
+        .sched-match.completed .sched-score {
+            color: #888;
+        }
+        .sched-match .sched-winner {
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+        .sched-match.completed .sched-team1:not(.sched-winner),
+        .sched-match.completed .sched-team2:not(.sched-winner) {
+            color: #666;
+        }
+
         /* --- FOOTER --- */
         .footer { margin-top: 60px; padding: 30px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
 
@@ -864,6 +1284,7 @@
         </header>
 
         <nav class="nav-bar">
+            <button class="nav-btn" onclick="scrollToSection('up-next')">Up Next</button>
             <button class="nav-btn" onclick="scrollToSection('teams')">Teams</button>
             <button class="nav-btn" onclick="scrollToSection('prizepool')">Prize Pool</button>
             <button class="nav-btn" onclick="scrollToSection('groups')">Groups</button>
@@ -891,6 +1312,88 @@
                     <div class="cd-num" id="cd-seconds">00</div>
                     <div class="cd-text">Secs</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- UP NEXT SECTION -->
+        <div id="up-next" class="section-wrapper up-next-section">
+            <h2 class="section-title">Up Next</h2>
+            <div class="up-next-container">
+                <!-- Stream A -->
+                <div class="up-next-stream" id="up-next-a">
+                    <div class="stream-header">
+                        <div class="stream-badge stream-a">
+                            <i class="fa-brands fa-twitch"></i> STREAM A
+                        </div>
+                        <div class="stream-watch-buttons">
+                            <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-watch-btn twitch">
+                                <i class="fa-brands fa-twitch"></i> Twitch
+                            </a>
+                            <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-watch-btn youtube">
+                                <i class="fa-brands fa-youtube"></i> YouTube
+                            </a>
+                        </div>
+                    </div>
+                    <div class="match-stage" id="stage-a">GROUP STAGE</div>
+                    <div class="match-time" id="time-a">17:00 CET</div>
+                    <div class="versus-container">
+                        <div class="versus-team-card" id="team-a1">
+                            <div class="versus-team-name">TBD</div>
+                            <div class="versus-players-list"></div>
+                        </div>
+                        <div class="versus-middle">
+                            <div class="versus-glow"></div>
+                            <div class="versus-text">VS</div>
+                            <div class="versus-lightning">
+                                <div class="lightning-bolt"></div>
+                                <div class="lightning-bolt delay"></div>
+                            </div>
+                        </div>
+                        <div class="versus-team-card" id="team-a2">
+                            <div class="versus-team-name">TBD</div>
+                            <div class="versus-players-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream B -->
+                <div class="up-next-stream" id="up-next-b">
+                    <div class="stream-header">
+                        <div class="stream-badge stream-b">
+                            <i class="fa-brands fa-twitch"></i> STREAM B
+                        </div>
+                        <div class="stream-watch-buttons">
+                            <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-watch-btn twitch">
+                                <i class="fa-brands fa-twitch"></i> Twitch
+                            </a>
+                        </div>
+                    </div>
+                    <div class="match-stage" id="stage-b">GROUP STAGE</div>
+                    <div class="match-time" id="time-b">17:00 CET</div>
+                    <div class="versus-container">
+                        <div class="versus-team-card" id="team-b1">
+                            <div class="versus-team-name">TBD</div>
+                            <div class="versus-players-list"></div>
+                        </div>
+                        <div class="versus-middle">
+                            <div class="versus-glow"></div>
+                            <div class="versus-text">VS</div>
+                            <div class="versus-lightning">
+                                <div class="lightning-bolt"></div>
+                                <div class="lightning-bolt delay"></div>
+                            </div>
+                        </div>
+                        <div class="versus-team-card" id="team-b2">
+                            <div class="versus-team-name">TBD</div>
+                            <div class="versus-players-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Single stream message for Day 3+4 -->
+            <div class="single-stream-notice" id="single-stream-notice" style="display: none;">
+                <i class="fa-solid fa-info-circle"></i> All remaining matches are on Stream A only
             </div>
         </div>
 
@@ -977,25 +1480,25 @@
             <div class="groups-container">
                 <div class="group-card js-tilt">
                     <div class="group-title">GROUP A</div>
-                    <table class="group-table">
+                    <table class="group-table" id="group-a-table">
                         <thead><tr><th>TEAM</th><th style="text-align:center">W</th><th style="text-align:center">L</th></tr></thead>
-                        <tbody>
-                            <tr><td>Maslyata</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>Space Marines</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>shottyteam</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>Lay an Egg</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                        <tbody id="group-a-body">
+                            <tr data-team="Maslyata"><td>Maslyata</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="Space Marines"><td>Space Marines</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="shottyteam"><td>shottyteam</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="Lay an Egg"><td>Lay an Egg</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="group-card js-tilt">
                     <div class="group-title">GROUP B</div>
-                    <table class="group-table">
+                    <table class="group-table" id="group-b-table">
                         <thead><tr><th>TEAM</th><th style="text-align:center">W</th><th style="text-align:center">L</th></tr></thead>
-                        <tbody>
-                            <tr><td>Gym Esports</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>TMNT</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>seppo13</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
-                            <tr><td>LAGGAN</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                        <tbody id="group-b-body">
+                            <tr data-team="Gym Esports"><td>Gym Esports</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="TMNT"><td>TMNT</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="seppo13"><td>seppo13</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
+                            <tr data-team="LAGGAN"><td>LAGGAN</td><td class="stat-num">0</td><td class="stat-num">0</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1008,68 +1511,68 @@
                 <div class="bracket-flex">
                     <div class="round-col">
                         <div class="round-header">UB SEMIFINALS - DEC 7 (19:30)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P3">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L6,27 L4,30 L10,33 L8,36 L14,40 L12,43 L28,48"/></svg></div>
-                            <div class="node-date">19:30</div><div class="node-row"><span>A1</span><span class="node-score">0</span></div><div class="node-row"><span>B2</span><span class="node-score">0</span></div>
+                            <div class="node-date">19:30</div><div class="node-row"><span class="team1">A1</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">B2</span><span class="node-score score2">0</span></div>
                         </div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P4">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L6,23 L4,20 L10,17 L8,14 L14,10 L12,7 L28,2"/></svg></div>
-                            <div class="node-date">19:30</div><div class="node-row"><span>B1</span><span class="node-score">0</span></div><div class="node-row"><span>A2</span><span class="node-score">0</span></div>
+                            <div class="node-date">19:30</div><div class="node-row"><span class="team1">B1</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">A2</span><span class="node-score score2">0</span></div>
                         </div>
                         <div class="bracket-spacer"></div>
                         <div class="round-header">LB ROUND 1 - DEC 7 (17:00)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P1">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,22 L3,19 L9,15 L7,12 L13,8 L28,3"/></svg></div>
-                            <div class="node-date">17:00</div><div class="node-row"><span>A3</span><span class="node-score">0</span></div><div class="node-row"><span>B4</span><span class="node-score">0</span></div>
+                            <div class="node-date">17:00</div><div class="node-row"><span class="team1">A3</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">B4</span><span class="node-score score2">0</span></div>
                         </div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P2">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,23 L3,20 L9,17 L7,14 L13,10 L28,5"/></svg></div>
-                            <div class="node-date">17:00</div><div class="node-row"><span>B3</span><span class="node-score">0</span></div><div class="node-row"><span>A4</span><span class="node-score">0</span></div>
+                            <div class="node-date">17:00</div><div class="node-row"><span class="team1">B3</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">A4</span><span class="node-score score2">0</span></div>
                         </div>
                     </div>
 
                     <div class="round-col">
                         <div class="round-header">UB FINAL - DEC 13 (19:30)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P8">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L6,28 L4,32 L10,36 L8,40 L14,44 L28,48"/></svg></div>
-                            <div class="node-date">19:30</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div>
+                            <div class="node-date">19:30</div><div class="node-row"><span class="team1">TBD</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">TBD</span><span class="node-score score2">0</span></div>
                         </div>
                         <div class="bracket-spacer"></div>
                         <div class="round-header">LB QUARTER - DEC 7 (22:00)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P5">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,22 L3,19 L9,15 L7,12 L13,8 L28,3"/></svg></div>
-                            <div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div>
+                            <div class="node-date">22:00</div><div class="node-row"><span class="team1">TBD</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">TBD</span><span class="node-score score2">0</span></div>
                         </div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P6">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,22 L3,19 L9,15 L7,12 L13,8 L28,3"/></svg></div>
-                            <div class="node-date">22:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div>
+                            <div class="node-date">22:00</div><div class="node-row"><span class="team1">TBD</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">TBD</span><span class="node-score score2">0</span></div>
                         </div>
                     </div>
 
                     <div class="round-col">
                         <div class="bracket-spacer"></div>
                         <div class="round-header">LB SEMI - DEC 13 (17:00)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P7">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,24 L3,26 L9,25 L7,24 L13,26 L28,25"/></svg></div>
-                            <div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div>
+                            <div class="node-date">17:00</div><div class="node-row"><span class="team1">TBD</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">TBD</span><span class="node-score score2">0</span></div>
                         </div>
                     </div>
 
                     <div class="round-col">
                         <div class="bracket-spacer"></div>
                         <div class="round-header">LB FINAL - DEC 14 (17:00)</div>
-                        <div class="match-node">
+                        <div class="match-node" id="match-P9">
                             <div class="lightning-connector"><div class="lightning-glow"></div><svg viewBox="0 0 30 50"><path class="lightning-path" d="M0,25 L5,22 L3,18 L9,14 L7,10 L13,6 L28,2"/></svg></div>
-                            <div class="node-date">17:00</div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div><div class="node-row"><span>TBD</span><span class="node-score">0</span></div>
+                            <div class="node-date">17:00</div><div class="node-row"><span class="team1">TBD</span><span class="node-score score1">0</span></div><div class="node-row"><span class="team2">TBD</span><span class="node-score score2">0</span></div>
                         </div>
                     </div>
 
                     <div class="round-col">
                         <div class="round-header">GRAND FINAL - DEC 14 (19:30)</div>
-                        <div class="match-node grand-final" id="grandFinal">
+                        <div class="match-node grand-final" id="match-P10">
                             <div class="node-date">19:30 - BO5</div>
-                            <div class="node-row"><span>UB Winner</span><span class="node-score">0</span></div>
-                            <div class="node-row"><span>LB Winner</span><span class="node-score">0</span></div>
+                            <div class="node-row"><span class="team1">UB Winner</span><span class="node-score score1">0</span></div>
+                            <div class="node-row"><span class="team2">LB Winner</span><span class="node-score score2">0</span></div>
                         </div>
                     </div>
                 </div>
@@ -1081,119 +1584,119 @@
             <div class="schedule-grid">
                 <div class="day-header">DAY 1: DEC 6th - GROUP STAGE (BO1)</div>
                 
-                <div class="match-row">
+                <div class="match-row" id="sched-G1-G2">
                     <div class="m-time">17:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">Maslyata vs Space Marines</span>
+                        <div class="sched-match" data-match="G1">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">Maslyata</span> <span class="sched-score"></span> <span class="sched-team2">Space Marines</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">Gym Esports vs TMNT</span>
+                        <div class="sched-match" data-match="G2">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">Gym Esports</span> <span class="sched-score"></span> <span class="sched-team2">TMNT</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-row">
+                <div class="match-row" id="sched-G3-G4">
                     <div class="m-time">18:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">shottyteam vs Lay an Egg</span>
+                        <div class="sched-match" data-match="G3">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">shottyteam</span> <span class="sched-score"></span> <span class="sched-team2">Lay an Egg</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">seppo13 vs LAGGAN</span>
+                        <div class="sched-match" data-match="G4">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">seppo13</span> <span class="sched-score"></span> <span class="sched-team2">LAGGAN</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-row">
+                <div class="match-row" id="sched-G5-G6">
                     <div class="m-time">19:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">Maslyata vs shottyteam</span>
+                        <div class="sched-match" data-match="G5">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">Maslyata</span> <span class="sched-score"></span> <span class="sched-team2">shottyteam</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">Gym Esports vs seppo13</span>
+                        <div class="sched-match" data-match="G6">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">Gym Esports</span> <span class="sched-score"></span> <span class="sched-team2">seppo13</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-row">
+                <div class="match-row" id="sched-G7-G8">
                     <div class="m-time">20:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">Space Marines vs Lay an Egg</span>
+                        <div class="sched-match" data-match="G7">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">Space Marines</span> <span class="sched-score"></span> <span class="sched-team2">Lay an Egg</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">TMNT vs LAGGAN</span>
+                        <div class="sched-match" data-match="G8">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">TMNT</span> <span class="sched-score"></span> <span class="sched-team2">LAGGAN</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-row">
+                <div class="match-row" id="sched-G9-G10">
                     <div class="m-time">21:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">Maslyata vs Lay an Egg</span>
+                        <div class="sched-match" data-match="G9">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">Maslyata</span> <span class="sched-score"></span> <span class="sched-team2">Lay an Egg</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">Gym Esports vs LAGGAN</span>
+                        <div class="sched-match" data-match="G10">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">Gym Esports</span> <span class="sched-score"></span> <span class="sched-team2">LAGGAN</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="match-row">
+                <div class="match-row" id="sched-G11-G12">
                     <div class="m-time">22:00 CET</div>
                     <div class="m-games-container">
-                        <div>
-                            <span class="m-group-tag">GRP A</span><span class="m-game-single">Space Marines vs shottyteam</span>
+                        <div class="sched-match" data-match="G11">
+                            <span class="m-group-tag">GRP A</span><span class="m-game-single"><span class="sched-team1">Space Marines</span> <span class="sched-score"></span> <span class="sched-team2">shottyteam</span></span>
                             <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                             <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                         <div class="m-divider"></div>
-                        <div>
-                            <span class="m-group-tag">GRP B</span><span class="m-game-single">TMNT vs seppo13</span>
+                        <div class="sched-match" data-match="G12">
+                            <span class="m-group-tag">GRP B</span><span class="m-game-single"><span class="sched-team1">TMNT</span> <span class="sched-score"></span> <span class="sched-team2">seppo13</span></span>
                             <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <div class="day-header">DAY 2: DEC 7th - PLAYOFFS START (BO3)</div>
-                <div class="match-row"><div class="m-time">17:00 CET</div><div class="m-teams">LB ROUND 1 (A3 vs B4)</div><div class="m-desc">BO3</div></div>
-                <div class="match-row"><div class="m-time">17:00 CET</div><div class="m-teams">LB ROUND 1 (B3 vs A4)</div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P1"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">A3</span> <span class="sched-score"></span> <span class="sched-team2">B4</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P2"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">B3</span> <span class="sched-score"></span> <span class="sched-team2">A4</span></div><div class="m-desc">BO3</div></div>
                 
-                <div class="match-row"><div class="m-time">19:30 CET</div><div class="m-teams">UB SEMIFINAL 1 (A1 vs B2)</div><div class="m-desc">BO3</div></div>
-                <div class="match-row"><div class="m-time">19:30 CET</div><div class="m-teams">UB SEMIFINAL 2 (B1 vs A2)</div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P3"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">A1</span> <span class="sched-score"></span> <span class="sched-team2">B2</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P4"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">B1</span> <span class="sched-score"></span> <span class="sched-team2">A2</span></div><div class="m-desc">BO3</div></div>
 
-                <div class="match-row"><div class="m-time">22:00 CET</div><div class="m-teams">LB QUARTERFINAL 1 (Loser UB1 vs Winner LB1)</div><div class="m-desc">BO3</div></div>
-                <div class="match-row"><div class="m-time">22:00 CET</div><div class="m-teams">LB QUARTERFINAL 2 (Loser UB2 vs Winner LB2)</div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P5"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P1</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P6"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P4</span> <span class="sched-score"></span> <span class="sched-team2">Winner P2</span></div><div class="m-desc">BO3</div></div>
 
                 <div class="day-header">DAY 3: DEC 13th - SEMIS (BO3)</div>
-                <div class="match-row"><div class="m-time">17:00 CET</div><div class="m-teams">LB SEMIFINAL (Winner LB Q1 vs Winner LB Q2)</div><div class="m-desc">BO3</div></div>
-                <div class="match-row"><div class="m-time">19:30 CET</div><div class="m-teams">UB FINAL (Winner UB Semi 1 vs Winner UB Semi 2)</div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P7"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">Winner P5</span> <span class="sched-score"></span> <span class="sched-team2">Winner P6</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P8"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">Winner P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P4</span></div><div class="m-desc">BO3</div></div>
 
                 <div class="day-header">DAY 4: DEC 14th - FINALS</div>
-                <div class="match-row"><div class="m-time">17:00 CET</div><div class="m-teams">LB FINAL (Loser UB Final vs Winner LB Semi)</div><div class="m-desc">BO3</div></div>
-                <div class="match-row" style="border-color: var(--accent-gold);"><div class="m-time">19:30 CET</div><div class="m-teams" style="color: var(--accent-gold);">GRAND FINAL (Winner UB vs Winner LB)</div><div class="m-desc">Best of 5</div></div>
+                <div class="match-row sched-match" data-match="P9"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P8</span> <span class="sched-score"></span> <span class="sched-team2">Winner P7</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row sched-match" data-match="P10" style="border-color: var(--accent-gold);"><div class="m-time">19:30 CET</div><div class="m-teams" style="color: var(--accent-gold);"><span class="sched-team1">Winner P8</span> <span class="sched-score"></span> <span class="sched-team2">Winner P9</span></div><div class="m-desc">Best of 5</div></div>
             </div>
         </div>
 
@@ -1399,7 +1902,7 @@
         });
 
         // === GRAND FINAL PARTICLES ===
-        const grandFinal = document.getElementById('grandFinal');
+        const grandFinal = document.getElementById('match-P10');
         if (grandFinal) {
             for (let i = 0; i < 8; i++) {
                 const particle = document.createElement('div');
@@ -1410,6 +1913,565 @@
                 grandFinal.appendChild(particle);
             }
         }
+
+        // === GOOGLE SHEETS LIVE RESULTS INTEGRATION ===
+        const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_rWzaJ2QJYXbrOeZX_IaZgcVGaR4xmQh1pPMh_aQEXUtiumhWqz_ctv00_6qxF_OYqWQ9Hf1JEWaj/pub?output=csv';
+        
+        // Group teams
+        const groupATeams = ['Maslyata', 'Space Marines', 'shottyteam', 'Lay an Egg'];
+        const groupBTeams = ['Gym Esports', 'TMNT', 'seppo13', 'LAGGAN'];
+        
+        // Team data with full player info for UP NEXT display
+        const teamsData = {
+            'Maslyata': {
+                players: [
+                    { name: 'sandstorm', mmr: 3509, rank: 'immortal', rankNum: '#3815' },
+                    { name: 'et si', mmr: 3996, rank: 'immortal', rankNum: null, highest: true, captain: true },
+                    { name: 'hedgehog', mmr: 3741, rank: 'immortal', rankNum: null },
+                    { name: 'kid', mmr: 3518, rank: 'immortal', rankNum: null },
+                    { name: 'piggy/electro', mmr: 3684, rank: 'immortal', rankNum: '#2024' }
+                ]
+            },
+            'Gym Esports': {
+                players: [
+                    { name: 'Ultra Greed', mmr: 3383, rank: 'divine-4', rankNum: null },
+                    { name: 'Aniki', mmr: 3337, rank: 'immortal', rankNum: '#870' },
+                    { name: 'Vata', mmr: 2739, rank: 'immortal', rankNum: '#932' },
+                    { name: 'Inffe', mmr: 3143, rank: 'immortal', rankNum: null },
+                    { name: 'Hoshoryu', mmr: 3393, rank: 'immortal', rankNum: null }
+                ]
+            },
+            'TMNT': {
+                players: [
+                    { name: 'Ptenchik', mmr: 3513, rank: 'immortal', rankNum: '#3147' },
+                    { name: 'Foxy', mmr: 3383, rank: 'divine-3', rankNum: null },
+                    { name: 'Mirrored', mmr: 3680, rank: 'immortal', rankNum: null },
+                    { name: 'Lost', mmr: 3976, rank: 'immortal', rankNum: '#1562', highest: true },
+                    { name: 'Lenske', mmr: 3443, rank: 'uncalibrated', rankNum: 'PVT' }
+                ]
+            },
+            'seppo13': {
+                players: [
+                    { name: 'BigGoose', mmr: 2661, rank: 'immortal', rankNum: '#2953' },
+                    { name: 'noertti', mmr: 3707, rank: 'immortal', rankNum: '#2428', highest: true },
+                    { name: 'sifla', mmr: 3087, rank: 'immortal', rankNum: '#1429' },
+                    { name: 'Fruugu', mmr: 2903, rank: 'immortal', rankNum: '#2381' },
+                    { name: 'Juketsuu', mmr: 3288, rank: 'immortal', rankNum: '#4596' }
+                ]
+            },
+            'Space Marines': {
+                players: [
+                    { name: 'Space', mmr: 3222, rank: 'immortal', rankNum: null },
+                    { name: 'friscy', mmr: 3357, rank: 'immortal', rankNum: null },
+                    { name: 'shushu', mmr: null, rank: 'immortal', rankNum: '#430' },
+                    { name: 'Nano', mmr: null, rank: 'immortal', rankNum: '#648' },
+                    { name: 'Godba', mmr: 3606, rank: 'immortal', rankNum: '#4369', highest: true }
+                ]
+            },
+            'LAGGAN': {
+                players: [
+                    { name: 'Circuz', mmr: null, rank: 'divine-1', rankNum: null },
+                    { name: 'Haj', mmr: 2333, rank: 'immortal', rankNum: null },
+                    { name: 'Hulk', mmr: 2522, rank: 'guardian-2', rankNum: null },
+                    { name: 'Dr_McWho', mmr: 2941, rank: 'immortal', rankNum: '#4109', highest: true },
+                    { name: 'Lungs', mmr: 2231, rank: 'legend-4', rankNum: null }
+                ]
+            },
+            'shottyteam': {
+                players: [
+                    { name: 'godwithashotgun', mmr: 3263, rank: 'immortal', rankNum: '#3761' },
+                    { name: 'drea', mmr: 3352, rank: 'immortal', rankNum: null, highest: true },
+                    { name: 'Admiral Rat', mmr: 3209, rank: 'divine-2', rankNum: null },
+                    { name: 'Silence', mmr: 3297, rank: 'archon-4', rankNum: null },
+                    { name: 'ATGAT', mmr: 2992, rank: 'legend-4', rankNum: null }
+                ]
+            },
+            'Lay an Egg': {
+                players: [
+                    { name: 'Dogical', mmr: 3062, rank: 'immortal', rankNum: '#581' },
+                    { name: 'erik', mmr: null, rank: 'immortal', rankNum: '#101' },
+                    { name: 'chrohny', mmr: null, rank: 'immortal', rankNum: '#1367' },
+                    { name: 'frisb', mmr: 3071, rank: 'immortal', rankNum: '#480', highest: true },
+                    { name: 'polo', mmr: 2196, rank: 'immortal', rankNum: '#1628' }
+                ]
+            }
+        };
+        
+        // Stream A matches (Group A on Day 1, top bracket on Day 2)
+        const streamAMatches = {
+            'G1': true, 'G3': true, 'G5': true, 'G7': true, 'G9': true, 'G11': true, // Group A
+            'P3': true, 'P4': true, 'P5': true, // Day 2 - UB Semis + LB Quarter 1
+            'P7': true, 'P8': true, // Day 3
+            'P9': true, 'P10': true // Day 4
+        };
+        // Stream B matches (Group B on Day 1, bottom bracket on Day 2)
+        const streamBMatches = {
+            'G2': true, 'G4': true, 'G6': true, 'G8': true, 'G10': true, 'G12': true, // Group B
+            'P1': true, 'P2': true, 'P6': true // Day 2 - LB Round 1 + LB Quarter 2
+        };
+        
+        // Match stage names
+        const matchStages = {
+            'G1': 'GROUP A - ROUND 1', 'G2': 'GROUP B - ROUND 1',
+            'G3': 'GROUP A - ROUND 1', 'G4': 'GROUP B - ROUND 1',
+            'G5': 'GROUP A - ROUND 2', 'G6': 'GROUP B - ROUND 2',
+            'G7': 'GROUP A - ROUND 2', 'G8': 'GROUP B - ROUND 2',
+            'G9': 'GROUP A - ROUND 3', 'G10': 'GROUP B - ROUND 3',
+            'G11': 'GROUP A - ROUND 3', 'G12': 'GROUP B - ROUND 3',
+            'P1': 'LB ROUND 1', 'P2': 'LB ROUND 1',
+            'P3': 'UB SEMIFINAL', 'P4': 'UB SEMIFINAL',
+            'P5': 'LB QUARTERFINAL', 'P6': 'LB QUARTERFINAL',
+            'P7': 'LB SEMIFINAL', 'P8': 'UB FINAL',
+            'P9': 'LB FINAL', 'P10': 'GRAND FINAL'
+        };
+
+        async function fetchResults() {
+            try {
+                // Use CORS proxy with cache-busting
+                const urlWithCache = SHEET_CSV + '&_=' + Date.now();
+                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(urlWithCache);
+                
+                const response = await fetch(proxyUrl);
+                const csvText = await response.text();
+                console.log('CSV fetched:', csvText.substring(0, 200));
+                
+                const rows = csvText.split('\n');
+                
+                // Check if first row is a header (starts with "Match" or similar)
+                const firstCell = rows[0].split(',')[0].replace(/"/g, '').trim();
+                const dataRows = (firstCell === 'Match' || firstCell === 'match') ? rows.slice(1) : rows;
+                
+                const results = dataRows.map(row => {
+                    const cols = parseCSVRow(row);
+                    return {
+                        matchId: cols[0],
+                        date: cols[1],
+                        time: cols[2],
+                        stage: cols[3],
+                        format: cols[4],
+                        team1: cols[5],
+                        score1: cols[6] !== '' ? parseInt(cols[6]) : null,
+                        score2: cols[7] !== '' ? parseInt(cols[7]) : null,
+                        team2: cols[8],
+                        winner: cols[9],
+                        status: cols[10]
+                    };
+                }).filter(r => r.matchId);
+                
+                console.log('Parsed results:', results.slice(0, 3));
+                
+                updateGroupStandings(results);
+                updateBracket(results);
+                updateSchedule(results);
+                updateUpNext(results);
+                
+            } catch (error) {
+                console.log('Could not fetch live results:', error);
+            }
+        }
+        
+        // Parse CSV row handling quoted fields
+        function parseCSVRow(row) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < row.length; i++) {
+                const char = row[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        // Group position mappings (filled after group stage)
+        let groupPositions = {
+            'A1': null, 'A2': null, 'A3': null, 'A4': null,
+            'B1': null, 'B2': null, 'B3': null, 'B4': null
+        };
+
+        function updateGroupStandings(results) {
+            // Calculate wins for each team
+            const wins = {};
+            const losses = {};
+            
+            [...groupATeams, ...groupBTeams].forEach(team => {
+                wins[team] = 0;
+                losses[team] = 0;
+            });
+            
+            // Count wins from group matches (G1-G12)
+            results.filter(r => r.matchId && r.matchId.startsWith('G')).forEach(match => {
+                // Determine winner from scores if not explicitly set
+                let winner = match.winner;
+                let loser = null;
+                
+                if (!winner && match.score1 !== null && match.score2 !== null) {
+                    if (match.score1 > match.score2) {
+                        winner = match.team1;
+                        loser = match.team2;
+                    } else if (match.score2 > match.score1) {
+                        winner = match.team2;
+                        loser = match.team1;
+                    }
+                } else if (winner) {
+                    loser = winner === match.team1 ? match.team2 : match.team1;
+                }
+                
+                if (winner) {
+                    if (wins[winner] !== undefined) {
+                        wins[winner]++;
+                    }
+                    if (loser && losses[loser] !== undefined) {
+                        losses[loser]++;
+                    }
+                    console.log(`Match ${match.matchId}: ${winner} wins`);
+                }
+            });
+            
+            console.log('Final wins:', wins);
+            
+            // Update Group A table and get sorted standings
+            const groupASorted = updateGroupTable('group-a-body', groupATeams, wins, losses);
+            // Update Group B table and get sorted standings
+            const groupBSorted = updateGroupTable('group-b-body', groupBTeams, wins, losses);
+            
+            // Update group position mappings if groups are complete (each team played 3 games)
+            const groupAComplete = groupASorted.every(t => t.wins + t.losses === 3);
+            const groupBComplete = groupBSorted.every(t => t.wins + t.losses === 3);
+            
+            if (groupAComplete) {
+                groupPositions['A1'] = groupASorted[0].name;
+                groupPositions['A2'] = groupASorted[1].name;
+                groupPositions['A3'] = groupASorted[2].name;
+                groupPositions['A4'] = groupASorted[3].name;
+                console.log('Group A positions:', groupPositions['A1'], groupPositions['A2'], groupPositions['A3'], groupPositions['A4']);
+            }
+            
+            if (groupBComplete) {
+                groupPositions['B1'] = groupBSorted[0].name;
+                groupPositions['B2'] = groupBSorted[1].name;
+                groupPositions['B3'] = groupBSorted[2].name;
+                groupPositions['B4'] = groupBSorted[3].name;
+                console.log('Group B positions:', groupPositions['B1'], groupPositions['B2'], groupPositions['B3'], groupPositions['B4']);
+            }
+        }
+        
+        function updateGroupTable(bodyId, teams, wins, losses) {
+            const tbody = document.getElementById(bodyId);
+            
+            // Create sorted array of teams by wins (desc), then losses (asc)
+            const sorted = teams.map(team => ({
+                name: team,
+                wins: wins[team] || 0,
+                losses: losses[team] || 0
+            })).sort((a, b) => {
+                if (b.wins !== a.wins) return b.wins - a.wins;
+                return a.losses - b.losses;
+            });
+            
+            if (!tbody) return sorted;
+            
+            // Update rows
+            const rows = tbody.querySelectorAll('tr');
+            sorted.forEach((team, idx) => {
+                if (rows[idx]) {
+                    rows[idx].querySelector('td:nth-child(1)').textContent = team.name;
+                    rows[idx].querySelector('td:nth-child(2)').textContent = team.wins;
+                    rows[idx].querySelector('td:nth-child(3)').textContent = team.losses;
+                    rows[idx].dataset.team = team.name;
+                }
+            });
+            
+            return sorted;
+        }
+        
+        // Resolve team name from position code or Winner/Loser reference
+        function resolveTeamName(teamRef, results) {
+            if (!teamRef) return null;
+            
+            // Check if it's a group position (A1, B2, etc.)
+            if (teamRef.match(/^[AB][1-4]$/)) {
+                return groupPositions[teamRef] || teamRef;
+            }
+            
+            // Check if it's a Winner/Loser reference
+            if (teamRef.includes('Winner ')) {
+                const matchRef = teamRef.replace('Winner ', '');
+                const refMatch = results.find(m => m.matchId === matchRef);
+                if (refMatch && refMatch.score1 !== null && refMatch.score2 !== null) {
+                    const winnerName = refMatch.score1 > refMatch.score2 ? refMatch.team1 : refMatch.team2;
+                    // Recursively resolve in case winner is also a reference
+                    return resolveTeamName(winnerName, results);
+                }
+                return teamRef;
+            }
+            
+            if (teamRef.includes('Loser ')) {
+                const matchRef = teamRef.replace('Loser ', '');
+                const refMatch = results.find(m => m.matchId === matchRef);
+                if (refMatch && refMatch.score1 !== null && refMatch.score2 !== null) {
+                    const loserName = refMatch.score1 < refMatch.score2 ? refMatch.team1 : refMatch.team2;
+                    // Recursively resolve in case loser is also a reference
+                    return resolveTeamName(loserName, results);
+                }
+                return teamRef;
+            }
+            
+            return teamRef;
+        }
+
+        function updateBracket(results) {
+            // Update playoff matches
+            results.filter(r => r.matchId && r.matchId.startsWith('P')).forEach(match => {
+                const matchEl = document.getElementById(`match-${match.matchId}`);
+                if (!matchEl) return;
+                
+                const team1El = matchEl.querySelector('.team1');
+                const team2El = matchEl.querySelector('.team2');
+                const score1El = matchEl.querySelector('.score1');
+                const score2El = matchEl.querySelector('.score2');
+                
+                // Resolve team names (handles A1/B2, Winner P3, Loser P4, etc.)
+                const resolvedTeam1 = resolveTeamName(match.team1, results);
+                const resolvedTeam2 = resolveTeamName(match.team2, results);
+                
+                // Update team names if resolved to actual teams
+                if (resolvedTeam1 && !resolvedTeam1.match(/^[AB][1-4]$/) && !resolvedTeam1.includes('Winner') && !resolvedTeam1.includes('Loser')) {
+                    team1El.textContent = resolvedTeam1;
+                }
+                if (resolvedTeam2 && !resolvedTeam2.match(/^[AB][1-4]$/) && !resolvedTeam2.includes('Winner') && !resolvedTeam2.includes('Loser')) {
+                    team2El.textContent = resolvedTeam2;
+                }
+                
+                // Update scores
+                if (match.score1 !== null) score1El.textContent = match.score1;
+                if (match.score2 !== null) score2El.textContent = match.score2;
+                
+                // Update status classes
+                matchEl.classList.remove('live', 'completed');
+                if (match.status === 'Live') {
+                    matchEl.classList.add('live');
+                } else if (match.status === 'Completed') {
+                    matchEl.classList.add('completed');
+                    
+                    // Highlight winner
+                    if (match.score1 > match.score2) {
+                        team1El.classList.add('winner');
+                        team2El.classList.remove('winner');
+                    } else if (match.score2 > match.score1) {
+                        team2El.classList.add('winner');
+                        team1El.classList.remove('winner');
+                    }
+                }
+            });
+        }
+        
+        function updateSchedule(results) {
+            // Update all schedule matches
+            results.forEach(match => {
+                const schedEl = document.querySelector(`.sched-match[data-match="${match.matchId}"]`);
+                if (!schedEl) return;
+                
+                const team1El = schedEl.querySelector('.sched-team1');
+                const team2El = schedEl.querySelector('.sched-team2');
+                const scoreEl = schedEl.querySelector('.sched-score');
+                
+                // Resolve team names for playoff matches
+                if (match.matchId.startsWith('P')) {
+                    const resolvedTeam1 = resolveTeamName(match.team1, results);
+                    const resolvedTeam2 = resolveTeamName(match.team2, results);
+                    
+                    if (resolvedTeam1 && !resolvedTeam1.match(/^[AB][1-4]$/) && !resolvedTeam1.includes('Winner') && !resolvedTeam1.includes('Loser')) {
+                        team1El.textContent = resolvedTeam1;
+                    }
+                    if (resolvedTeam2 && !resolvedTeam2.match(/^[AB][1-4]$/) && !resolvedTeam2.includes('Winner') && !resolvedTeam2.includes('Loser')) {
+                        team2El.textContent = resolvedTeam2;
+                    }
+                }
+                
+                // Update score display
+                if (match.score1 !== null && match.score2 !== null) {
+                    scoreEl.textContent = `${match.score1} - ${match.score2}`;
+                } else {
+                    scoreEl.textContent = 'vs';
+                }
+                
+                // Update status classes
+                schedEl.classList.remove('live', 'completed');
+                team1El.classList.remove('sched-winner');
+                team2El.classList.remove('sched-winner');
+                
+                if (match.status === 'Live') {
+                    schedEl.classList.add('live');
+                } else if (match.status === 'Completed' || (match.score1 !== null && match.score2 !== null && match.score1 !== match.score2)) {
+                    schedEl.classList.add('completed');
+                    
+                    // Highlight winner
+                    if (match.score1 > match.score2) {
+                        team1El.classList.add('sched-winner');
+                    } else if (match.score2 > match.score1) {
+                        team2El.classList.add('sched-winner');
+                    }
+                }
+            });
+        }
+        
+        function updateUpNext(results) {
+            // Find completed matches
+            const completedMatches = new Set();
+            const liveMatches = new Set();
+            
+            results.forEach(match => {
+                if (match.score1 !== null && match.score2 !== null && match.score1 !== match.score2) {
+                    completedMatches.add(match.matchId);
+                }
+                if (match.status === 'Live') {
+                    liveMatches.add(match.matchId);
+                }
+            });
+            
+            // Match order for each stream
+            const streamAOrder = ['G1', 'G3', 'G5', 'G7', 'G9', 'G11', 'P3', 'P4', 'P5', 'P7', 'P8', 'P9', 'P10'];
+            const streamBOrder = ['G2', 'G4', 'G6', 'G8', 'G10', 'G12', 'P1', 'P2', 'P6'];
+            
+            // Find next match for Stream A
+            let nextMatchA = null;
+            for (const matchId of streamAOrder) {
+                if (!completedMatches.has(matchId)) {
+                    nextMatchA = results.find(m => m.matchId === matchId) || { matchId };
+                    break;
+                }
+            }
+            
+            // Find next match for Stream B
+            let nextMatchB = null;
+            for (const matchId of streamBOrder) {
+                if (!completedMatches.has(matchId)) {
+                    nextMatchB = results.find(m => m.matchId === matchId) || { matchId };
+                    break;
+                }
+            }
+            
+            // Update Stream A display
+            const streamAEl = document.getElementById('up-next-a');
+            const stageA = document.getElementById('stage-a');
+            const timeA = document.getElementById('time-a');
+            const teamA1 = document.getElementById('team-a1');
+            const teamA2 = document.getElementById('team-a2');
+            
+            if (nextMatchA) {
+                streamAEl.classList.remove('inactive');
+                stageA.textContent = matchStages[nextMatchA.matchId] || nextMatchA.stage || 'MATCH';
+                timeA.textContent = (nextMatchA.time || '') + ' CET';
+                
+                // Check if match is live
+                if (liveMatches.has(nextMatchA.matchId)) {
+                    stageA.innerHTML = '<span class="live-badge">🔴 LIVE</span> ' + (matchStages[nextMatchA.matchId] || '');
+                }
+                
+                updateVersusTeam(teamA1, nextMatchA.team1, results);
+                updateVersusTeam(teamA2, nextMatchA.team2, results);
+            } else {
+                streamAEl.classList.add('inactive');
+            }
+            
+            // Update Stream B display
+            const streamBEl = document.getElementById('up-next-b');
+            const stageB = document.getElementById('stage-b');
+            const timeB = document.getElementById('time-b');
+            const teamB1 = document.getElementById('team-b1');
+            const teamB2 = document.getElementById('team-b2');
+            const singleNotice = document.getElementById('single-stream-notice');
+            
+            if (nextMatchB) {
+                streamBEl.classList.remove('inactive');
+                streamBEl.style.display = '';
+                singleNotice.style.display = 'none';
+                document.querySelector('.up-next-container').classList.remove('single-stream');
+                stageB.textContent = matchStages[nextMatchB.matchId] || nextMatchB.stage || 'MATCH';
+                timeB.textContent = (nextMatchB.time || '') + ' CET';
+                
+                // Check if match is live
+                if (liveMatches.has(nextMatchB.matchId)) {
+                    stageB.innerHTML = '<span class="live-badge">🔴 LIVE</span> ' + (matchStages[nextMatchB.matchId] || '');
+                }
+                
+                updateVersusTeam(teamB1, nextMatchB.team1, results);
+                updateVersusTeam(teamB2, nextMatchB.team2, results);
+            } else {
+                // No more Stream B matches (Day 3+4)
+                streamBEl.style.display = 'none';
+                document.querySelector('.up-next-container').classList.add('single-stream');
+                if (nextMatchA) {
+                    singleNotice.style.display = 'block';
+                } else {
+                    singleNotice.style.display = 'none';
+                }
+            }
+            
+            // Check if tournament is completed
+            const upNextSection = document.getElementById('up-next');
+            if (!nextMatchA && !nextMatchB) {
+                upNextSection.classList.add('completed');
+            } else {
+                upNextSection.classList.remove('completed');
+            }
+        }
+        
+        function updateVersusTeam(el, teamName, results) {
+            const nameEl = el.querySelector('.versus-team-name');
+            const playersEl = el.querySelector('.versus-players-list');
+            
+            // Resolve team name using the shared function
+            let resolvedName = resolveTeamName(teamName, results);
+            
+            // If still a placeholder, show it as-is
+            if (!resolvedName || resolvedName.match(/^[AB][1-4]$/) || resolvedName.includes('Winner') || resolvedName.includes('Loser')) {
+                resolvedName = teamName || 'TBD';
+            }
+            
+            nameEl.textContent = resolvedName || 'TBD';
+            
+            // Add player info if we have it
+            const teamInfo = teamsData[resolvedName];
+            if (teamInfo) {
+                playersEl.innerHTML = teamInfo.players.map(p => {
+                    const rankUrl = `https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-${p.rank}.png`;
+                    const mmrDisplay = p.mmr ? p.mmr : '—';
+                    const mmrClass = p.mmr ? 'versus-player-mmr' : 'versus-player-mmr no-mmr';
+                    const rowClass = p.highest ? 'versus-player-row versus-highest-mmr' : 'versus-player-row';
+                    const crown = p.captain ? '<span class="versus-crown">👑</span>' : '';
+                    const rankPill = p.rankNum ? `<span class="versus-rank-pill">${p.rankNum}</span>` : '';
+                    
+                    return `
+                        <div class="${rowClass}">
+                            <div class="versus-player-info">
+                                <div class="versus-rank-wrapper">
+                                    <img class="versus-rank-icon" src="${rankUrl}" alt="${p.rank}">
+                                    ${rankPill}
+                                </div>
+                                <span class="versus-player-name">${p.name}${crown}</span>
+                            </div>
+                            <span class="${mmrClass}">${mmrDisplay}</span>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                playersEl.innerHTML = '<div class="versus-player-row"><span class="versus-player-name" style="color:#666;text-align:center;width:100%;">Team not yet determined</span></div>';
+            }
+        }
+        
+        // Fetch immediately and then every 30 seconds
+        fetchResults();
+        setInterval(fetchResults, 30000);
     </script>
 </body>
 </html>
