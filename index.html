@@ -19,6 +19,13 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        // Run BEFORE page renders to handle hash navigation
+        if (window.location.hash) {
+            document.documentElement.classList.add('has-hash');
+        }
+    </script>
 
     <style>
         :root {
@@ -45,6 +52,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 90px;
         }
 
         body {
@@ -355,7 +363,7 @@
             padding: 35px 45px;
             position: relative;
             overflow: hidden;
-            scroll-margin-top: 100px;
+            scroll-margin-top: 20px;
         }
         .up-next-stream::before {
             content: '';
@@ -696,13 +704,17 @@
 
         /* === SCROLL ANIMATIONS === */
         .section-wrapper { 
-            scroll-margin-top: 80px; 
             margin-bottom: 80px;
             opacity: 0;
             transform: translateY(60px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
         .section-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* When navigating with hash, make all sections visible immediately */
+        html.has-hash .section-wrapper {
             opacity: 1;
             transform: translateY(0);
         }
@@ -1816,12 +1828,8 @@
         function scrollToSection(id) { 
             const target = document.getElementById(id);
             if (target) {
-                const navHeight = document.querySelector('.nav-bar')?.offsetHeight || 70;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                target.classList.add('visible');
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -1922,30 +1930,17 @@
         // === SCROLL-TRIGGERED ANIMATIONS ===
         const sections = document.querySelectorAll('.section-wrapper');
         
-        // Handle hash navigation properly
+        // Handle hash navigation - make sections visible first
         function handleHashNavigation() {
             if (window.location.hash) {
                 // Make all sections visible immediately so heights are correct
                 sections.forEach(section => section.classList.add('visible'));
-                
-                const target = document.querySelector(window.location.hash);
-                if (target) {
-                    // Calculate proper scroll position accounting for sticky nav
-                    const navHeight = document.querySelector('.nav-bar')?.offsetHeight || 70;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'auto'
-                    });
-                }
             }
         }
         
-        // Run on page load after a brief delay for rendering
-        setTimeout(handleHashNavigation, 150);
-        
-        // Also handle hash changes while on page
+        // Run immediately and on load
+        handleHashNavigation();
+        window.addEventListener('load', handleHashNavigation);
         window.addEventListener('hashchange', handleHashNavigation);
         
         const observerOptions = {
