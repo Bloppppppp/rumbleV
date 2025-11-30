@@ -24,6 +24,26 @@
         // Run BEFORE page renders to handle hash navigation
         if (window.location.hash) {
             document.documentElement.classList.add('has-hash');
+            
+            function scrollToHash() {
+                var hash = window.location.hash;
+                if (hash) {
+                    var target = document.querySelector(hash);
+                    if (target) {
+                        var navHeight = document.querySelector('.nav-bar') ? document.querySelector('.nav-bar').offsetHeight : 70;
+                        var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+                        window.scrollTo(0, top);
+                    }
+                }
+            }
+            
+            // Force scroll after page fully loads (Chrome fix)
+            window.addEventListener('load', function() {
+                // Multiple attempts to ensure it works
+                scrollToHash();
+                setTimeout(scrollToHash, 100);
+                setTimeout(scrollToHash, 300);
+            });
         }
     </script>
 
@@ -713,10 +733,11 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* When navigating with hash, make all sections visible immediately */
+        /* When navigating with hash, make all sections visible immediately with NO animation */
         html.has-hash .section-wrapper {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: none !important;
         }
 
         .section-title {
