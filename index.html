@@ -21,28 +21,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script>
-        // Run BEFORE page renders to handle hash navigation
+        // Run BEFORE page renders to handle hash/query navigation
+        // Support both #section and ?section=X for OBS/Streamlabs compatibility
+        var targetSection = null;
+        var viewOnly = false;
+        
+        // Check hash first
         if (window.location.hash) {
+            targetSection = window.location.hash.substring(1);
             document.documentElement.classList.add('has-hash');
-            
-            function scrollToHash() {
-                var hash = window.location.hash;
-                if (hash) {
-                    var target = document.querySelector(hash);
-                    if (target) {
-                        var navHeight = document.querySelector('.nav-bar') ? document.querySelector('.nav-bar').offsetHeight : 70;
-                        var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                        window.scrollTo(0, top);
-                    }
+        }
+        
+        // Check query parameter (works better in OBS/Streamlabs)
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('section')) {
+            targetSection = urlParams.get('section');
+            document.documentElement.classList.add('has-hash');
+        }
+        if (urlParams.get('goto')) {
+            targetSection = urlParams.get('goto');
+            document.documentElement.classList.add('has-hash');
+        }
+        
+        // View-only mode: ?view=prizepool shows ONLY that section (best for OBS)
+        if (urlParams.get('view')) {
+            targetSection = urlParams.get('view');
+            viewOnly = true;
+            document.documentElement.classList.add('has-hash');
+            document.documentElement.classList.add('view-only');
+        }
+        
+        if (targetSection && !viewOnly) {
+            function scrollToTarget() {
+                var target = document.getElementById(targetSection);
+                if (target) {
+                    var navHeight = document.querySelector('.nav-bar') ? document.querySelector('.nav-bar').offsetHeight : 70;
+                    var top = target.offsetTop - navHeight - 20;
+                    window.scrollTo(0, top);
+                    document.documentElement.scrollTop = top;
+                    document.body.scrollTop = top;
                 }
             }
             
-            // Force scroll after page fully loads (Chrome fix)
+            // Multiple attempts for embedded browsers (OBS/Streamlabs)
+            document.addEventListener('DOMContentLoaded', scrollToTarget);
             window.addEventListener('load', function() {
-                // Multiple attempts to ensure it works
-                scrollToHash();
-                setTimeout(scrollToHash, 100);
-                setTimeout(scrollToHash, 300);
+                scrollToTarget();
+                setTimeout(scrollToTarget, 50);
+                setTimeout(scrollToTarget, 150);
+                setTimeout(scrollToTarget, 300);
+                setTimeout(scrollToTarget, 500);
+            });
+        }
+        
+        // For view-only mode, mark the target section
+        if (viewOnly && targetSection) {
+            document.addEventListener('DOMContentLoaded', function() {
+                var target = document.getElementById(targetSection);
+                if (target) {
+                    target.classList.add('view-target');
+                    // If target is inside a section-wrapper, show that wrapper too
+                    var parentWrapper = target.closest('.section-wrapper');
+                    if (parentWrapper) {
+                        parentWrapper.classList.add('view-target');
+                    }
+                    // If viewing just a stream (up-next-a or up-next-b), add special class
+                    if (targetSection === 'up-next-a' || targetSection === 'up-next-b') {
+                        document.documentElement.classList.add('view-stream-only');
+                    }
+                }
             });
         }
     </script>
@@ -738,6 +785,52 @@
             opacity: 1 !important;
             transform: translateY(0) !important;
             transition: none !important;
+        }
+        
+        /* View-only mode for OBS/Streamlabs - hide everything except target section */
+        html.view-only .section-wrapper {
+            display: none !important;
+        }
+        html.view-only .section-wrapper.view-target {
+            display: block !important;
+            opacity: 1 !important;
+            transform: none !important;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        html.view-only .nav-bar {
+            display: none !important;
+        }
+        html.view-only .cyber-bg,
+        html.view-only .particles,
+        html.view-only .grid-overlay {
+            display: none !important;
+        }
+        html.view-only .container {
+            padding-top: 0;
+        }
+        html.view-only .header-section {
+            display: none !important;
+        }
+        html.view-only .footer {
+            display: none !important;
+        }
+        /* For viewing just Stream A or Stream B */
+        html.view-only .up-next-stream {
+            display: none !important;
+        }
+        html.view-only .up-next-stream.view-target {
+            display: block !important;
+        }
+        html.view-only .single-stream-notice {
+            display: none !important;
+        }
+        /* When viewing a specific stream, hide section title and container styling */
+        html.view-only.view-stream-only .section-title {
+            display: none !important;
+        }
+        html.view-only.view-stream-only .up-next-container {
+            max-width: 100%;
         }
 
         .section-title {
@@ -1455,7 +1548,7 @@
                     <div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span></div><div class="player-row highest-mmr"><div class="mmr-tooltip">Highest AD MMR</div><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ua.png" alt="UA"><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ua.png" alt="UA"><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span></div></div>
                 </div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="Gym Esports">Gym Esports</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Ultra Greed</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#870</span></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Aniki</span></div><span class="player-mmr" data-val="3337">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#932</span></div><img class="player-flag" src="https://flagcdn.com/24x18/sy.png" alt="SY"><span class="player-name">Vata</span></div><span class="player-mmr" data-val="2739">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Inffe</span></div><span class="player-mmr" data-val="3143">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Hoshoryu</span></div><span class="player-mmr" data-val="3393">0</span></div></div></div>
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="TMNT">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><img class="player-flag" src="https://flagcdn.com/24x18/rs.png" alt="RS"><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
+                <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="TMNT">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/dk.png" alt="DK"><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><img class="player-flag" src="https://flagcdn.com/24x18/rs.png" alt="RS"><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="seppo13">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
 
                 <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="Space Marines">Space Marines</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">Space</span></div><span class="player-mmr" data-val="3222">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">friscy</span></div><span class="player-mmr" data-val="3357">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#430</span></div><img class="player-flag" src="https://flagcdn.com/24x18/dz.png" alt="DZ"><span class="player-name">shushu</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#648</span></div><img class="player-flag" src="https://flagcdn.com/24x18/lb.png" alt="LB"><span class="player-name">Nano</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4369</span></div><img class="player-flag" src="https://flagcdn.com/24x18/pe.png" alt="PE"><span class="player-name">Godba</span></div><span class="player-mmr" data-val="3606">0</span></div></div></div>
@@ -1951,10 +2044,19 @@
         // === SCROLL-TRIGGERED ANIMATIONS ===
         const sections = document.querySelectorAll('.section-wrapper');
         
-        // Handle hash navigation - make sections visible first
+        // Handle hash/query navigation - make sections visible first
         function handleHashNavigation() {
+            // Get target from hash or query params
+            let targetId = null;
             if (window.location.hash) {
-                // Make all sections visible immediately so heights are correct
+                targetId = window.location.hash.substring(1);
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('section')) targetId = urlParams.get('section');
+            if (urlParams.get('goto')) targetId = urlParams.get('goto');
+            
+            if (targetId) {
+                // Make all sections visible immediately
                 sections.forEach(section => section.classList.add('visible'));
             }
         }
@@ -2026,7 +2128,7 @@
                 players: [
                     { name: 'Ptenchik', mmr: 3513, rank: 'immortal', rankNum: '#3147', country: 'ru' },
                     { name: 'Foxy', mmr: 3383, rank: 'divine-3', rankNum: null, country: 'ru' },
-                    { name: 'Mirrored', mmr: 3680, rank: 'immortal', rankNum: null, country: 'ru' },
+                    { name: 'Mirrored', mmr: 3680, rank: 'immortal', rankNum: null, country: 'dk' },
                     { name: 'Lost', mmr: 3976, rank: 'immortal', rankNum: '#1562', highest: true, country: 'ru' },
                     { name: 'Lenske', mmr: 3443, rank: 'uncalibrated', rankNum: 'PVT', country: 'rs' }
                 ]
