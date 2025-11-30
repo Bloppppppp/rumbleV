@@ -89,6 +89,10 @@
                     if (targetSection === 'up-next-a' || targetSection === 'up-next-b') {
                         document.documentElement.classList.add('view-stream-only');
                     }
+                    // If viewing a schedule day, add special class
+                    if (targetSection.startsWith('schedule-day')) {
+                        document.documentElement.classList.add('view-day-only');
+                    }
                 }
             });
         }
@@ -812,6 +816,12 @@
         html.view-only .header-section {
             display: none !important;
         }
+        html.view-only .header {
+            display: none !important;
+        }
+        html.view-only .countdown-container {
+            display: none !important;
+        }
         html.view-only .footer {
             display: none !important;
         }
@@ -831,6 +841,23 @@
         }
         html.view-only.view-stream-only .up-next-container {
             max-width: 100%;
+        }
+        /* Schedule day styling */
+        .schedule-day {
+            margin-bottom: 20px;
+        }
+        /* For viewing individual schedule days */
+        html.view-only.view-day-only .schedule-day {
+            display: none !important;
+        }
+        html.view-only.view-day-only .schedule-day.view-target {
+            display: block !important;
+        }
+        html.view-only.view-day-only .section-title {
+            display: none !important;
+        }
+        html.view-only.view-day-only .schedule-grid {
+            display: block !important;
         }
 
         .section-title {
@@ -1723,6 +1750,7 @@
         <div id="schedule" class="section-wrapper">
             <h2 class="section-title">Tournament Schedule</h2>
             <div class="schedule-grid">
+                <div id="schedule-day1" class="schedule-day">
                 <div class="day-header">DAY 1: DEC 6th - GROUP STAGE (BO1)</div>
                 
                 <div class="match-row" id="sched-G1-G2">
@@ -1821,6 +1849,9 @@
                     </div>
                 </div>
 
+                </div>
+
+                <div id="schedule-day2" class="schedule-day">
                 <div class="day-header">DAY 2: DEC 7th - PLAYOFFS START (BO3)</div>
                 <div class="match-row sched-match" data-match="P1"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">A3</span> <span class="sched-score"></span> <span class="sched-team2">B4</span></div><div class="m-desc">BO3</div></div>
                 <div class="match-row sched-match" data-match="P2"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">B3</span> <span class="sched-score"></span> <span class="sched-team2">A4</span></div><div class="m-desc">BO3</div></div>
@@ -1831,13 +1862,20 @@
                 <div class="match-row sched-match" data-match="P5"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P1</span></div><div class="m-desc">BO3</div></div>
                 <div class="match-row sched-match" data-match="P6"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P4</span> <span class="sched-score"></span> <span class="sched-team2">Winner P2</span></div><div class="m-desc">BO3</div></div>
 
+                </div>
+
+                <div id="schedule-day3" class="schedule-day">
                 <div class="day-header">DAY 3: DEC 13th - SEMIS (BO3)</div>
                 <div class="match-row sched-match" data-match="P7"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">Winner P5</span> <span class="sched-score"></span> <span class="sched-team2">Winner P6</span></div><div class="m-desc">BO3</div></div>
                 <div class="match-row sched-match" data-match="P8"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">Winner P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P4</span></div><div class="m-desc">BO3</div></div>
 
+                </div>
+
+                <div id="schedule-day4" class="schedule-day">
                 <div class="day-header">DAY 4: DEC 14th - FINALS</div>
                 <div class="match-row sched-match" data-match="P9"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P8</span> <span class="sched-score"></span> <span class="sched-team2">Winner P7</span></div><div class="m-desc">BO3</div></div>
                 <div class="match-row sched-match" data-match="P10" style="border-color: var(--accent-gold);"><div class="m-time">19:30 CET</div><div class="m-teams" style="color: var(--accent-gold);"><span class="sched-team1">Winner P8</span> <span class="sched-score"></span> <span class="sched-team2">Winner P9</span></div><div class="m-desc">Best of 5</div></div>
+                </div>
             </div>
         </div>
 
