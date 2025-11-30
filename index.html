@@ -681,7 +681,7 @@
 
         /* === SCROLL ANIMATIONS === */
         .section-wrapper { 
-            scroll-margin-top: 140px; 
+            scroll-margin-top: 80px; 
             margin-bottom: 80px;
             opacity: 0;
             transform: translateY(60px);
@@ -1784,7 +1784,17 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToSection(id) { 
+            const target = document.getElementById(id);
+            if (target) {
+                const navHeight = document.querySelector('.nav-bar')?.offsetHeight || 70;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
 
         // === MOUSE GLOW FOLLOWER ===
         const mouseGlow = document.getElementById('mouseGlow');
@@ -1882,6 +1892,32 @@
 
         // === SCROLL-TRIGGERED ANIMATIONS ===
         const sections = document.querySelectorAll('.section-wrapper');
+        
+        // Handle hash navigation properly
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                // Make all sections visible immediately so heights are correct
+                sections.forEach(section => section.classList.add('visible'));
+                
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    // Calculate proper scroll position accounting for sticky nav
+                    const navHeight = document.querySelector('.nav-bar')?.offsetHeight || 70;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'auto'
+                    });
+                }
+            }
+        }
+        
+        // Run on page load after a brief delay for rendering
+        setTimeout(handleHashNavigation, 150);
+        
+        // Also handle hash changes while on page
+        window.addEventListener('hashchange', handleHashNavigation);
         
         const observerOptions = {
             root: null,
