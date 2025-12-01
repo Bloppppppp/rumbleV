@@ -1092,61 +1092,101 @@
 
         /* --- PRIZE POOL --- */
         .prizepool-container { display: flex; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
-        .prizepool-card { flex: 2; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
+        .prizepool-card { flex: 2; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
         .prizepool-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05), transparent 60%); animation: pulsePool 5s infinite alternate; pointer-events: none; }
         @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
         
-        .base-pool { font-size: 0.9rem; color: #666; margin-bottom: -5px; text-transform: uppercase; letter-spacing: 1px; }
-        .total-prize { font-family: 'Black Ops One'; font-size: 5rem; color: var(--accent-green); text-shadow: 0 0 20px var(--accent-green); margin: 5px 0 20px 0; line-height: 1; animation: subtleFlicker 12s infinite; }
+        .base-pool { font-size: 0.95rem; color: #888; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .community-pool { font-size: 1.1rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 10px; }
+        .total-prize { font-family: 'Black Ops One'; font-size: 5.5rem; color: var(--accent-green); text-shadow: 0 0 40px rgba(57, 255, 20, 0.6), 0 0 80px rgba(57, 255, 20, 0.3); margin: 10px 0 25px 0; line-height: 1; animation: prizeGlow 2s ease-in-out infinite alternate; letter-spacing: 4px; }
+        @keyframes prizeGlow {
+            0% { text-shadow: 0 0 40px rgba(57, 255, 20, 0.6), 0 0 80px rgba(57, 255, 20, 0.3); }
+            100% { text-shadow: 0 0 60px rgba(57, 255, 20, 0.9), 0 0 120px rgba(57, 255, 20, 0.5), 0 0 160px rgba(57, 255, 20, 0.3); }
+        }
         
-        /* === 3D ROTATING TROPHY === */
+        /* === 3D FLOATING TROPHY === */
         .trophy-container {
             perspective: 1000px;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .trophy-3d {
-            font-size: 4rem;
+            font-size: 5rem;
             display: inline-block;
-            animation: trophyRotate 6s ease-in-out infinite;
+            animation: trophyFloat 3s ease-in-out infinite;
             transform-style: preserve-3d;
-            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
         }
-        @keyframes trophyRotate {
-            0%, 100% { transform: rotateY(-15deg) rotateX(5deg); }
-            50% { transform: rotateY(15deg) rotateX(-5deg); }
+        @keyframes trophyFloat {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
-        .distribution-grid { display: flex; justify-content: space-around; margin: 30px 0; gap: 10px; flex-wrap: wrap; }
-        .dist-item { display: flex; flex-direction: column; padding: 15px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid #333; min-width: 120px; transition: transform 0.3s, box-shadow 0.3s; }
-        .dist-item:hover { transform: translateY(-5px); }
-        .dist-item.rank-1 { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.15); }
-        .dist-item.rank-1:hover { box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
+        .distribution-grid { display: flex; justify-content: center; margin: 30px 0; gap: 15px; flex-wrap: wrap; }
+        .dist-item { display: flex; flex-direction: column; padding: 18px 25px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 2px solid #333; min-width: 110px; transition: all 0.3s ease; }
+        .dist-item:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .dist-item.rank-1 { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+        .dist-item.rank-1:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
         .dist-item.rank-1 .place { color: var(--accent-gold); }
+        .dist-item.rank-1 .value { color: var(--accent-gold); text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        .dist-item.rank-2 { border-color: var(--accent-silver); }
         .dist-item.rank-2 .place { color: var(--accent-silver); }
+        .dist-item.rank-3 { border-color: var(--accent-bronze); }
         .dist-item.rank-3 .place { color: var(--accent-bronze); }
         
         .place { font-family: 'Black Ops One'; font-size: 1.5rem; margin-bottom: 5px; }
         .percent { font-size: 0.9rem; color: #888; font-weight: 700; }
-        .value { font-size: 1.2rem; font-weight: 700; color: #eee; margin-top: 5px; }
+        .value { font-size: 1.3rem; font-weight: 700; color: var(--accent-green); margin-top: 5px; }
 
         .donate-btn {
-            display: inline-block; margin-top: 10px; padding: 15px 40px;
-            background: linear-gradient(90deg, var(--accent-green), #2a8a1a);
-            color: #000; font-family: 'Black Ops One'; font-size: 1.2rem; text-transform: uppercase;
-            text-decoration: none; border-radius: 50px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
-            transition: all 0.3s; position: relative; z-index: 2;
+            display: inline-block; margin-top: 20px; padding: 18px 50px;
+            background: linear-gradient(135deg, var(--accent-gold), #ff8c00);
+            color: #000; font-family: 'Black Ops One'; font-size: 1.4rem; text-transform: uppercase;
+            text-decoration: none; border-radius: 50px; 
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s; position: relative; z-index: 2; overflow: hidden;
+            animation: donateAttention 3s ease-in-out infinite;
         }
-        .donate-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(57, 255, 20, 0.6); color: #000; }
+        .donate-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            animation: donateShine 2.5s infinite;
+        }
+        @keyframes donateShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes donateAttention {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .donate-btn:hover { transform: scale(1.1) !important; box-shadow: 0 10px 50px rgba(255, 215, 0, 0.7); color: #000; }
+        .donate-btn i { margin-right: 10px; }
 
         /* Side Panel for Donators */
-        .donators-card { flex: 1; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; min-width: 300px; display: flex; flex-direction: column; }
-        .donators-title { font-family: 'Black Ops One'; color: #fff; font-size: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; text-align: center; letter-spacing: 1px; }
-        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; max-height: 300px; }
-        .donator-item { display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; font-weight: 600; font-size: 0.95rem; }
+        .donators-card { flex: 1; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px; min-width: 320px; display: flex; flex-direction: column; }
+        .donators-title { font-family: 'Black Ops One'; color: var(--accent-gold); font-size: 1.4rem; border-bottom: 2px solid var(--accent-gold); padding-bottom: 12px; margin-bottom: 5px; text-align: center; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .donators-subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 15px; }
+        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; max-height: 350px; }
+        .donator-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
+        .donator-item:hover { background: rgba(57, 255, 20, 0.05); padding-left: 20px; }
         .donator-item:last-child { border-bottom: none; }
-        .donator-amount { color: var(--accent-green); }
-        .donator-item.top { color: var(--accent-gold); text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
+        .donator-amount { color: var(--accent-green); font-family: 'Rajdhani'; font-weight: 700; font-size: 1.15rem; }
+        .donator-item.rank-1 { color: var(--accent-gold); font-size: 1.1rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+        .donator-item.rank-1 .donator-amount { color: var(--accent-gold); }
+        .donator-item.rank-2 { color: var(--accent-silver); }
+        .donator-item.rank-2 .donator-amount { color: var(--accent-silver); }
+        .donator-item.rank-3 { color: var(--accent-bronze); }
+        .donator-item.rank-3 .donator-amount { color: var(--accent-bronze); }
+        .donator-name { display: flex; align-items: center; gap: 8px; }
+        .donator-crown { font-size: 1rem; }
+        .donator-count { text-align: center; color: #666; font-size: 0.85rem; margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* --- GROUPS TABLE --- */
         .groups-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
@@ -1604,41 +1644,44 @@
                         <div class="trophy-3d">🏆</div>
                     </div>
                     <div class="base-pool">Base Pool: 500€ (Host)</div>
-                    <div class="total-prize">615€</div>
+                    <div class="community-pool">+ <span id="community-total">115</span>€ Community</div>
+                    <div class="total-prize" id="total-prize">615€</div>
                     <div class="distribution-grid">
                         <div class="dist-item rank-1">
                             <span class="place">1st</span>
                             <span class="percent">50%</span>
-                            <span class="value">~307€</span>
+                            <span class="value" id="prize-1st">~307€</span>
                         </div>
                         <div class="dist-item rank-2">
                             <span class="place">2nd</span>
                             <span class="percent">25%</span>
-                            <span class="value">~153€</span>
+                            <span class="value" id="prize-2nd">~153€</span>
                         </div>
                         <div class="dist-item rank-3">
                             <span class="place">3rd</span>
                             <span class="percent">15%</span>
-                            <span class="value">~92€</span>
+                            <span class="value" id="prize-3rd">~92€</span>
                         </div>
                         <div class="dist-item">
                             <span class="place">4th</span>
                             <span class="percent">10%</span>
-                            <span class="value">~61€</span>
+                            <span class="value" id="prize-4th">~61€</span>
                         </div>
                     </div>
-                    <a href="https://www.paypal.com/donate/?hosted_button_id=2A52H56DRV48Q" target="_blank" class="donate-btn">Contribute to Pool</a>
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=2A52H56DRV48Q" target="_blank" class="donate-btn"><i class="fa-solid fa-heart"></i> Donate Now</a>
                 </div>
                 
                 <div class="donators-card">
-                    <div class="donators-title">TOP CONTRIBUTORS</div>
-                    <ul class="donator-list">
-                        <li class="donator-item top"><span>Mogul</span><span class="donator-amount">40€</span></li>
-                        <li class="donator-item top"><span>polo</span><span class="donator-amount">30€</span></li>
-                        <li class="donator-item"><span>Gigipaturica</span><span class="donator-amount">25€</span></li>
-                        <li class="donator-item"><span>Burrito</span><span class="donator-amount">10€</span></li>
-                        <li class="donator-item"><span>anonymous</span><span class="donator-amount">10€</span></li>
+                    <div class="donators-title">🎖️ HALL OF HEROES</div>
+                    <div class="donators-subtitle">Growing the prize pool for the community</div>
+                    <ul class="donator-list" id="donator-list">
+                        <li class="donator-item rank-1"><span class="donator-name"><span class="donator-crown">👑</span>Mogul</span><span class="donator-amount">40€</span></li>
+                        <li class="donator-item rank-2"><span class="donator-name">polo</span><span class="donator-amount">30€</span></li>
+                        <li class="donator-item rank-3"><span class="donator-name">Gigipaturica</span><span class="donator-amount">25€</span></li>
+                        <li class="donator-item"><span class="donator-name">Burrito</span><span class="donator-amount">10€</span></li>
+                        <li class="donator-item"><span class="donator-name">anonymous</span><span class="donator-amount">10€</span></li>
                     </ul>
+                    <div class="donator-count"><span id="donator-count">5</span> contributors 💚</div>
                 </div>
             </div>
         </div>
@@ -2695,6 +2738,77 @@
         // Fetch immediately and then every 30 seconds
         fetchResults();
         setInterval(fetchResults, 30000);
+        
+        // === GOOGLE SHEETS DONATIONS INTEGRATION ===
+        const DONATIONS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR549ECatWJ-ysAtFWu4v0lIZjFqzlrq-m50r62UiJ6QDRTQGsJ7ZTxWNWixHFiPPjtTm3clkP0aJN9/pub?output=csv';
+        const BASE_POOL = 500;
+        
+        async function fetchDonations() {
+            try {
+                const urlWithCache = DONATIONS_SHEET_URL + '&_=' + Date.now();
+                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(urlWithCache);
+                const response = await fetch(proxyUrl);
+                const csvText = await response.text();
+                console.log('Donations CSV loaded:', csvText.substring(0, 100));
+                const lines = csvText.trim().split('\n');
+                
+                // Parse donations (skip header row)
+                const donations = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',');
+                    if (cols.length >= 2) {
+                        const name = cols[0].trim();
+                        const amount = parseFloat(cols[1]) || 0;
+                        if (name && amount > 0) {
+                            donations.push({ name, amount });
+                        }
+                    }
+                }
+                
+                // Sort by amount (highest first)
+                donations.sort((a, b) => b.amount - a.amount);
+                
+                // Calculate totals
+                const communityTotal = donations.reduce((sum, d) => sum + d.amount, 0);
+                const totalPrize = BASE_POOL + communityTotal;
+                
+                // Update prize pool display
+                document.getElementById('community-total').textContent = communityTotal;
+                document.getElementById('total-prize').textContent = totalPrize + '€';
+                document.getElementById('prize-1st').textContent = '~' + Math.round(totalPrize * 0.50) + '€';
+                document.getElementById('prize-2nd').textContent = '~' + Math.round(totalPrize * 0.25) + '€';
+                document.getElementById('prize-3rd').textContent = '~' + Math.round(totalPrize * 0.15) + '€';
+                document.getElementById('prize-4th').textContent = '~' + Math.round(totalPrize * 0.10) + '€';
+                
+                // Update donator list
+                const donatorList = document.getElementById('donator-list');
+                if (donatorList && donations.length > 0) {
+                    donatorList.innerHTML = donations.map((d, index) => {
+                        let rankClass = '';
+                        let crownHtml = '';
+                        if (index === 0) {
+                            rankClass = 'rank-1';
+                            crownHtml = '<span class="donator-crown">👑</span>';
+                        } else if (index === 1) {
+                            rankClass = 'rank-2';
+                        } else if (index === 2) {
+                            rankClass = 'rank-3';
+                        }
+                        return `<li class="donator-item ${rankClass}"><span class="donator-name">${crownHtml}${d.name}</span><span class="donator-amount">${d.amount}€</span></li>`;
+                    }).join('');
+                }
+                
+                // Update count
+                document.getElementById('donator-count').textContent = donations.length;
+                
+            } catch (error) {
+                console.log('Donations fetch error (using fallback):', error);
+            }
+        }
+        
+        // Fetch donations on load and every 60 seconds
+        fetchDonations();
+        setInterval(fetchDonations, 60000);
     </script>
 </body>
 </html>
