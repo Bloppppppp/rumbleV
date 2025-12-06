@@ -1896,14 +1896,53 @@
 
                 <div id="schedule-day2" class="schedule-day">
                 <div class="day-header">DAY 2: DEC 7th - PLAYOFFS START (BO3)</div>
-                <div class="match-row sched-match" data-match="P1"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">A3</span> <span class="sched-score"></span> <span class="sched-team2">B4</span></div><div class="m-desc">BO3</div></div>
-                <div class="match-row sched-match" data-match="P2"><div class="m-time">17:00 CET</div><div class="m-teams"><span class="sched-team1">B3</span> <span class="sched-score"></span> <span class="sched-team2">A4</span></div><div class="m-desc">BO3</div></div>
-                
-                <div class="match-row sched-match" data-match="P3"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">A1</span> <span class="sched-score"></span> <span class="sched-team2">B2</span></div><div class="m-desc">BO3</div></div>
-                <div class="match-row sched-match" data-match="P4"><div class="m-time">19:30 CET</div><div class="m-teams"><span class="sched-team1">B1</span> <span class="sched-score"></span> <span class="sched-team2">A2</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row" id="sched-P1-P2">
+                    <div class="m-time">17:00 CET</div>
+                    <div class="m-games-container">
+                        <div class="sched-match" data-match="P2">
+                            <span class="m-group-tag">LB R1</span><span class="m-game-single"><span class="sched-team1">B3</span> <span class="sched-score"></span> <span class="sched-team2">A4</span></span>
+                            <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                            <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                        <div class="m-divider"></div>
+                        <div class="sched-match" data-match="P1">
+                            <span class="m-group-tag">LB R1</span><span class="m-game-single"><span class="sched-team1">A3</span> <span class="sched-score"></span> <span class="sched-team2">B4</span></span>
+                            <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="match-row sched-match" data-match="P5"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P1</span></div><div class="m-desc">BO3</div></div>
-                <div class="match-row sched-match" data-match="P6"><div class="m-time">22:00 CET</div><div class="m-teams"><span class="sched-team1">Loser P4</span> <span class="sched-score"></span> <span class="sched-team2">Winner P2</span></div><div class="m-desc">BO3</div></div>
+                <div class="match-row" id="sched-P3-P4">
+                    <div class="m-time">19:30 CET</div>
+                    <div class="m-games-container">
+                        <div class="sched-match" data-match="P3">
+                            <span class="m-group-tag">UB SEMI</span><span class="m-game-single"><span class="sched-team1">A1</span> <span class="sched-score"></span> <span class="sched-team2">B2</span></span>
+                            <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                            <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                        <div class="m-divider"></div>
+                        <div class="sched-match" data-match="P4">
+                            <span class="m-group-tag">UB SEMI</span><span class="m-game-single"><span class="sched-team1">B1</span> <span class="sched-score"></span> <span class="sched-team2">A2</span></span>
+                            <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="match-row" id="sched-P5-P6">
+                    <div class="m-time">22:00 CET</div>
+                    <div class="m-games-container">
+                        <div class="sched-match" data-match="P5">
+                            <span class="m-group-tag">LB QF</span><span class="m-game-single"><span class="sched-team1">Loser P3</span> <span class="sched-score"></span> <span class="sched-team2">Winner P1</span></span>
+                            <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                            <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-link youtube"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                        <div class="m-divider"></div>
+                        <div class="sched-match" data-match="P6">
+                            <span class="m-group-tag">LB QF</span><span class="m-game-single"><span class="sched-team1">Loser P4</span> <span class="sched-score"></span> <span class="sched-team2">Winner P2</span></span>
+                            <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-link twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+                </div>
 
                 </div>
 
@@ -2264,14 +2303,14 @@
         // Stream A matches (Group A on Day 1, top bracket on Day 2)
         const streamAMatches = {
             'G1': true, 'G3': true, 'G5': true, 'G7': true, 'G9': true, 'G11': true, // Group A
-            'P3': true, 'P4': true, 'P5': true, // Day 2 - UB Semis + LB Quarter 1
+            'P2': true, 'P3': true, 'P5': true, // Day 2 - LB R1 + UB Semi + LB Quarter
             'P7': true, 'P8': true, // Day 3
             'P9': true, 'P10': true // Day 4
         };
         // Stream B matches (Group B on Day 1, bottom bracket on Day 2)
         const streamBMatches = {
             'G2': true, 'G4': true, 'G6': true, 'G8': true, 'G10': true, 'G12': true, // Group B
-            'P1': true, 'P2': true, 'P6': true // Day 2 - LB Round 1 + LB Quarter 2
+            'P1': true, 'P4': true, 'P6': true // Day 2 - LB Round 1 + UB Semi + LB Quarter
         };
         
         // Match stage names
@@ -2611,8 +2650,8 @@
             });
             
             // Match order for each stream
-            const streamAOrder = ['G1', 'G3', 'G5', 'G7', 'G9', 'G11', 'P3', 'P4', 'P5', 'P7', 'P8', 'P9', 'P10'];
-            const streamBOrder = ['G2', 'G4', 'G6', 'G8', 'G10', 'G12', 'P1', 'P2', 'P6'];
+            const streamAOrder = ['G1', 'G3', 'G5', 'G7', 'G9', 'G11', 'P2', 'P3', 'P5', 'P7', 'P8', 'P9', 'P10'];
+            const streamBOrder = ['G2', 'G4', 'G6', 'G8', 'G10', 'G12', 'P1', 'P4', 'P6'];
             
             // Find next match for Stream A
             let nextMatchA = null;
