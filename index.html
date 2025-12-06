@@ -2305,6 +2305,14 @@
                 const firstCell = rows[0].split(',')[0].replace(/"/g, '').trim();
                 const dataRows = (firstCell === 'Match' || firstCell === 'match') ? rows.slice(1) : rows;
                 
+                // Normalize team names from sheet
+                const normalizeTeamName = (name) => {
+                    const teamNameMap = {
+                        'shottyteam': 'SHOTGUN MARRIAGE'
+                    };
+                    return teamNameMap[name] || name;
+                };
+                
                 const results = dataRows.map(row => {
                     const cols = parseCSVRow(row);
                     return {
@@ -2313,11 +2321,11 @@
                         time: cols[2],
                         stage: cols[3],
                         format: cols[4],
-                        team1: cols[5],
+                        team1: normalizeTeamName(cols[5]),
                         score1: cols[6] !== '' ? parseInt(cols[6]) : null,
                         score2: cols[7] !== '' ? parseInt(cols[7]) : null,
-                        team2: cols[8],
-                        winner: cols[9],
+                        team2: normalizeTeamName(cols[8]),
+                        winner: normalizeTeamName(cols[9]),
                         status: cols[10]
                     };
                 }).filter(r => r.matchId);
