@@ -2702,6 +2702,14 @@
                 resolvedName = teamName || 'TBD';
             }
             
+            // Normalize team names from sheet to match teamsData
+            const teamNameMap = {
+                'shottyteam': 'SHOTGUN MARRIAGE'
+            };
+            if (teamNameMap[resolvedName]) {
+                resolvedName = teamNameMap[resolvedName];
+            }
+            
             nameEl.textContent = resolvedName || 'TBD';
             
             // Add player info if we have it
