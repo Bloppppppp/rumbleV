@@ -2513,11 +2513,18 @@
                 return groupPositions[teamRef] || teamRef;
             }
             
+            // Helper to check if match is complete based on format
+            function isMatchComplete(match) {
+                if (!match || match.score1 === null || match.score2 === null) return false;
+                const winsNeeded = match.format === 'BO5' ? 3 : (match.format === 'BO3' ? 2 : 1);
+                return match.score1 >= winsNeeded || match.score2 >= winsNeeded;
+            }
+            
             // Check if it's a Winner/Loser reference
             if (teamRef.includes('Winner ')) {
                 const matchRef = teamRef.replace('Winner ', '');
                 const refMatch = results.find(m => m.matchId === matchRef);
-                if (refMatch && refMatch.score1 !== null && refMatch.score2 !== null) {
+                if (refMatch && isMatchComplete(refMatch)) {
                     const winnerName = refMatch.score1 > refMatch.score2 ? refMatch.team1 : refMatch.team2;
                     // Recursively resolve in case winner is also a reference
                     return resolveTeamName(winnerName, results);
@@ -2528,7 +2535,7 @@
             if (teamRef.includes('Loser ')) {
                 const matchRef = teamRef.replace('Loser ', '');
                 const refMatch = results.find(m => m.matchId === matchRef);
-                if (refMatch && refMatch.score1 !== null && refMatch.score2 !== null) {
+                if (refMatch && isMatchComplete(refMatch)) {
                     const loserName = refMatch.score1 < refMatch.score2 ? refMatch.team1 : refMatch.team2;
                     // Recursively resolve in case loser is also a reference
                     return resolveTeamName(loserName, results);
@@ -2620,9 +2627,15 @@
                 team1El.classList.remove('sched-winner');
                 team2El.classList.remove('sched-winner');
                 
+                // Determine wins needed based on format
+                const winsNeeded = match.format === 'BO5' ? 3 : (match.format === 'BO3' ? 2 : 1);
+                const isCompleted = match.status === 'Completed' || 
+                    (match.score1 !== null && match.score2 !== null && 
+                     (match.score1 >= winsNeeded || match.score2 >= winsNeeded));
+                
                 if (match.status === 'Live') {
                     schedEl.classList.add('live');
-                } else if (match.status === 'Completed' || (match.score1 !== null && match.score2 !== null && match.score1 !== match.score2)) {
+                } else if (isCompleted) {
                     schedEl.classList.add('completed');
                     
                     // Highlight winner
@@ -2641,7 +2654,9 @@
             const liveMatches = new Set();
             
             results.forEach(match => {
-                if (match.score1 !== null && match.score2 !== null && match.score1 !== match.score2) {
+                const winsNeeded = match.format === 'BO5' ? 3 : (match.format === 'BO3' ? 2 : 1);
+                if (match.score1 !== null && match.score2 !== null && 
+                    (match.score1 >= winsNeeded || match.score2 >= winsNeeded)) {
                     completedMatches.add(match.matchId);
                 }
                 if (match.status === 'Live') {
