@@ -688,6 +688,31 @@
             z-index: 2;
             animation: vsPulse 1.5s ease-in-out infinite;
         }
+        .versus-score {
+            font-family: 'Black Ops One';
+            font-size: 3rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 25px var(--accent-green), 0 0 50px var(--accent-green);
+            z-index: 2;
+            animation: vsPulse 1.5s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        .versus-score .score1,
+        .versus-score .score2 {
+            display: inline-block;
+            min-width: 1.2ch;
+            text-align: center;
+        }
+        .versus-middle.has-score .versus-text {
+            display: none;
+        }
+        .versus-middle.has-score .versus-score {
+            display: block !important;
+        }
         @keyframes vsPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -1549,9 +1574,10 @@
                             <div class="versus-team-name">TBD</div>
                             <div class="versus-players-list"></div>
                         </div>
-                        <div class="versus-middle">
+                        <div class="versus-middle" id="versus-middle-a">
                             <div class="versus-glow"></div>
                             <div class="versus-text">VS</div>
+                            <div class="versus-score" id="score-a" style="display: none;"><span class="score1">0</span> - <span class="score2">0</span></div>
                             <div class="versus-lightning">
                                 <div class="lightning-bolt"></div>
                                 <div class="lightning-bolt delay"></div>
@@ -1583,9 +1609,10 @@
                             <div class="versus-team-name">TBD</div>
                             <div class="versus-players-list"></div>
                         </div>
-                        <div class="versus-middle">
+                        <div class="versus-middle" id="versus-middle-b">
                             <div class="versus-glow"></div>
                             <div class="versus-text">VS</div>
+                            <div class="versus-score" id="score-b" style="display: none;"><span class="score1">0</span> - <span class="score2">0</span></div>
                             <div class="versus-lightning">
                                 <div class="lightning-bolt"></div>
                                 <div class="lightning-bolt delay"></div>
@@ -2703,6 +2730,17 @@
                     stageA.innerHTML = '<span class="live-badge">🔴 LIVE</span> ' + (matchStages[nextMatchA.matchId] || '');
                 }
                 
+                // Show score if available
+                const versusMiddleA = document.getElementById('versus-middle-a');
+                const scoreA = document.getElementById('score-a');
+                if (nextMatchA.score1 !== null && nextMatchA.score2 !== null) {
+                    versusMiddleA.classList.add('has-score');
+                    scoreA.querySelector('.score1').textContent = nextMatchA.score1;
+                    scoreA.querySelector('.score2').textContent = nextMatchA.score2;
+                } else {
+                    versusMiddleA.classList.remove('has-score');
+                }
+                
                 updateVersusTeam(teamA1, nextMatchA.team1, results);
                 updateVersusTeam(teamA2, nextMatchA.team2, results);
             } else {
@@ -2728,6 +2766,17 @@
                 // Check if match is live
                 if (liveMatches.has(nextMatchB.matchId)) {
                     stageB.innerHTML = '<span class="live-badge">🔴 LIVE</span> ' + (matchStages[nextMatchB.matchId] || '');
+                }
+                
+                // Show score if available
+                const versusMiddleB = document.getElementById('versus-middle-b');
+                const scoreB = document.getElementById('score-b');
+                if (nextMatchB.score1 !== null && nextMatchB.score2 !== null) {
+                    versusMiddleB.classList.add('has-score');
+                    scoreB.querySelector('.score1').textContent = nextMatchB.score1;
+                    scoreB.querySelector('.score2').textContent = nextMatchB.score2;
+                } else {
+                    versusMiddleB.classList.remove('has-score');
                 }
                 
                 updateVersusTeam(teamB1, nextMatchB.team1, results);
