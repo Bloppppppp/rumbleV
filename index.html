@@ -1116,8 +1116,8 @@
         @keyframes fadeIn { to { opacity: 1; } }
 
         /* --- PRIZE POOL --- */
-        .prizepool-container { display: flex; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
-        .prizepool-card { flex: 2; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
+        .prizepool-container { display: flex; flex-direction: column; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .prizepool-card { flex: none; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
         .prizepool-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05), transparent 60%); animation: pulsePool 5s infinite alternate; pointer-events: none; }
         @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
         
@@ -1195,13 +1195,14 @@
         .donate-btn i { margin-right: 10px; }
 
         /* Side Panel for Donators */
-        .donators-card { flex: 1; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px; min-width: 320px; display: flex; flex-direction: column; }
+        .donators-card { width: 100%; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px 40px; display: flex; flex-direction: column; }
         .donators-title { font-family: 'Black Ops One'; color: var(--accent-gold); font-size: 1.4rem; border-bottom: 2px solid var(--accent-gold); padding-bottom: 12px; margin-bottom: 5px; text-align: center; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
         .donators-subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 15px; }
-        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; max-height: 350px; }
-        .donator-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
-        .donator-item:hover { background: rgba(57, 255, 20, 0.05); padding-left: 20px; }
-        .donator-item:last-child { border-bottom: none; }
+        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 25px; }
+        @media (max-width: 900px) { .donator-list { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .donator-list { grid-template-columns: 1fr; } }
+        .donator-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(0,0,0,0.3); border-radius: 6px; color: #ccc; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
+        .donator-item:hover { background: rgba(57, 255, 20, 0.15); transform: translateX(5px); }
         .donator-amount { color: var(--accent-green); font-family: 'Rajdhani'; font-weight: 700; font-size: 1.15rem; }
         .donator-item.rank-1 { color: var(--accent-gold); font-size: 1.1rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
         .donator-item.rank-1 .donator-amount { color: var(--accent-gold); }
