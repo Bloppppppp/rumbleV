@@ -844,6 +844,11 @@
         html.view-only .header {
             display: none !important;
         }
+        html.view-only .header.view-target {
+            display: block !important;
+            margin: 0;
+            padding: 40px 20px;
+        }
         html.view-only .countdown-container {
             display: none !important;
         }
@@ -1547,7 +1552,7 @@
 
     <div class="container">
         
-        <header class="header">
+        <header class="header" id="title-banner">
             <div class="logo-stack">
                 <div class="typewriter-container">
                     <div class="h-text h-rumble typewriter">RUMBLE</div>
