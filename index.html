@@ -1166,14 +1166,14 @@
         @keyframes fadeIn { to { opacity: 1; } }
 
         /* --- PRIZE POOL --- */
-        .prizepool-container { display: flex; flex-direction: column; gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .prizepool-card { flex: none; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
+        .prizepool-container { display: flex; flex-direction: column; gap: 15px; max-width: 1200px; margin: 0 auto; }
+        .prizepool-card { flex: none; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px 40px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(57, 255, 20, 0.1); }
         .prizepool-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05), transparent 60%); animation: pulsePool 5s infinite alternate; pointer-events: none; }
         @keyframes pulsePool { 0% { opacity: 0.5; } 100% { opacity: 1; } }
         
-        .base-pool { font-size: 0.95rem; color: #888; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .community-pool { font-size: 1.1rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 10px; }
-        .total-prize { font-family: 'Black Ops One'; font-size: 5.5rem; color: var(--accent-green); text-shadow: 0 0 40px rgba(57, 255, 20, 0.6), 0 0 80px rgba(57, 255, 20, 0.3); margin: 10px 0 25px 0; line-height: 1; animation: prizeGlow 2s ease-in-out infinite alternate; letter-spacing: 4px; }
+        .base-pool { font-size: 0.85rem; color: #888; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; }
+        .community-pool { font-size: 0.95rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 5px; }
+        .total-prize { font-family: 'Black Ops One'; font-size: 4rem; color: var(--accent-green); text-shadow: 0 0 40px rgba(57, 255, 20, 0.6), 0 0 80px rgba(57, 255, 20, 0.3); margin: 5px 0 15px 0; line-height: 1; animation: prizeGlow 2s ease-in-out infinite alternate; letter-spacing: 4px; }
         @keyframes prizeGlow {
             0% { text-shadow: 0 0 40px rgba(57, 255, 20, 0.6), 0 0 80px rgba(57, 255, 20, 0.3); }
             100% { text-shadow: 0 0 60px rgba(57, 255, 20, 0.9), 0 0 120px rgba(57, 255, 20, 0.5), 0 0 160px rgba(57, 255, 20, 0.3); }
@@ -1183,22 +1183,22 @@
         .trophy-container {
             perspective: 1000px;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
         .trophy-3d {
-            font-size: 5rem;
+            font-size: 3rem;
             display: inline-block;
             animation: trophyFloat 3s ease-in-out infinite;
             transform-style: preserve-3d;
-            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
         }
         @keyframes trophyFloat {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
             50% { transform: translateY(-12px) rotate(3deg); }
         }
 
-        .distribution-grid { display: flex; justify-content: center; margin: 30px 0; gap: 15px; flex-wrap: wrap; }
-        .dist-item { display: flex; flex-direction: column; padding: 18px 25px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 2px solid #333; min-width: 110px; transition: all 0.3s ease; }
+        .distribution-grid { display: flex; justify-content: center; margin: 15px 0; gap: 12px; flex-wrap: wrap; }
+        .dist-item { display: flex; flex-direction: column; padding: 12px 20px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 2px solid #333; min-width: 90px; transition: all 0.3s ease; }
         .dist-item:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .dist-item.rank-1 { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
         .dist-item.rank-1:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
@@ -1209,14 +1209,14 @@
         .dist-item.rank-3 { border-color: var(--accent-bronze); }
         .dist-item.rank-3 .place { color: var(--accent-bronze); }
         
-        .place { font-family: 'Black Ops One'; font-size: 1.5rem; margin-bottom: 5px; }
-        .percent { font-size: 0.9rem; color: #888; font-weight: 700; }
-        .value { font-size: 1.3rem; font-weight: 700; color: var(--accent-green); margin-top: 5px; }
+        .place { font-family: 'Black Ops One'; font-size: 1.2rem; margin-bottom: 3px; }
+        .percent { font-size: 0.75rem; color: #888; font-weight: 700; }
+        .value { font-size: 1rem; font-weight: 700; color: var(--accent-green); margin-top: 3px; }
 
         .donate-btn {
-            display: inline-block; margin-top: 20px; padding: 18px 50px;
+            display: inline-block; margin-top: 10px; padding: 12px 35px;
             background: linear-gradient(135deg, var(--accent-gold), #ff8c00);
-            color: #000; font-family: 'Black Ops One'; font-size: 1.4rem; text-transform: uppercase;
+            color: #000; font-family: 'Black Ops One'; font-size: 1.1rem; text-transform: uppercase;
             text-decoration: none; border-radius: 50px; 
             box-shadow: 0 5px 30px rgba(255, 215, 0, 0.5);
             transition: all 0.3s; position: relative; z-index: 2; overflow: hidden;
@@ -1245,13 +1245,13 @@
         .donate-btn i { margin-right: 10px; }
 
         /* Side Panel for Donators */
-        .donators-card { width: 100%; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px 40px; display: flex; flex-direction: column; }
-        .donators-title { font-family: 'Black Ops One'; color: var(--accent-gold); font-size: 1.4rem; border-bottom: 2px solid var(--accent-gold); padding-bottom: 12px; margin-bottom: 5px; text-align: center; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
-        .donators-subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 15px; }
-        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 25px; }
+        .donators-card { width: 100%; background: var(--glass-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px 30px; display: flex; flex-direction: column; }
+        .donators-title { font-family: 'Black Ops One'; color: var(--accent-gold); font-size: 1.1rem; border-bottom: 2px solid var(--accent-gold); padding-bottom: 8px; margin-bottom: 3px; text-align: center; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .donators-subtitle { text-align: center; color: #888; font-size: 0.75rem; margin-bottom: 10px; }
+        .donator-list { list-style: none; padding: 0; margin: 0; flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px 15px; }
         @media (max-width: 900px) { .donator-list { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 500px) { .donator-list { grid-template-columns: 1fr; } }
-        .donator-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(0,0,0,0.3); border-radius: 6px; color: #ccc; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
+        .donator-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: rgba(0,0,0,0.3); border-radius: 4px; color: #ccc; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease; }
         .donator-item:hover { background: rgba(57, 255, 20, 0.15); transform: translateX(5px); }
         .donator-amount { color: var(--accent-green); font-family: 'Rajdhani'; font-weight: 700; font-size: 1.15rem; }
         .donator-item.rank-1 { color: var(--accent-gold); font-size: 1.1rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
@@ -1262,7 +1262,7 @@
         .donator-item.rank-3 .donator-amount { color: var(--accent-bronze); }
         .donator-name { display: flex; align-items: center; gap: 8px; }
         .donator-crown { font-size: 1rem; }
-        .donator-count { text-align: center; color: #666; font-size: 0.85rem; margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .donator-count { text-align: center; color: #666; font-size: 0.75rem; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.05); }
 
         /* --- GROUPS TABLE --- */
         .groups-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
