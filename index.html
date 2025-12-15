@@ -1045,7 +1045,8 @@
         .champion-badge {
             position: absolute;
             top: -12px;
-            right: -12px;
+            left: -12px;
+            right: auto;
             background: linear-gradient(
                 135deg,
                 #ffd700 0%,
@@ -1063,7 +1064,7 @@
             font-size: 0.65rem;
             padding: 6px 10px;
             border-radius: 4px;
-            transform: rotate(12deg);
+            transform: rotate(-12deg);
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
             z-index: 20;
             text-transform: uppercase;
@@ -1103,6 +1104,45 @@
         }
         .placement-badge.place-7-8 {
             background: linear-gradient(135deg, #3a3a3a 0%, #555 50%, #3a3a3a 100%);
+        }
+        .placement-badge.place-1 {
+            background: linear-gradient(135deg, #ffd700 0%, #fff 15%, #ffd700 30%, #ff6b6b 45%, #ffd700 60%, #6bffb8 75%, #ffd700 90%, #fff 100%);
+            background-size: 200% 200%;
+            color: #000;
+            border: 2px solid rgba(255,255,255,0.5);
+            animation: holographic 3s ease infinite;
+            font-size: 0.8rem;
+            padding: 8px 14px;
+        }
+        .team-card.champion {
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.2);
+        }
+        .team-card.champion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 50%, rgba(255,215,0,0.1) 100%);
+            pointer-events: none;
+            border-radius: 12px;
+        }
+        .placement-badge.place-2 {
+            background: linear-gradient(135deg, #c0c0c0 0%, #fff 50%, #c0c0c0 100%);
+            color: #333;
+            border: 1px solid #fff;
+        }
+        .placement-badge.place-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #daa520 50%, #cd7f32 100%);
+            color: #fff;
+            border: 1px solid #daa520;
+        }
+        .placement-badge.place-4 {
+            background: linear-gradient(135deg, #4a5568 0%, #718096 50%, #4a5568 100%);
+            color: #fff;
+            border: 1px solid #718096;
         }
         .eliminated-text {
             position: absolute;
@@ -1210,6 +1250,7 @@
         .dist-item.rank-3 .place { color: var(--accent-bronze); }
         
         .place { font-family: 'Black Ops One'; font-size: 1.2rem; margin-bottom: 3px; }
+        .dist-team { font-size: 0.7rem; color: #aaa; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
         .percent { font-size: 0.75rem; color: #888; font-weight: 700; }
         .value { font-size: 1rem; font-weight: 700; color: var(--accent-green); margin-top: 3px; }
 
@@ -1568,7 +1609,6 @@
         </header>
 
         <nav class="nav-bar">
-            <button class="nav-btn" onclick="scrollToSection('up-next')">Up Next</button>
             <button class="nav-btn" onclick="scrollToSection('teams')">Teams</button>
             <button class="nav-btn" onclick="scrollToSection('prizepool')">Prize Pool</button>
             <button class="nav-btn" onclick="scrollToSection('groups')">Groups</button>
@@ -1577,7 +1617,7 @@
             <a href="https://discord.gg/sQFwGxFYFB" target="_blank" class="nav-btn discord"><i class="fa-brands fa-discord"></i> Join Discord</a>
         </nav>
 
-        <div class="countdown-container">
+        <div class="countdown-container" style="display: none;">
             <div class="countdown-label">TOURNAMENT STARTS IN</div>
             <div class="countdown-timer">
                 <div class="cd-box">
@@ -1600,103 +1640,24 @@
         </div>
 
         <!-- UP NEXT SECTION -->
-        <div id="up-next" class="section-wrapper up-next-section">
-            <h2 class="section-title">Up Next</h2>
-            <div class="up-next-container">
-                <!-- Stream A -->
-                <div class="up-next-stream" id="up-next-a">
-                    <div class="stream-header">
-                        <div class="stream-badge stream-a">
-                            <i class="fa-brands fa-twitch"></i> STREAM A
-                        </div>
-                        <div class="stream-watch-buttons">
-                            <a href="https://www.twitch.tv/bloppdota2" target="_blank" class="stream-watch-btn twitch">
-                                <i class="fa-brands fa-twitch"></i> Twitch
-                            </a>
-                            <a href="https://www.youtube.com/@bloppdota2" target="_blank" class="stream-watch-btn youtube">
-                                <i class="fa-brands fa-youtube"></i> YouTube
-                            </a>
-                        </div>
-                    </div>
-                    <div class="match-stage" id="stage-a">GROUP STAGE</div>
-                    <div class="match-time" id="time-a">17:00 CET</div>
-                    <div class="versus-container">
-                        <div class="versus-team-card" id="team-a1">
-                            <div class="versus-team-name">TBD</div>
-                            <div class="versus-players-list"></div>
-                        </div>
-                        <div class="versus-middle" id="versus-middle-a">
-                            <div class="versus-glow"></div>
-                            <div class="versus-text">VS</div>
-                            <div class="versus-score" id="score-a" style="display: none;"><span class="score1">0</span> - <span class="score2">0</span></div>
-                            <div class="versus-lightning">
-                                <div class="lightning-bolt"></div>
-                                <div class="lightning-bolt delay"></div>
-                            </div>
-                        </div>
-                        <div class="versus-team-card" id="team-a2">
-                            <div class="versus-team-name">TBD</div>
-                            <div class="versus-players-list"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stream B -->
-                <div class="up-next-stream" id="up-next-b">
-                    <div class="stream-header">
-                        <div class="stream-badge stream-b">
-                            <i class="fa-brands fa-twitch"></i> STREAM B
-                        </div>
-                        <div class="stream-watch-buttons">
-                            <a href="https://www.twitch.tv/tiarinhino" target="_blank" class="stream-watch-btn twitch">
-                                <i class="fa-brands fa-twitch"></i> Twitch
-                            </a>
-                        </div>
-                    </div>
-                    <div class="match-stage" id="stage-b">GROUP STAGE</div>
-                    <div class="match-time" id="time-b">17:00 CET</div>
-                    <div class="versus-container">
-                        <div class="versus-team-card" id="team-b1">
-                            <div class="versus-team-name">TBD</div>
-                            <div class="versus-players-list"></div>
-                        </div>
-                        <div class="versus-middle" id="versus-middle-b">
-                            <div class="versus-glow"></div>
-                            <div class="versus-text">VS</div>
-                            <div class="versus-score" id="score-b" style="display: none;"><span class="score1">0</span> - <span class="score2">0</span></div>
-                            <div class="versus-lightning">
-                                <div class="lightning-bolt"></div>
-                                <div class="lightning-bolt delay"></div>
-                            </div>
-                        </div>
-                        <div class="versus-team-card" id="team-b2">
-                            <div class="versus-team-name">TBD</div>
-                            <div class="versus-players-list"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Single stream message for Day 3+4 -->
-            <div class="single-stream-notice" id="single-stream-notice" style="display: none;">
-                <i class="fa-solid fa-info-circle"></i> All remaining matches are on Stream A only
-            </div>
-        </div>
 
         <div id="teams" class="section-wrapper visible">
-            <h2 class="section-title">Competing Teams</h2>
+            <h2 class="section-title">Final Standings</h2>
             <div class="teams-container">
-                <!-- STILL IN - TOP ROW -->
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="seppo13">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="TMNT">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/dk.png" alt="DK"><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><img class="player-flag" src="https://flagcdn.com/24x18/rs.png" alt="RS"><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
-                <div class="team-card js-tilt">
+                <!-- 1ST PLACE - TMNT -->
+                <div class="team-card js-tilt champion"><div class="placement-badge place-1">🏆 1st</div><div class="team-header"><div class="team-name" data-text="TMNT">TMNT</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3147</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Ptenchik</span></div><span class="player-mmr" data-val="3513">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-3.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Foxy</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/dk.png" alt="DK"><span class="player-name">Mirrored</span></div><span class="player-mmr" data-val="3680">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1562</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Lost</span></div><span class="player-mmr" data-val="3976">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-uncalibrated.png"><span class="rank-pill">PVT</span></div><img class="player-flag" src="https://flagcdn.com/24x18/rs.png" alt="RS"><span class="player-name">Lenske</span></div><span class="player-mmr" data-val="3443">0</span></div></div></div>
+                <!-- 2ND PLACE - Space Marines -->
+                <div class="team-card js-tilt"><div class="placement-badge place-2">🥈 2nd</div><div class="team-header"><div class="team-name" data-text="Space Marines">Space Marines</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">Space</span></div><span class="player-mmr" data-val="3222">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">friscy</span></div><span class="player-mmr" data-val="3357">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#430</span></div><img class="player-flag" src="https://flagcdn.com/24x18/dz.png" alt="DZ"><span class="player-name">shushu</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#648</span></div><img class="player-flag" src="https://flagcdn.com/24x18/lb.png" alt="LB"><span class="player-name">Nano</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4369</span></div><img class="player-flag" src="https://flagcdn.com/24x18/pe.png" alt="PE"><span class="player-name">Godba</span></div><span class="player-mmr" data-val="3606">0</span></div></div></div>
+                <!-- 3RD PLACE - seppo13 -->
+                <div class="team-card js-tilt"><div class="placement-badge place-3">🥉 3rd</div><div class="team-header"><div class="team-name" data-text="seppo13">seppo13</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2953</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">BigGoose</span></div><span class="player-mmr" data-val="2661">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2428</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">noertti</span></div><span class="player-mmr" data-val="3707">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1429</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">sifla</span></div><span class="player-mmr" data-val="3087">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2381</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Fruugu</span></div><span class="player-mmr" data-val="2903">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4596</span></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Juketsuu</span></div><span class="player-mmr" data-val="3288">0</span></div></div></div>
+                <!-- 4TH PLACE - Maslyata -->
+                <div class="team-card js-tilt"><div class="placement-badge place-4">4th</div>
                     <div class="champion-badge"><i class="fa-solid fa-crown"></i> 4x Champions</div>
                     <div class="team-header"><div class="team-name" data-text="Maslyata">Maslyata</div></div>
                     <div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3815</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">sandstorm</span></div><span class="player-mmr" data-val="3509">0</span></div><div class="player-row highest-mmr"><div class="mmr-tooltip">Highest AD MMR</div><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ua.png" alt="UA"><span class="player-name">et si <span class="crown-icon">👑</span></span></div><span class="player-mmr" data-val="3996">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">hedgehog</span></div><span class="player-mmr" data-val="3741">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">kid</span></div><span class="player-mmr" data-val="3518">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#2024</span></div><img class="player-flag" src="https://flagcdn.com/24x18/ua.png" alt="UA"><span class="player-name">piggy/electro</span></div><span class="player-mmr" data-val="3684">0</span></div></div>
                 </div>
-                <div class="team-card js-tilt"><div class="team-header"><div class="team-name" data-text="Space Marines">Space Marines</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">Space</span></div><span class="player-mmr" data-val="3222">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">friscy</span></div><span class="player-mmr" data-val="3357">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#430</span></div><img class="player-flag" src="https://flagcdn.com/24x18/dz.png" alt="DZ"><span class="player-name">shushu</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#648</span></div><img class="player-flag" src="https://flagcdn.com/24x18/lb.png" alt="LB"><span class="player-name">Nano</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#4369</span></div><img class="player-flag" src="https://flagcdn.com/24x18/pe.png" alt="PE"><span class="player-name">Godba</span></div><span class="player-mmr" data-val="3606">0</span></div></div></div>
 
-                <!-- ELIMINATED - BOTTOM ROW -->
+                <!-- 5-8TH PLACE -->
                 <div class="team-card js-tilt eliminated"><div class="placement-badge place-5-6">5-6th</div><div class="team-header"><div class="team-name" data-text="Lay an Egg">Lay an Egg</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#581</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">Dogical</span></div><span class="player-mmr" data-val="3062">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#101</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">erik</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1367</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">chrohny</span></div><span class="player-mmr no-mmr">—</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#480</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">frisb</span></div><span class="player-mmr" data-val="3071">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#1628</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">polo</span></div><span class="player-mmr" data-val="2196">0</span></div></div></div>
                 <div class="team-card js-tilt eliminated"><div class="placement-badge place-5-6">5-6th</div><div class="team-header"><div class="team-name" data-text="SHOTGUN MARRIAGE">SHOTGUN MARRIAGE</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#3761</span></div><img class="player-flag" src="https://flagcdn.com/24x18/us.png" alt="US"><span class="player-name">godwithashotgun</span></div><span class="player-mmr" data-val="3263">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/de.png" alt="DE"><span class="player-name">drea</span></div><span class="player-mmr" data-val="3352">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-2.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/fi.png" alt="FI"><span class="player-name">Admiral Rat</span></div><span class="player-mmr" data-val="3209">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-archon-4.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/se.png" alt="SE"><span class="player-name">Silence</span></div><span class="player-mmr" data-val="3297">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-legend-4.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/se.png" alt="SE"><span class="player-name">ATGAT</span></div><span class="player-mmr" data-val="2992">0</span></div></div></div>
                 <div class="team-card js-tilt eliminated"><div class="placement-badge place-7-8">7-8th</div><div class="team-header"><div class="team-name" data-text="Gym Esports">Gym Esports</div></div><div class="players-list"><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-divine-4.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Ultra Greed</span></div><span class="player-mmr" data-val="3383">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#870</span></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Aniki</span></div><span class="player-mmr" data-val="3337">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"><span class="rank-pill">#932</span></div><img class="player-flag" src="https://flagcdn.com/24x18/sy.png" alt="SY"><span class="player-name">Vata</span></div><span class="player-mmr" data-val="2739">0</span></div><div class="player-row"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/ru.png" alt="RU"><span class="player-name">Inffe</span></div><span class="player-mmr" data-val="3143">0</span></div><div class="player-row highest-mmr"><div class="player-info"><div class="rank-wrapper"><img class="rank-icon" src="https://hawk.live/images/dota-2-seasonal-ranking-medals/seasonal-rank-immortal.png"></div><img class="player-flag" src="https://flagcdn.com/24x18/kz.png" alt="KZ"><span class="player-name">Hoshoryu</span></div><span class="player-mmr" data-val="3393">0</span></div></div></div>
@@ -1728,23 +1689,27 @@
                     <div class="distribution-grid">
                         <div class="dist-item rank-1">
                             <span class="place">1st</span>
+                            <span class="dist-team">TMNT</span>
                             <span class="percent">50%</span>
-                            <span class="value" id="prize-1st">~307€</span>
+                            <span class="value" id="prize-1st">~552€</span>
                         </div>
                         <div class="dist-item rank-2">
                             <span class="place">2nd</span>
+                            <span class="dist-team">Space Marines</span>
                             <span class="percent">25%</span>
-                            <span class="value" id="prize-2nd">~153€</span>
+                            <span class="value" id="prize-2nd">~276€</span>
                         </div>
                         <div class="dist-item rank-3">
                             <span class="place">3rd</span>
+                            <span class="dist-team">seppo13</span>
                             <span class="percent">15%</span>
-                            <span class="value" id="prize-3rd">~92€</span>
+                            <span class="value" id="prize-3rd">~165€</span>
                         </div>
                         <div class="dist-item">
                             <span class="place">4th</span>
+                            <span class="dist-team">Maslyata</span>
                             <span class="percent">10%</span>
-                            <span class="value" id="prize-4th">~61€</span>
+                            <span class="value" id="prize-4th">~110€</span>
                         </div>
                     </div>
                     <a href="https://www.paypal.com/donate/?hosted_button_id=2A52H56DRV48Q" target="_blank" class="donate-btn"><i class="fa-solid fa-heart"></i> Donate Now</a>
