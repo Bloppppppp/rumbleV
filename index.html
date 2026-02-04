@@ -2376,7 +2376,7 @@
             try {
                 // Use CORS proxy with cache-busting
                 const urlWithCache = SHEET_CSV + '&_=' + Date.now();
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(urlWithCache);
+                const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(urlWithCache);
                 
                 const response = await fetch(proxyUrl);
                 const csvText = await response.text();
@@ -2882,7 +2882,7 @@
         async function fetchDonations() {
             try {
                 const urlWithCache = DONATIONS_SHEET_URL + '&_=' + Date.now();
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(urlWithCache);
+                const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(urlWithCache);
                 const response = await fetch(proxyUrl);
                 const csvText = await response.text();
                 console.log('Donations CSV loaded:', csvText.substring(0, 100));
